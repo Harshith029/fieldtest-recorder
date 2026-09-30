@@ -1,6 +1,8 @@
 ﻿# Builds the SIH26231 idea deck on the OFFICIAL SIH 2026 template through PowerPoint itself.
 # Usage: powershell -File build_deck.ps1 [-TeamId "..."] [-TeamName "..."]
 param([string]$TeamId = "[Team ID]", [string]$TeamName = "[Team Name]")
+$RepoUrl = "https://github.com/Harshith029/fieldtest-recorder"
+$RepoText = "github.com/Harshith029/fieldtest-recorder"
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $root = Split-Path -Parent (Split-Path -Parent $here)
@@ -225,7 +227,7 @@ try {
     $null = Add-Text $s 620 322 316 26 @((P (T "Reference card v2 (printable, 150 x 105 mm): 24 colour patches, 4 markers, SAMPLE and BLANK zones. The engine finds it in the print file." $false $MUTED $true) 8.5))
     $null = Add-Text $s 620 356 316 16 @((P (T "BUILT SO FAR" $true $NAVY) 11))
     $built = @(
-        @("Reference implementation: record core, verifier, colour engine, NDDK protocol, sync server, search", "code"),
+        @("Reference implementation + one-command demo, 47 tests: github.com/Harshith029/fieldtest-recorder", "code"),
         @("17 experiments with 95% intervals (colour, liveness, night light, amount)", "sim"),
         @("Android app (Kotlin) on the same test vectors", "next"))
     for ($i = 0; $i -lt 3; $i++) {
@@ -370,9 +372,11 @@ try {
         $null = Add-Text $s $col[1] 100 446 220 $paras 10.5
     }
     $null = Add-Box $s 5 22 322 916 166 $CARD
-    $null = Add-Text $s 34 332 892 16 @((P (T "OUR OWN RESEARCH (AVAILABLE ON REQUEST)" $true $NAVY) 12))
+    $hdr6 = Add-Text $s 34 332 892 16 @((P @((T "OUR CODE AND RESEARCH: " $true $NAVY), (T $RepoText $true $BLUE)) 12))
+    $lnk = $hdr6.TextFrame.TextRange.Find($RepoText)
+    if ($lnk) { $lnk.ActionSettings.Item(1).Hyperlink.Address = $RepoUrl }
     $null = Add-Text $s 34 354 892 130 @(
-        (P @((T "Executable reference implementation " $true), (T "of the record format, verifier, colour engine, NCB kit protocol, searchable log and sync server; the Android app must match its outputs byte for byte.")) 10.5 $true 1 7),
+        (P @((T "Working reference implementation with a one-command demo and 47 automated tests: " $true), (T "record format and offline verifier, colour engine, NCB kit protocol, searchable log, sync server. The Android app must match its outputs byte for byte.")) 10.5 $true 1 7),
         (P @((T "17 experiments with 95% confidence intervals, " $true), (T "including 18 tampering attacks, 15 failure scenarios, sample-amount tests, night light and staged-sample detection.")) 10.5 $true 1 7),
         (P @((T "An external review, re-checked claim by claim: " $true), (T "every confirmed defect was fixed and re-tested before this submission.")) 10.5 $true 1 7),
         (P @((T "Safety and law: " $true), (T "our team never handles narcotics; colour tests use published colours, the kit chart and safe dyes. Real-kit validation is designed for NCB or CFSL chemists.")) 10.5 $true 1 0)) 10.5

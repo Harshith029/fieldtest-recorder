@@ -1,7 +1,9 @@
-"""E15: real Android key-attestation verification against Google's published sample chains.
+"""E15: Android key-attestation verification: Google's sample chains, tampered/forged variants, and the ACCEPT path.
 
-Expected: genuine TEE and StrongBox samples verify (the samples come from Google's test-resources, so we read
-their challenge rather than issue one); every tampered / foreign / replayed / revoked variant is rejected.
+Google's samples come from development devices (unlocked, unverified boot), so the strict policy must reject them.
+Strict X.509 libraries (cryptography >= 50) refuse to parse Google's sample certificates at all (a non-DER encoding
+in the signature algorithm): our verifier then reports "unparseable chain", which is still a rejection (fail closed).
+The accept path is proven with a production-style chain (locked, verified boot, TEE, our challenge) under a TEST root.
 """
 import datetime as dt
 
@@ -14,56 +16,17 @@ import attestation as at
 
 rev = at.load_revocation()
 rows = []
-
-
-def run(name, chain, challenge, expect_ok, **kw):
-    v = at.verify(chain, challenge, revocation=kw.pop("revocation", rev), **kw)
-    rows.append((name, "PASS" if v.ok == expect_ok else "FAIL", "accepted" if v.ok else "; ".join(v.reasons)[:95], v.attestation))
-
-
-for lvl in ("EC_TEE", "EC_StrongBox"):
-    chain = at.load_sample(lvl)
-    att = at.parse_key_description(x509.load_pem_x509_certificate(chain[0]))
-    # Google's samples come from development devices, so we report their boot state honestly and check both policies
-    run(f"{lvl}: genuine chain (strict policy: locked + verified boot)", chain, att.challenge,
-        expect_ok=(att.verified_boot_state == "Verified" and att.device_locked is True))
-    run(f"{lvl}: genuine chain, correct challenge (chain + hardware checks only)", chain, att.challenge, expect_ok=True,
-        require_locked=False) if att.verified_boot_state == "Verified" else None
-    run(f"{lvl}: wrong challenge (replayed attestation)", chain, b"server-nonce-that-differs", expect_ok=False,
-        require_locked=False)
-    bad = bytearray(chain[1]); pos = len(bad) // 2; bad[pos] = ord("A") if bad[pos] != ord("A") else ord("B")
-    run(f"{lvl}: tampered intermediate certificate", [chain[0], bytes(bad), chain[2], chain[3]], att.challenge, expect_ok=False,
-        require_locked=False)
-    run(f"{lvl}: chain out of order", [chain[1], chain[0], chain[2], chain[3]], att.challenge, expect_ok=False,
-        require_locked=False)
-    fake_rev = {"entries": {format(x509.load_pem_x509_certificate(chain[1]).serial_number, "x"): {"status": "REVOKED", "reason": "KEY_COMPROMISE"}}}
-    run(f"{lvl}: intermediate on revocation list", chain, att.challenge, expect_ok=False, revocation=fake_rev,
-        require_locked=False)
-    other_key = ec.generate_private_key(ec.SECP256R1()).public_key().public_bytes(
-        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
-    run(f"{lvl}: attested key differs from enrolled key", chain, att.challenge, expect_ok=False,
-        enrolled_pub_der=other_key, require_locked=False)
-
-# a forged chain: attacker-made CA issuing a cert that CLAIMS StrongBox (fake extension copied from a real leaf)
-real_leaf = x509.load_pem_x509_certificate(at.load_sample("EC_StrongBox")[0])
-ext = real_leaf.extensions.get_extension_for_oid(at.KEY_DESCRIPTION_OID)
-ca_key, leaf_key = ec.generate_private_key(ec.SECP256R1()), ec.generate_private_key(ec.SECP256R1())
 name = lambda n: x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, n)])
 now = dt.datetime.now(dt.timezone.utc)
-ca = (x509.CertificateBuilder().subject_name(name("Fake Root")).issuer_name(name("Fake Root")).public_key(ca_key.public_key())
-      .serial_number(1).not_valid_before(now).not_valid_after(now + dt.timedelta(days=9))
-      .add_extension(x509.BasicConstraints(ca=True, path_length=None), critical=True).sign(ca_key, hashes.SHA256()))
-leaf = (x509.CertificateBuilder().subject_name(name("Android Keystore Key")).issuer_name(name("Fake Root"))
-        .public_key(leaf_key.public_key()).serial_number(2).not_valid_before(now).not_valid_after(now + dt.timedelta(days=9))
-        .add_extension(ext.value, critical=False).sign(ca_key, hashes.SHA256()))
 pem = lambda c: c.public_bytes(serialization.Encoding.PEM)
-att = at.parse_key_description(real_leaf)
-run("forged chain claiming StrongBox (attacker's own root)", [pem(leaf), pem(ca)], att.challenge, expect_ok=False,
-    require_locked=False)
 
-# ---- success path (review finding: every earlier test "passed" by rejecting). Google's samples come from
-# development devices, so we build a chain the way a locked production phone presents it, under a TEST root,
-# and pass that root explicitly. Proves the accept path of the parser and of record_core end to end.
+
+def run(label, chain, challenge, expect_ok, **kw):
+    v = at.verify(chain, challenge, revocation=kw.pop("revocation", rev), **kw)
+    rows.append((label, "PASS" if v.ok == expect_ok else "FAIL", "accepted" if v.ok else "; ".join(v.reasons)[:95], v.attestation))
+
+
+# ---- DER builders for a KeyDescription extension (Android attestation schema)
 def der(tag: bytes, content: bytes) -> bytes:
     n = len(content)
     ln = bytes([n]) if n < 128 else (b"\x81" + bytes([n]) if n < 256 else b"\x82" + n.to_bytes(2, "big"))
@@ -82,15 +45,17 @@ def key_description(challenge: bytes, locked=True, boot_state=0, sec_level=1) ->
                + der_int(b"\x0a", sec_level) + der(b"\x04", challenge) + der(b"\x04", b"") + der(b"\x30", b"") + hw)
 
 
+def cert(subj, iss, pub, signer, serial, ca, ext=None):
+    b = (x509.CertificateBuilder().subject_name(name(subj)).issuer_name(name(iss)).public_key(pub).serial_number(serial)
+         .not_valid_before(now).not_valid_after(now + dt.timedelta(days=9))
+         .add_extension(x509.BasicConstraints(ca=ca, path_length=None), critical=True))
+    if ext is not None:
+        b = b.add_extension(x509.UnrecognizedExtension(at.KEY_DESCRIPTION_OID, ext), critical=False)
+    return b.sign(signer, hashes.SHA256())
+
+
 def make_chain(device_key, challenge, **kd):
     root_k, inter_k = ec.generate_private_key(ec.SECP256R1()), ec.generate_private_key(ec.SECP256R1())
-    def cert(subj, iss, pub, signer, serial, ca, ext=None):
-        b = (x509.CertificateBuilder().subject_name(name(subj)).issuer_name(name(iss)).public_key(pub).serial_number(serial)
-             .not_valid_before(now).not_valid_after(now + dt.timedelta(days=9))
-             .add_extension(x509.BasicConstraints(ca=ca, path_length=None), critical=True))
-        if ext is not None:
-            b = b.add_extension(x509.UnrecognizedExtension(at.KEY_DESCRIPTION_OID, ext), critical=False)
-        return b.sign(signer, hashes.SHA256())
     root = cert("TEST attestation root", "TEST attestation root", root_k.public_key(), root_k, 11, True)
     inter = cert("TEST intermediate", "TEST attestation root", inter_k.public_key(), root_k, 12, True)
     leaf = cert("Android Keystore Key", "TEST intermediate", device_key.public_key(), inter_k, 13, False,
@@ -99,9 +64,40 @@ def make_chain(device_key, challenge, **kd):
     return [pem(leaf), pem(inter), pem(root)], {spki}
 
 
+# ---- Google's sample chains (development devices)
+for lvl in ("EC_TEE", "EC_StrongBox"):
+    chain = at.load_sample(lvl)
+    try:
+        att = at.parse_key_description(x509.load_pem_x509_certificate(chain[0]))
+    except ValueError:
+        run(f"{lvl}: Google sample, strict X.509 parser refuses it -> must still be rejected", chain, b"any", expect_ok=False)
+        continue
+    run(f"{lvl}: genuine chain (strict policy: locked + verified boot)", chain, att.challenge,
+        expect_ok=(att.verified_boot_state == "Verified" and att.device_locked is True))
+    run(f"{lvl}: wrong challenge (replayed attestation)", chain, b"server-nonce-that-differs", expect_ok=False,
+        require_locked=False)
+    bad = bytearray(chain[1]); pos = len(bad) // 2; bad[pos] = ord("A") if bad[pos] != ord("A") else ord("B")
+    run(f"{lvl}: tampered intermediate certificate", [chain[0], bytes(bad), chain[2], chain[3]], att.challenge, expect_ok=False,
+        require_locked=False)
+    run(f"{lvl}: chain out of order", [chain[1], chain[0], chain[2], chain[3]], att.challenge, expect_ok=False,
+        require_locked=False)
+    fake_rev = {"entries": {format(x509.load_pem_x509_certificate(chain[1]).serial_number, "x"): {"status": "REVOKED", "reason": "KEY_COMPROMISE"}}}
+    run(f"{lvl}: intermediate on revocation list", chain, att.challenge, expect_ok=False, revocation=fake_rev,
+        require_locked=False)
+    other_key = ec.generate_private_key(ec.SECP256R1()).public_key().public_bytes(
+        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
+    run(f"{lvl}: attested key differs from enrolled key", chain, att.challenge, expect_ok=False,
+        enrolled_pub_der=other_key, require_locked=False)
+
+# ---- forged chain: attacker's own root issuing a leaf that CLAIMS StrongBox, locked, verified boot
 dev_key = ec.generate_private_key(ec.SECP256R1())
 dev_spki = dev_key.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
 nonce = b"enrol-nonce-7f3a"
+forged, _ = make_chain(dev_key, nonce, sec_level=2)
+run("forged chain claiming StrongBox (attacker's own root) vs Google's roots", forged, nonce, expect_ok=False,
+    enrolled_pub_der=dev_spki)
+
+# ---- success path (a production-style chain; TEST root passed explicitly)
 chain_ok, test_roots = make_chain(dev_key, nonce)
 run("SUCCESS PATH: locked, verified boot, TEE, right challenge + key (test root)", chain_ok, nonce, expect_ok=True,
     enrolled_pub_der=dev_spki, roots=test_roots)
@@ -110,6 +106,8 @@ chain_unlocked, r2 = make_chain(dev_key, nonce, locked=False)
 run("same device with bootloader unlocked", chain_unlocked, nonce, expect_ok=False, enrolled_pub_der=dev_spki, roots=r2)
 chain_sw, r3 = make_chain(dev_key, nonce, sec_level=0)
 run("key in software keystore, not TEE/StrongBox", chain_sw, nonce, expect_ok=False, enrolled_pub_der=dev_spki, roots=r3)
+chain_replay, r4 = make_chain(dev_key, b"old-nonce")
+run("attestation made for an old enrolment nonce (replay)", chain_replay, nonce, expect_ok=False, enrolled_pub_der=dev_spki, roots=r4)
 
 # ...and end to end through the offline verifier (strict policy, no test flag)
 import record_core as rc  # noqa: E402
@@ -130,12 +128,16 @@ except rc.VerificationError as e:
 rows.append(("SUCCESS PATH end to end: record_core strict policy with attested binding",
              "PASS" if out == "VERIFIED" else "FAIL", out, None))
 
-w = max(len(r[0]) for r in rows)
-for n, st, why, a in rows:
-    print(f"{st}  {n:{w}s}  -> {why}")
-for lvl in ("EC_TEE", "EC_StrongBox"):
-    a = at.parse_key_description(x509.load_pem_x509_certificate(at.load_sample(lvl)[0]))
-    print(f"\n{lvl} decoded: attestation v{a.attestation_version}, key in {a.security_level}, "
-          f"verified boot {a.verified_boot_state}, bootloader locked {a.device_locked}, challenge {a.challenge[:16]!r}")
-print(f"\n{sum(r[1] == 'PASS' for r in rows)}/{len(rows)} checks behave as expected; revocation list entries loaded: "
-      f"{len(rev['entries']) if rev else 0}")
+if __name__ == "__main__":
+    w = max(len(r[0]) for r in rows)
+    for n, st, why, a in rows:
+        print(f"{st}  {n:{w}s}  -> {why}")
+    for lvl in ("EC_TEE", "EC_StrongBox"):
+        try:
+            a = at.parse_key_description(x509.load_pem_x509_certificate(at.load_sample(lvl)[0]))
+            print(f"\n{lvl} decoded: attestation v{a.attestation_version}, key in {a.security_level}, "
+                  f"verified boot {a.verified_boot_state}, bootloader locked {a.device_locked}, challenge {a.challenge[:16]!r}")
+        except ValueError as e:
+            print(f"\n{lvl}: not parseable by this X.509 library ({str(e)[:80]})")
+    print(f"\n{sum(r[1] == 'PASS' for r in rows)}/{len(rows)} checks behave as expected; revocation list entries loaded: "
+          f"{len(rev['entries']) if rev else 0}")

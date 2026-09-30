@@ -13,7 +13,8 @@ Anything not measured is marked **NOT YET VERIFIED**.
 | Timestamp, GPS (with mock-location flag), operator ID, image hash in every signed test record | required by the verifier and the sync server | `test_integrity.py`, E14 |
 | Panchnama code check character | 434/434 single-character errors and 12/13 adjacent swaps detected; typo reported as a typo | `test_integrity.py` |
 | Strict attestation policy: bindings without an attestation chain | rejected | `test_integrity.py` |
-| Attestation checks (Google's samples + synthetic production-style chain) | 18/18 as expected, **including the success path** end to end | E15 |
+| Attestation checks (Google's samples + synthetic production-style chain) | 19/19 as expected, **including the success path** end to end and a replayed enrolment nonce | E15 |
+| Same checks with a strict X.509 library (cryptography 50, CI) | Google's sample certificates cannot be parsed → reported as rejections (fail closed); see U26 | CI |
 | Attestation pass on a real locked production phone | **NOT YET VERIFIED** | E15 |
 | Malformed bundles handled cleanly | 13/13 | E10 |
 | Hostile images crashing the engine | 0/11 | E10 |

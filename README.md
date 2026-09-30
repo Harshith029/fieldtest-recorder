@@ -48,7 +48,7 @@ pytest                           # 47 tests, ~30 s
 | Part | Status | Evidence |
 |---|---|---|
 | Record format: signed header + payload with time, GNSS time, GPS + mock-location flag, officer, image hash; hash chain | **Proven in code** | 18/18 tampering attacks caught (`ftr-reference/test_integrity.py`) |
-| Trust model: NCB supervisor list → supervisor-signed phone binding → attested hardware key; our server is never trusted | **Proven in code** | Insider-admin forgery caught; attestation accept + reject paths 18/18 (`e15_attestation.py`) |
+| Trust model: NCB supervisor list → supervisor-signed phone binding → attested hardware key; our server is never trusted | **Proven in code** | Insider-admin forgery caught; attestation accept + reject paths 19/19 (`e15_attestation.py`) |
 | Panchnama anchor: every phone's record range + chain head; code with check character | **Proven in code** | Deleted/re-run records caught; 434/434 single-character typos detected |
 | Verify one raid without disclosing other cases | **Proven in code** | Other cases disclosed as hashes only |
 | Sync protocol: idempotent, fork/replay detection, durable checkpoints, search | **Proven in code** (SQLite reference server) | 15/15 failure scenarios (`e14_failures.py`) |
