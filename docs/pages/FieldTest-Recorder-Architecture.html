@@ -122,9 +122,10 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
 
 <main>
 <header class="top">
-  <div class="eyebrow"><span>SIH26231 · NCB (MHA)</span><span>Architecture · revision 7</span><span>29 Sep 2026</span></div>
+  <div class="eyebrow"><span>SIH26231 · NCB (MHA)</span><span>Architecture · revision 8</span><span>30 Sep 2026</span></div>
   <h1>FieldTest Recorder Architecture</h1>
-  <p class="lede">A digital companion for NCB's own Narcotic Drugs Detection Kit. It guides the officer through the kit's Tests A–E and reads each reaction against a blank well in the same photo and a published, signed colour standard. It reports the result with every substance that colour is consistent with. It produces a signed, tamper-evident, per-package record with time, GPS and officer that an independent expert can verify offline.</p>
+  <p class="lede">A digital companion for NCB's own Narcotic Drugs Detection Kit. It is designed to guide the officer through the kit's Tests A–E and read each reaction against a blank well in the same photo and a published, signed colour standard. It would report the result with every substance on the kit chart that the colour is consistent with, and produce a signed, tamper-evident, per-package record with time, GPS and officer that an independent expert can verify offline.</p>
+  <p class="note"><strong>Target design, not a description of what is built.</strong> Only the Python reference prototype exists today; there is no Android app. Several statements on this page are design only, including: the Field Test Memo, Form-1 item 5 and BSA s.63 outputs; reading tube tests (B, E); liveness and night mode inside the capture pipeline; hardware-backed keys on a real phone; the attestation checks of app signing certificate and certificate validity dates; time, binding-validity and revocation checks in the offline verifier; the verifier re-running the colour measurement. The repository README says which parts exist, and open defects are in the problem register (U27–U34 come from an independent audit on 30 Sep 2026).</p>
   <p class="note">This is the single current version. What earlier rounds got wrong, and what changed, is recorded in <a href="#p14">Phase 14</a>. Revision 7 applies an external review whose every claim we re-checked. Every rate comes from code in <code>ftr-reference/</code>, with a 95% interval. Evidence trail: <code>ftr-reference/docs/research/</code>.</p>
 </header>
 
@@ -137,17 +138,18 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
       <li>Every test record signs time, GNSS time, GPS with a mock-location flag, officer and image hash</li>
       <li>One raid can be verified with every other case on the phone withheld</li>
       <li>Sync protocol: 15/15 failure scenarios; searchable log on phone and server</li>
-      <li>Attestation verification, including the accept path (E15)</li></ul></div>
+      <li>Attestation checker: accept and reject paths on test certificates (E15); validity-date and app-identity checks not yet implemented</li></ul></div>
     <div class="panel"><h3>Simulated</h3><ul>
-      <li>NCB kit bands built from the printed chart: 89.1% correct, 1.7% wrong across sample amounts (E17)</li>
+      <li>NCB kit bands tested on the chart's own colours: 1.7% wrong across sample amounts (a consistency check, not accuracy; E17)</li>
       <li>Band model + blank well: 0.0% false positives where the old rule reached 11.7% (E17)</li>
       <li>Clear well read as "no colour change": 99–100%</li>
-      <li>RAW capture, night mode, staged-capture detection (E9, E13, E16)</li></ul></div>
+      <li>RAW capture, night mode, staged-capture detection (E9, E13, E16); night mode and staged-capture detection are separate simulations, not yet in the pipeline</li></ul></div>
     <div class="panel bad"><h3>Not yet verified</h3><ul>
       <li>Real phones and the printed card v2 (card, reader and protocol ready)</li>
       <li>NCB's real reactions: chart colours come from a scan; Tests C and D are not printed</li>
       <li>RAW support on officers' phones; a locked production phone's attestation</li>
-      <li>Officer time per package; court treatment; API access</li></ul></div>
+      <li>Officer time per package; court treatment; API access</li>
+      <li>Tube tests B and E (the engine reads flat spots only); a contaminated blank well can turn a positive into "no colour change"</li></ul></div>
     <div class="panel key"><h3>Biggest risks</h3><ul>
       <li>No app yet, while a public rival repo already has a working one</li>
       <li>No officer, chemist or prosecutor consulted</li>
@@ -275,7 +277,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
       <tr><td>E14</td><td>Sync and user-failure scenarios</td><td>15/15, including malformed records in a signed batch and server search</td><td>Durable checkpoints; per-record validation</td><td>Real code (reference server)</td></tr>
       <tr><td>E15</td><td>Android attestation</td><td>18/18 as expected, including the accept path end to end (test root)</td><td>Strict by default</td><td>Real code</td></tr>
       <tr><td>E16</td><td>Staged capture</td><td>Staged 0.0% [0–0.9]; mid-capture swap 0.5% [0.1–1.8]; a swap at the drop passes</td><td>Capture starts before the drop</td><td>Simulation</td></tr>
-      <tr><td><strong>E17</strong></td><td>Sample amount; blank well; NCB kit</td><td>Old rule: up to 11.7% false positives. <strong>Bands: 0.0%</strong>. Clear well → negative 99–100%. NCB kit: 89.1% correct, 1.7% wrong</td><td>Band model, blank well, NDDK protocol</td><td>Colour-level simulation</td></tr>
+      <tr><td><strong>E17</strong></td><td>Sample amount; blank well; NCB kit</td><td>Old rule: up to 11.7% false positives. <strong>Bands: 0.0%</strong>. Clear well → negative 99–100%. NCB kit, chart's own colours: 1.7% wrong (consistency check)</td><td>Band model, blank well, NDDK protocol</td><td>Colour-level simulation</td></tr>
     </tbody>
   </table></div>
 
@@ -288,7 +290,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
       <tr><td>Mecke</td><td class="num">27.0% / 0.0%</td><td class="num">66.1% / 0.0%</td></tr>
       <tr><td>Simon's</td><td class="num">19.3% / <strong>9.2%</strong></td><td class="num">44.3% / 0.0% [0–0.6]</td></tr>
       <tr><td>Cobalt thiocyanate</td><td class="num">17.1% / <strong>11.7%</strong></td><td class="num">29.2% / 0.0% [0–0.1]</td></tr>
-      <tr><td>NCB kit, all chart outcomes</td><td class="num">—</td><td class="num">89.1% correct / 1.7% [1.2–2.2] wrong</td></tr>
+      <tr><td>NCB kit, all chart outcomes</td><td class="num">—</td><td class="num">1.7% [1.2–2.2] wrong (chart's own colours)</td></tr>
     </tbody>
   </table></div>
   <p class="note">The remaining NCB-kit errors all come from partially reacted wells, which the bands were not built from. Where same-hue substances overlap (Simon's, cobalt), the band model returns "inconclusive" instead of a guess.</p>
@@ -724,7 +726,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
 
   <h3>Authentication and authorisation</h3>
   <ul>
-    <li><strong>Enrolment (online, once):</strong> officer signs in (Parichay in production; agency directory in pilot). App generates an EC P-256 key in Android Keystore with an attestation challenge from the server. Server verifies the chain against Google's attestation roots and revocation list, plus verified boot, locked bootloader, app signing certificate, security level and the challenge (<code>attestation.py</code>, E15). <strong>The supervising officer then signs the binding (officer, device, key) with their own DSC</strong>; the server only stores and logs it. One active binding per device.</li>
+    <li><strong>Enrolment (online, once):</strong> officer signs in (Parichay in production; agency directory in pilot). App generates an EC P-256 key in Android Keystore with an attestation challenge from the server. Server verifies the chain against Google's attestation roots and revocation list, plus verified boot, locked bootloader, security level and the challenge (<code>attestation.py</code>, E15); the app signing certificate and validity-date checks are designed but not yet implemented. <strong>The supervising officer then signs the binding (officer, device, key) with their own DSC</strong>; the server only stores and logs it. One active binding per device.</li>
     <li><strong>Field (offline):</strong> signing needs recent device authentication (PIN or biometric), so a stolen unlocked-then-locked phone can't sign.</li>
     <li><strong>Sync:</strong> TLS plus a device-signed request envelope (key ID, nonce, time, body hash). No bearer tokens stored on the phone.</li>
     <li><strong>Portal:</strong> SSO plus role, and attribute checks on agency, unit and case assignment. Roles: field officer, supervisor, IO / lab liaison, QA analyst (aggregates only), profile authority (two-person), auditor (read-only logs), system admin (operations, no case data).</li>
@@ -1156,7 +1158,7 @@ CREATE TABLE checkpoint (day date PRIMARY KEY, last_seq bigint NOT NULL, head_ha
   <h2>Confidence in each major decision</h2>
   <div class="grid2">
     <div class="panel good"><h3>Verified (primary sources, or proven in code)</h3><ul><li>Statement requirements [S1]</li><li>Kit role, test each package, record in panchnama, lab negative "often possible" [S4]</li><li>Rules 3, 5, 10(2), 13, 14 and Form-1 item 5 [S5]</li><li>BSA s.63 certificate with hash; BPR&amp;D SOP [S7]</li><li>Case numbers; 30 zonal units [S8]</li><li>CERT-In directions [S18]</li><li>NIJ published colours; Bombay HC and Delhi HC judgments, read in full [S35][S36][S37]</li><li>NCB's kit: Tests A–E, flow charts, colour ranges (NICFS guide) [S6]</li><li>In code: 18/18 attacks caught (E5); verifier fails closed (E10); 15/15 sync failure scenarios (E14); attestation accept and reject paths (E15)</li></ul></div>
-    <div class="panel"><h3>Simulated (our experiments)</h3><ul><li>Card calibration 3–4× better under normal light (E1)</li><li>Sodium light detectable by card error; flash/no-flash fixes it (E1b)</li><li>Same-photo comparison far more reliable (E2)</li><li>Anchor catches tail deletion and re-runs (E3; this is logic, so high confidence)</li><li>E4: full engine on 900 rendered photos, 0 wrong answers</li><li>E12: held-out NIJ colours through the real engine, RAW 0–1.6% wrong at the reference amount</li><li>E17: colour bands + blank well, 0.0% false positives across amounts; NCB-kit bands 89.1% correct</li><li>E13: RAW fixes out-of-gamut colours</li><li>E16: staged captures rejected</li></ul><p class="note">All use a real DSLR sensor model and real light spectra, not a phone. E1–E4 used made-up reaction colours; E6 onward use NIJ published colours.</p></div>
+    <div class="panel"><h3>Simulated (our experiments)</h3><ul><li>Card calibration 3–4× better under normal light (E1)</li><li>Sodium light detectable by card error; flash/no-flash fixes it (E1b)</li><li>Same-photo comparison far more reliable (E2)</li><li>Anchor catches tail deletion and re-runs (E3; this is logic, so high confidence)</li><li>E4: full engine on 900 rendered photos, 0 wrong answers</li><li>E12: held-out NIJ colours through the real engine, RAW 0–1.6% wrong at the reference amount</li><li>E17: colour bands + blank well, 0.0% false positives across amounts; NCB-kit bands 1.7% wrong on the chart's own colours (consistency check)</li><li>E13: RAW fixes out-of-gamut colours</li><li>E16: staged captures rejected</li></ul><p class="note">All use a real DSLR sensor model and real light spectra, not a phone. E1–E4 used made-up reaction colours; E6 onward use NIJ published colours.</p></div>
     <div class="panel"><h3>Believed (reasoned, not verified)</h3><ul><li>Officers will adopt it if it removes paperwork</li><li>NCB can distribute cards with kits</li><li>Estimated record volumes</li></ul></div>
     <div class="panel bad"><h3>Assumed / not verified</h3><ul><li>NCB's printed chart colours are close to real reactions</li><li>Officers' phones support RAW capture</li><li>Kit vessel format</li><li>Access to e-Sakshya, SIMS or Parichay APIs</li><li>How BNSS s.105 applies to NDPS searches in practice</li><li>Courts accepting this record type</li></ul></div>
   </div>

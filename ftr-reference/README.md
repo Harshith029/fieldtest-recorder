@@ -90,7 +90,7 @@ python read_photos.py --photos path/to/photos --profile profiles/marquis_rule.js
   - 18/18 attestation cases behave as expected, including the accept path;
   - one raid verifies with other cases withheld.
 - **Colour** (simulated, held out, glare on): RAW capture gives 85–92% correct and 0.0–1.6% wrong across 5 reagents, **at the reference sample amount only**.
-- **Sample amount** (E17): the point rule fails off the reference amount. The band model with a blank well gives 0.0% false positives and 29–75% sensitivity. NCB kit bands: 89.1% correct, 1.7% wrong.
+- **Sample amount** (E17): the point rule fails off the reference amount. The band model with a blank well gives 0.0% false positives and 29–75% sensitivity. NCB kit bands, tested only on the chart's own colours: 1.7% wrong (a consistency check, not accuracy).
 - **JPEG only:** cobalt thiocyanate is 21.2% wrong with the rule, so it needs RAW or the region map.
 - **Liveness:**
   - staged pre-reacted wells accepted 0.0% [0–0.9];
