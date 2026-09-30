@@ -30,6 +30,18 @@ def test_clear_well_reads_no_colour_change_against_the_blank(pid):
     assert (out, reason) == ("negative", "no_colour_change")
 
 
+@pytest.mark.parametrize("pid", sorted(PROFILES))
+def test_contaminated_blank_never_turns_a_positive_into_no_colour_change(pid):
+    """Audit U27: sample carried into the blank well. Sample and blank then match, which used to read
+    'negative, no colour change'. Every positive colour must instead come back inconclusive."""
+    p = PROFILES[pid]
+    for L in p.labs()[p.targets()]:
+        if p.classify(L, np.array([95.0, 0.0, 0.0]))[0] != "positive":
+            continue                                   # not called positive even with a clean blank
+        out, reason, _ = p.classify(L, L + np.array([0.4, -0.3, 0.2]))
+        assert (out, reason) == ("inconclusive", "blank_shows_reaction_colour"), (pid, L)
+
+
 def test_without_a_blank_a_clear_well_is_never_called_positive():
     for pid, p in PROFILES.items():
         assert p.classify(np.array([94.0, 0.0, 0.0]))[0] != "positive", pid

@@ -1,0 +1,31 @@
+Copyright (c) 2026 the members of team Darth CodersUNI
+(Smart India Hackathon 2026, Team ID 152041). All rights reserved.
+
+Permission for evaluation
+-------------------------
+Anyone may read, download, run and test this repository to evaluate or review
+it, including Smart India Hackathon evaluators and the Narcotics Control Bureau.
+No other right is granted. Copying, modifying, redistributing, or using this
+code or its documents in a product or service requires written permission from
+the team.
+
+Why this is not yet an open-source licence
+------------------------------------------
+Under the SIH 2026 guidelines, the intellectual property of a winning idea is
+split between the organisation that set the problem statement (here the
+Narcotics Control Bureau, MHA) and the team, or is decided by mutual agreement.
+Granting an irrevocable open-source licence now would pre-empt that agreement.
+The intended outcome is government ownership with open record formats (see
+README.md); the final licence will be agreed with NCB.
+
+Third-party material
+--------------------
+Third-party software, certificates and data used by this repository keep their
+own licences and terms. See THIRD_PARTY_NOTICES.md.
+
+No warranty; not for evidential use
+-----------------------------------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. It is a research prototype. All signing keys in this repository are
+test keys, colour results are from simulated photos, and every result is
+presumptive only. It must not be used to record real seizures.

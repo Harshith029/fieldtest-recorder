@@ -140,7 +140,7 @@ try {
 
     # column A: the gap
     $null = Add-Box $s 5 22 96 262 396 $CARD
-    $null = Add-Text $s 34 106 240 18 @((P (T "THE GAP TODAY" $true $NAVY) 12))
+    $null = Add-Text $s 34 106 240 18 @((P (T "THE PROBLEM IT ADDRESSES" $true $NAVY) 12))
     $null = Add-Text $s 34 130 240 356 @(
         (P @((T "Read by eye. " $true), (T "Officers match the kit's colour against a printed chart; nothing proves a test happened at a place and time (NCB, this problem statement).")) 11 $true 1 12),
         (P @((T "No standard. " $true), (T "Bombay HC (2021): NCB ""has not prescribed the standards""; field testing is ""arbitrary"", and a bare mention in the panchnama is not enough.")) 11 $true 1 12),
@@ -148,7 +148,7 @@ try {
         (P @((T "So: " $true), (T "disputed seizures, bail on procedure, and field results that cannot later be checked against the lab report.")) 11 $true 1 0)) 11
 
     # column B: the solution as a 6-step flow
-    $null = Add-Text $s 300 100 330 18 @((P (T "HOW IT WILL WORK (PHONE, OFFLINE)" $true $NAVY) 12))
+    $null = Add-Text $s 300 100 330 18 @((P (T "PROPOSED SOLUTION (PHONE APP, OFFLINE)" $true $NAVY) 12))
     $steps = @(
         @("Guide", "NCB kit Tests A–E in the order of the kit's printed flow charts, with the drops and steps printed for each test"),
         @("Capture", "Photo of the reaction on a reference colour card beside a reagent-only blank well (spot-plate tests first; tube holder for Tests B and E next)"),
@@ -165,7 +165,7 @@ try {
     }
 
     # column C: what is new
-    $null = Add-Text $s 648 100 290 18 @((P (T "WHAT IS NEW" $true $NAVY) 12))
+    $null = Add-Text $s 648 100 290 18 @((P (T "INNOVATION AND UNIQUENESS" $true $NAVY) 12))
     $news = @(
         @("Says only what the chemistry supports", "Test E blue = ""cocaine or methaqualone"" until E3/E4 narrows it; warns when the NDPS quantity category can't be told in the field.", ""),
         @("Designed for varying sample amounts", "In simulation, colour bands + a blank well gave 0% false positives where our first single-point rule gave up to 11.7%. Real reactions: next.", "sim"),
@@ -218,22 +218,31 @@ try {
     $null = Add-Pill $s 532 381 "code"
     # tech chips row
     $null = Add-Text $s 22 440 578 50 @(
-        (P @((T "Planned stack: " $true $NAVY), (T "Kotlin · CameraX/Camera2 · OpenCV · Android Keystore + attestation · SQLCipher · RFC 8785 JSON · ECDSA P-256 · Spring Boot · PostgreSQL · S3. Prototype today: Python, OpenCV, SQLite.")) 9.5 $false 1 3),
+        (P @((T "Technologies to be used: " $true $NAVY), (T "Kotlin · CameraX/Camera2 · OpenCV · Android Keystore + attestation · SQLCipher · RFC 8785 JSON · ECDSA P-256 · Spring Boot · PostgreSQL · S3. Prototype today: Python, OpenCV, SQLite.")) 9.5 $false 1 3),
         (P @((T "Deliberately not used: " $true $NAVY), (T "blockchain, cloud AI, a neural-network ""drug detector"" (a colour test cannot identify a drug; the court must be able to re-run the reading)")) 9.5))
-    # card image + status
-    $img = Join-Path $root "ftr-reference\docs\validation\card\ftr-card-150x105mm.png"
-    $pic = $s.Shapes.AddPicture($img, 0, -1, 620, 98, 316, 221)
-    $pic.Line.Visible = -1; $pic.Line.ForeColor.RGB = (C $LINE); $pic.Line.Weight = 0.75
-    $null = Add-Text $s 620 322 316 26 @((P (T "Reference card v2 (printable, 150 x 105 mm). Tested on the print file; photos of real prints on real phones come next." $false $MUTED $true) 8.5))
-    $null = Add-Text $s 620 356 316 16 @((P (T "BUILT SO FAR" $true $NAVY) 11))
-    $built = @(
-        @("Python reference prototype + one-command demo, 47 tests: github.com/Harshith029/fieldtest-recorder", "code"),
-        @("Colour, liveness, night-light and amount experiments on simulated photos", "sim"),
-        @("Android app; real-phone and real-reaction validation", "next"))
+    # working prototype: real engine output on simulated photos
+    $null = Add-Text $s 620 98 240 16 @((P (T "WORKING PROTOTYPE OUTPUT" $true $NAVY) 11))
+    $null = Add-Pill $s 888 100 "sim"
+    $tiles = @(
+        @("proto-positive.png", "POSITIVE", "Test A: fits codeine, heroin, morphine", $ORANGE),
+        @("proto-negative.png", "NEGATIVE", "Test A: no colour change vs blank", $GREEN),
+        @("proto-inconclusive.png", "INCONCLUSIVE", "Test C: kit chart not printed", $GREY))
     for ($i = 0; $i -lt 3; $i++) {
-        $y = 376 + $i * 38
+        $x = 620 + $i * 108
+        $pic = $s.Shapes.AddPicture((Join-Path $here "img\$($tiles[$i][0])"), 0, -1, $x, 120, 100, 74)
+        $pic.Line.Visible = -1; $pic.Line.ForeColor.RGB = (C $LINE); $pic.Line.Weight = 0.75
+        $null = Add-Text $s ($x - 2) 196 104 34 @((P (T $tiles[$i][1] $true $tiles[$i][3]) 9 $false 1 0), (P (T $tiles[$i][2] $false $MUTED) 8 $false 1 0))
+    }
+    $null = Add-Text $s 620 234 316 40 @((P (T "Real reference code on camera-model photos: finds the card, corrects the light, reads the well against the blank, decides, then signs and chains the record; the raid verifies offline." $false $MUTED $true) 8.5))
+    $null = Add-Text $s 620 282 316 16 @((P (T "IMPLEMENTATION STATUS" $true $NAVY) 11))
+    $built = @(
+        @("Python reference prototype + one-command demo, 65 automated test cases: github.com/Harshith029/fieldtest-recorder", "code"),
+        @("Colour, liveness, night-light and amount experiments on simulated photos", "sim"),
+        @("Android app; printed-card and real-reaction validation with NCB/CFSL chemists", "next"))
+    for ($i = 0; $i -lt 3; $i++) {
+        $y = 302 + $i * 40
         $null = Add-Pill $s 620 ($y + 2) $built[$i][1]
-        $null = Add-Text $s 688 $y 248 36 @((P (T $built[$i][0]) 9.5))
+        $null = Add-Text $s 688 $y 248 38 @((P (T $built[$i][0]) 9.5))
     }
 
     # ================================================================ 4. FEASIBILITY AND VIABILITY
@@ -252,11 +261,11 @@ try {
         $null = Add-Pill $s ($x + 210 - $(switch ($stats[$i][2]) { "code" { 62 } "next" { 28 } default { 48 } })) 102 $stats[$i][2]
     }
     # risk table
-    $null = Add-Text $s 22 204 600 16 @((P (T "CHALLENGES AND HOW WE HANDLE THEM" $true $NAVY) 11))
+    $null = Add-Text $s 22 204 600 16 @((P (T "POTENTIAL CHALLENGES, RISKS AND STRATEGIES" $true $NAVY) 11))
     $rows = @(
         @("Real reaction colours differ from the printed chart", "Validation by NCB/CFSL chemists under their licences: 1,296 captures at 3 sample amounts; we never handle narcotics"),
         @("Phones and light vary; glare; night raids", "Reference card + RAW capture and a bad-light gate (prototype); say ""inconclusive"" rather than guess; flash/no-flash night mode (simulated, not yet integrated)"),
-        @("Staged or swapped sample", "Planned: capture from before the reagent drop, liveness check (simulated so far), package label in frame, link to the s.105 video"),
+        @("Staged or swapped sample; contaminated blank", "A blank that shows a reaction colour gives inconclusive, never negative (prototype). Planned: capture from before the drop, liveness check (simulated so far), package label in frame, s.105 video link"),
         @("Rooted phone, insider, deleted records", "Supervisor-signed binding, panchnama anchor, untrusted server (prototype); hardware keys + attestation (designed; checker prototyped)"),
         @("Access to SIMS / e-Sakshya not confirmed", "File exports first; the engine is designed as an SDK that e-Sakshya could embed"))
     $tbl = $s.Shapes.AddTable(6, 2, 22, 222, 600, 260)
@@ -280,18 +289,18 @@ try {
     for ($r = 1; $r -le 6; $r++) { $tb.Rows.Item($r).Height = 20 }
     # viability card
     $null = Add-Box $s 5 638 204 300 286 $CARD
-    $null = Add-Text $s 650 212 278 16 @((P (T "WHY IT IS VIABLE" $true $NAVY) 11))
+    $null = Add-Text $s 650 212 278 16 @((P (T "FEASIBILITY ANALYSIS" $true $NAVY) 11))
     $null = Add-Text $s 650 234 278 250 @(
         (P @((T "Existing kit, existing phones: " $true), (T "NCB already supplies the kit free; the additions are a printed colour card per kit and a few reagent drops for the blank well.")) 10.5 $true 1 9),
         (P @((T "Small infrastructure (estimate): " $true), (T "one app server pair, PostgreSQL, 1–3 TB a year of storage on NIC or MeitY-empanelled cloud.")) 10.5 $true 1 9),
-        (P @((T "Government-owned by design: " $true), (T "NCB would hold the signing keys, the colour standard and the code; open formats, no licences.")) 10.5 $true 1 9),
+        (P @((T "Government-owned by design: " $true), (T "NCB would hold the signing keys, the colour standard and the code; open formats, no per-device licence fees.")) 10.5 $true 1 9),
         (P @((T "Pass criteria set in advance: " $true), (T "false positives at most 1%, proven at 95% confidence (at least 299 negative controls); ""inconclusive"" at most 15%.")) 10.5 $true 1 9),
         (P @((T "Clear status: " $true), (T "every number is labelled proven in code, simulated or next. No real phone photo or real reaction has been tested yet; that is the next stage.")) 10.5 $true 1 0)) 10.5
 
     # ================================================================ 5. IMPACT AND BENEFITS
     $s = $pres.Slides.Item(5)
     Set-Chrome $s "IMPACT AND BENEFITS" 32
-    $null = Add-Text $s 22 98 420 16 @((P (T "WHO BENEFITS" $true $NAVY) 11))
+    $null = Add-Text $s 22 98 420 16 @((P (T "POTENTIAL IMPACT ON THE TARGET AUDIENCE" $true $NAVY) 11))
     $who = @(
         @("SO", "Seizing officer", "A guided test and a signed record that shows good-faith action; planned: Field Test Memo and Form-1 item 5 filled in."),
         @("IO", "Investigating officer, prosecutor", "Checkable records for remand and bail; planned: a Rule 10(2) grouping check and the lab result linked back."),
@@ -376,7 +385,7 @@ try {
     $lnk = $hdr6.TextFrame.TextRange.Find($RepoText)
     if ($lnk) { $lnk.ActionSettings.Item(1).Hyperlink.Address = $RepoUrl }
     $null = Add-Text $s 34 354 892 130 @(
-        (P @((T "Working Python reference prototype with a one-command demo and 47 automated tests: " $true), (T "record format and offline verifier, colour engine, NCB kit protocol, searchable log, sync protocol. Photos in the demo are simulated; the Android app must match its outputs.")) 10.5 $true 1 7),
+        (P @((T "Working Python reference prototype with a one-command demo and 65 automated test cases: " $true), (T "record format and offline verifier, colour engine, NCB kit protocol, searchable log, sync protocol. Photos in the demo are simulated; the Android app must match its outputs.")) 10.5 $true 1 7),
         (P @((T "17 experiments with 95% confidence intervals, " $true), (T "including 18 tampering attacks and 15 failure scenarios (real code) and colour, sample-amount, night-light and staged-sample tests (simulated photos).")) 10.5 $true 1 7),
         (P @((T "Reviewed adversarially, claim by claim: " $true), (T "confirmed defects are either fixed and re-tested or listed openly in the repository's problem register.")) 10.5 $true 1 7),
         (P @((T "Safety and law: " $true), (T "our team never handles narcotics; colour tests use published colours, the kit chart and safe dyes. Real-kit validation is designed for NCB or CFSL chemists.")) 10.5 $true 1 0)) 10.5

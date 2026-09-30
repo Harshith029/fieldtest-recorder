@@ -115,7 +115,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
     <li><a href="#p17">17 · Build plan</a></li>
     <li><a href="#p18">18 · Testing</a></li>
     <li><a href="#p19">19 · Is this good?</a></li>
-    <li><a href="#px">X · Not just AI-generated</a></li>
+    <li><a href="#px">X · Differentiation test</a></li>
     <li><a href="#sources">Sources</a></li>
   </ol>
 </nav>
@@ -149,9 +149,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
       <li>NCB's real reactions: chart colours come from a scan; Tests C and D are not printed</li>
       <li>RAW support on officers' phones; a locked production phone's attestation</li>
       <li>Officer time per package; court treatment; API access</li>
-      <li>Tube tests B and E (the engine reads flat spots only); a contaminated blank well can turn a positive into "no colour change"</li></ul></div>
+      <li>Tube tests B and E (the engine reads flat spots only); a blank contaminated with sample now gives "inconclusive" (fixed 30 Sep, U27)</li></ul></div>
     <div class="panel key"><h3>Biggest risks</h3><ul>
-      <li>No app yet, while a public rival repo already has a working one</li>
+      <li>No app yet: the Python reference prototype is not a phone app</li>
       <li>No officer, chemist or prosecutor consulted</li>
       <li>Partially reacted wells cause the remaining errors</li>
       <li>A swap timed at the drop, or a replayed video, can't be caught from colour alone</li></ul></div>
@@ -322,7 +322,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
   <h2>Confident in the design; real-world accuracy and the app not yet shown</h2>
   <div class="verdict">
     <p><strong>Decision:</strong> build this architecture on NCB's kit. The trust layer, record format and sync protocol are proven in code. Colour decisions hold up in simulation across sample amounts with no false positives.</p>
-    <p><strong>Condition:</strong> no accuracy claim beyond "simulated" until real phones and NCB's reactions are tested. The app must exist before the finale: a public rival already demos one.</p>
+    <p><strong>Condition:</strong> no accuracy claim beyond "simulated" until real phones and NCB's reactions are tested. The app must exist before the finale.</p>
     <p><strong>Pitch position:</strong> "We built NCB's own kit into a guided, measured, signed procedure, the standard and evidence trail the courts said were missing, and here is how we will validate it with NCB."</p>
   </div>
   <div class="tbl"><table>
@@ -1278,7 +1278,7 @@ CREATE TABLE checkpoint (day date PRIMARY KEY, last_seq bigint NOT NULL, head_ha
 
 <section id="px">
   <span class="kicker">Phase X · Convergence test</span>
-  <h2>Why this is not just an AI-generated hackathon project</h2>
+  <h2>Differentiation test: what is generic and what is not</h2>
   <div class="grid2">
     <div class="panel"><h3>What 100 AI-assisted teams will probably build</h3><ul><li>Flutter or React Native app, or a web app</li><li>OpenCV colour matching, often a CNN/TFLite "drug classifier" trained on synthetic images with a high accuracy number</li><li>SHA-256 of the image, GPS, timestamp, QR code</li><li>Firebase/Supabase or FastAPI + PostgreSQL</li><li>Blockchain (Polygon/Hyperledger) "for immutability"</li><li>React dashboard with maps and heatmaps</li><li>NDPS law chatbot (LLM/RAG); PDF report; multilingual UI</li></ul></div>
     <div class="panel"><h3>Which of our parts are also generic</h3><ul><li>Android app, reference card (mandated), colour distance, hashing, GPS, PDF text, bilingual UI, a server with PostgreSQL</li><li>These are necessary but earn no points. Judges have seen them in every demo.</li></ul></div>

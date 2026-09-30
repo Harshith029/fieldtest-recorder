@@ -115,9 +115,19 @@ class KitProfile:
         if the profile has one; otherwise a clear well cannot be called negative and returns inconclusive.
         """
         L = np.asarray(L, float)
-        if blank_L is None and self.blank_lab_x100 is not None:
+        if blank_L is not None:
+            # audit U27: sample carried into the blank well makes a real positive look like "no colour change".
+            # A blank that itself reads as a positive colour, or that is far from the documented blank colour,
+            # cannot be trusted as the reference.
+            blank_L = np.asarray(blank_L, float)
+            if self._decide(blank_L)[0] == "positive" or self._near_positive(blank_L):
+                return "inconclusive", "blank_shows_reaction_colour", []
+            if self.blank_lab_x100 is not None and \
+                    float(de(blank_L, np.array(self.blank_lab_x100, float) / 100)) > CLEAR_CHANGE_X100 / 100:
+                return "inconclusive", "blank_not_documented_colour", []
+        elif self.blank_lab_x100 is not None:
             blank_L = np.array(self.blank_lab_x100, float) / 100
-        d_blank = float(de(L, np.asarray(blank_L, float))) if blank_L is not None else None
+        d_blank = float(de(L, blank_L)) if blank_L is not None else None
         if d_blank is not None and d_blank <= NO_CHANGE_X100 / 100:
             return "negative", "no_colour_change", []
         out, reason, cons = self._decide(L)
@@ -126,6 +136,19 @@ class KitProfile:
         if out == "inconclusive" and reason in ("unknown_colour", "outside_validated_colours") and d_blank is None:
             return "inconclusive", "no_blank_in_frame", cons
         return out, reason, cons
+
+    def _near_positive(self, L):
+        """True if L is within the decision's reach of a documented positive colour (used to reject blanks)."""
+        d = self.decision
+        if d["type"] == "band":
+            if self._bands is None:
+                self._bands = [(o, np.array(o["points_x100"], float) / 100) for o in d["outcomes"]]
+            reach = (d["tol_x100"] + d["margin_x100"]) / 100
+            return any(o["positive"] and float(np.min(de(np.broadcast_to(L, pts.shape), pts))) <= reach
+                       for o, pts in self._bands)
+        reach = (d["r_x100"] + d["m_x100"]) / 100 if d["type"] == "rule" else MAP_GUARD_X100 / 100
+        labs = self.labs()[self.positive_group()]
+        return bool(len(labs)) and min(float(de(L, x)) for x in labs) <= reach
 
     def _decide(self, L):
         labs = self.labs()

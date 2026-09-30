@@ -1,6 +1,6 @@
 # FieldTest Recorder
 
-**SIH 2026 · SIH26231 · Digital Companion for Field Drug Testing (Narcotics Control Bureau, MHA)**
+**SIH 2026 · SIH26231 · Digital Companion for Field Drug Testing (Narcotics Control Bureau, MHA)** · Team Darth CodersUNI (Team ID 152041)
 
 ![tests](https://github.com/Harshith029/fieldtest-recorder/actions/workflows/ci.yml/badge.svg)
 
@@ -30,7 +30,7 @@ A guided, measured and signed field test for NCB's **Narcotic Drugs Detection Ki
 ```bash
 pip install -r requirements.txt
 python demo/run_demo.py          # full workflow in ~15 s -> demo/output/report.html
-pytest                           # 47 tests, ~30 s
+pytest                           # 65 test cases, ~1 min
 ```
 
 **The demo** (a pre-generated copy is in [`docs/demo/report.html`](docs/demo/report.html); download and open it) covers one seizure with two officers, two phones and three packets:
@@ -54,7 +54,7 @@ pytest                           # 47 tests, ~30 s
 | Sync protocol: idempotent, fork/replay detection, durable checkpoints, search | **Proven in code** (SQLite reference server) | 15/15 failure scenarios (`e14_failures.py`) |
 | Searchable offline log that re-verifies on open | **Proven in code** | 10/10 checks (`test_log.py`) |
 | NCB kit as a signed guided protocol: Tests A–E, flow charts, narrowing across tests, NDPS quantity warning | **Built** (protocol and decision logic) | Colours sampled from the scanned printed chart: approximate. Tube tests B and E: instructions only, the engine cannot read a tube or its lower layer yet (U29). The chart lists drugs only, so non-drug look-alikes are not named (U31) |
-| Colour engine: card detection, correction, RAW tier, **blank well**, colour bands across sample amount | **Simulated** | 0.0% false positives across 0.5–1.6× sample amount on published US colours (old point rule: up to 11.7%). NCB-kit bands tested only on the chart's own colours: a consistency check, not accuracy (E17). JPEG-only, glare and sodium-light weaknesses and blank-well contamination are open (U27, U32) |
+| Colour engine: card detection, correction, RAW tier, **blank well**, colour bands across sample amount | **Simulated** | 0.0% false positives across 0.5–1.6× sample amount on published US colours (old point rule: up to 11.7%). NCB-kit bands tested only on the chart's own colours: a consistency check, not accuracy (E17). A blank that itself shows a reaction colour now gives inconclusive, never "no colour change" (U27, fixed). JPEG-only, glare and sodium-light weaknesses are open (U32) |
 | Android app (Kotlin), camera capture, hardware-backed keys, Field Test Memo, Form-1 item 5 and BSA s.63 outputs, Spring Boot server, real-phone and real-kit validation | **Not built yet** | Designed; planned for the finale |
 
 The full evidence trail covers 17 experiments with 95% intervals, the decisions they forced, an unresolved-problem register, an external review we verified claim by claim, and an independent adversarial audit whose confirmed findings are fixed or listed as U27–U34. It's in [`ftr-reference/docs/research/`](ftr-reference/docs/research/); start with [`validation-results.md`](ftr-reference/docs/research/validation-results.md).
@@ -85,7 +85,7 @@ Each has an ID in the [problem register](ftr-reference/docs/research/unresolved-
 - **No app yet:** camera capture, hardware-backed keys, liveness, night mode and the Field Test Memo / Form-1 / BSA s.63 outputs are designed, not built. Liveness and night mode exist only as separate simulations.
 - **Colour accuracy** is simulated with a camera-sensor model and chart colours from a scanned book. Real phones, printed cards and real NCB reactions are untested (U2, U24, U33).
 - **Tube tests** B and E cannot be read by the engine yet (U29).
-- **Blank well:** if sample gets into the blank well, a real positive can read "no colour change" (U27).
+- **Blank well:** a blank contaminated with sample now gives "inconclusive" (U27, fixed 30 Sep). A blank spoiled by something that does not look like a positive colour is not detected yet.
 - **Look-alikes:** some published amphetamine colours fall in the chart's mescaline band, and non-drug substances that react are not listed (U31).
 - **Light:** with JPEG only, 3 of 96 simulated NCB-kit photos were read wrongly; glare makes most readings inconclusive; sodium street light is always rejected (U25, U32).
 - **Verifier:** no offline checks yet for implausible times, binding validity or revocation; the attestation checker lacks validity-date and app-identity checks (U28, U30).
@@ -104,6 +104,7 @@ Each has an ID in the [problem register](ftr-reference/docs/research/unresolved-
 | `ftr-reference/docs/validation/` | Real-phone test protocol and printable reference card |
 | `docs/deck/` | SIH idea presentation (PDF) and its build script |
 | `docs/sources/SOURCES.md` | Primary sources with links |
+| `LICENSE`, `THIRD_PARTY_NOTICES.md` | Licence terms and third-party attributions |
 
 ## Safety and legal
 
@@ -111,4 +112,6 @@ Each has an ID in the [problem register](ftr-reference/docs/research/unresolved-
 - **Test keys only:** the signing keys in this repository are **TEST-ONLY**. Production keys belong to NCB and never leave its hardware.
 - **Presumptive only:** results are presumptive. They never replace the laboratory report.
 
-© 2026 the team. All rights reserved; licence to be decided by the team.
+## Licence
+
+All rights reserved, with permission for anyone to read, run and test the code for evaluation ([LICENSE](LICENSE)). It is not open source yet on purpose: under the SIH 2026 rules, the IP of a winning idea is shared with the problem-statement owner (NCB), so the final licence will be agreed with NCB. Third-party material: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

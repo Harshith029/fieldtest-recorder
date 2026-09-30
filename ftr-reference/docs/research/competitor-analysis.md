@@ -1,4 +1,4 @@
-# Competitor and AI-convergence analysis (revision 6)
+# Existing approaches and differentiation
 
 ## Existing products and approaches (state of the art, not blueprints)
 
@@ -10,35 +10,7 @@
 | Academic phone colorimetry (e.g., Choodum & Nic Daeid 2011) | RGB analysis of colour tests | Research, not a field workflow or evidence system; usually JPEG |
 | NIJ Std-0604.01 | Documented colour standard for kits (US) | A standard, not software; India lacks an equivalent (Bombay HC, 2021) |
 
-## The strongest public rival: Pranav-error/sih-2026-field-drug-testing (read 29 Sep 2026)
-Based on its README and file list; we did not run its code. About 50 commits by one owner.
-
-| Area | Rival | Us (rev 7) | Who is ahead |
-|---|---|---|---|
-| Working app | Flutter Android app, pipeline runs on the handset, offline | None yet (Python reference only) | **Rival** |
-| Tests / second implementation | 398 automated tests; an independent Dart verifier cross-checked on vectors | One Python reference; suites E5/E10/E14/E15/E17 + log | **Rival** |
-| Colour measurement | Root-polynomial correction, light-field fit, 28 camera sensitivities, conformal prediction sets | 3×3 correction, RAW tier, 1 DSLR sensor model, band model + blank well | **Rival** on validation breadth; us on RAW and amount handling |
-| Liveness | Two-view parallax with a fold-up card tab: prints and screens give ~0 px, real card 28 px (measured) | Colour track from before the drop: staged wells 0%, mid-swaps 0.5% (sim) | Different attacks; **their tab is cheap and physical** |
-| Timestamp + GPS in the signed record (required by the PS) | Not signed (argues a device clock proves nothing) | Signed: device + GNSS time, location, mock flag; server countersign; panchnama anchor bounds time | **Us** |
-| Completeness (deleted or re-run records) | Hash chain detects forks; tail deletion bounded only by "records not yet witnessed off-device" | Every phone's range + head in the witness-signed panchnama (multi-phone) | **Us** |
-| Who vouches for the device's officer | Attestation only | Supervisor-DSC binding under NCB's list + attestation | **Us** |
-| Searchable log (required by the PS) | No (CCTNS is the system of record) | On-device log + server search | **Us** |
-| NCB's actual kit | Generic kit | NDDK Tests A–E, flow charts, lower-layer reading, colour ranges, narrowing, quantity warning | **Us** |
-| NDPS procedure | BSA s.63 certificate (draft) | s.63 data, Form-1 item 5, Rule 10(2) grouping, panchnama anchor, Rule 14 lab loop (design) | **Us** on scope; rival has a built s.63 emitter |
-| Real photos / users | None | None | Neither |
-
-**Verdict:**
-- **Design:** ours fits the problem statement and Indian NDPS procedure more closely.
-- **Execution:** theirs is further along.
-- **At the finale:** the final round weighs the complete product from the officer's view, so today they would demo better.
-
-**What to learn (ideas, not code):**
-- A fold-up parallax tab on the card for photo/screen replay (it complements our colour-track liveness).
-- Calibrated abstention thresholds (conformal) once validation data exists.
-- Testing over many camera sensitivities.
-- A second, independent verifier (our Kotlin port).
-
-## What 100 AI-assisted teams will probably build
+## What a typical submission would build
 
 - A Flutter, React Native or web app.
 - An OpenCV colour match, or a CNN "drug classifier" trained on synthetic images, with a high accuracy claim.
