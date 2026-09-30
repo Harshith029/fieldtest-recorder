@@ -86,6 +86,21 @@ function Add-Arrow($slide, $x1, $y1, $x2, $y2, [string]$color = $BLUE) {
     return $ln
 }
 
+function Add-Line($slide, $x1, $y1, $x2, $y2, [string]$color = $BLUE) {
+    $ln = $slide.Shapes.AddLine($x1, $y1, $x2, $y2)
+    $ln.Line.ForeColor.RGB = (C $color); $ln.Line.Weight = 1.5
+    return $ln
+}
+
+function Add-Step($slide, $l, $t, $w, $h, [string]$num, [string]$title, [string]$body) {
+    $b = Add-Box $slide 5 $l $t $w $h $WHITE $BLUE
+    $b.Line.Weight = 1
+    $head = if ($num) { @((T "$num  " $true $BLUE), (T $title $true $NAVY)) } else { @((T $title $true $NAVY)) }
+    Fill-Text $b.TextFrame @((P $head 9.5 $false 1 1), (P (T $body $false $INK) 8 $false 1 0))
+    $tf = $b.TextFrame; $tf.MarginLeft = 5; $tf.MarginRight = 4; $tf.MarginTop = 2; $tf.MarginBottom = 2; $tf.VerticalAnchor = 3
+    return $b
+}
+
 function Set-Chrome($slide, [string]$title, [double]$titleSize = 32) {
     foreach ($sh in @($slide.Shapes)) {
         if ($sh.Name -like "Oval*") {
@@ -181,45 +196,54 @@ try {
     # ================================================================ 3. TECHNICAL APPROACH
     $s = $pres.Slides.Item(3)
     Set-Chrome $s "TECHNICAL APPROACH" 32
-    # phone box
-    $null = Add-Box $s 5 22 96 280 268 $CARD $LINE
-    $null = Add-Text $s 34 104 256 18 @((P (T "OFFICER'S PHONE APP (design, offline)" $true $NAVY) 11))
-    $chips = @(
-        @("Guided NDDK protocol", "signed file: steps, drops, flow charts (in prototype)"),
-        @("Capture", "CameraX / Camera2 RAW; card found by ArUco markers"),
-        @("Colour engine", "card correction, blank well, colour bands (in prototype)"),
-        @("Record core", "ECDSA P-256 + SHA-256 chain; key in StrongBox/TEE"),
-        @("Log + reports", "searchable log (in prototype); memo, Form-1 (planned)"))
-    for ($i = 0; $i -lt 5; $i++) {
-        $y = 128 + $i * 46
-        $null = Add-Box $s 5 34 $y 256 40 $WHITE $LINE
-        $null = Add-Text $s 42 ($y + 5) 242 32 @((P (T $chips[$i][0] $true $INK) 10.5 $false 1 0), (P (T $chips[$i][1] $false $MUTED) 9 $false 1 0))
+    # process flow: one package from seizure to court (left two thirds)
+    $null = Add-Text $s 22 94 440 16 @((P (T "PROCESS FLOW: ONE PACKAGE, FROM SEIZURE TO COURT" $true $NAVY) 11))
+    $null = Add-Box $s 5 22 112 578 162 $CARD
+    $null = Add-Text $s 30 116 300 12 @((P (T "OFFICER'S PHONE · WORKS OFFLINE" $true $BLUE) 7.5))
+    $null = Add-Box $s 5 22 282 284 82 $CARD
+    $null = Add-Text $s 30 286 270 12 @((P (T "ANYONE · OFFLINE VERIFIER" $true $BLUE) 7.5))
+    $null = Add-Box $s 5 316 282 284 82 $CARD
+    $null = Add-Text $s 324 286 270 12 @((P (T "NCB SERVER (NIC / MeitY CLOUD) · WHEN ONLINE" $true $BLUE) 7.5))
+    # row A: pick -> capture -> read -> result
+    $null = Add-Step $s 30 132 104 46 "1" "Pick the test" "the kit's printed flow chart chooses Test A–E"
+    $null = Add-Step $s 150 132 112 46 "2" "Capture" "one photo: colour card + sample well + blank well"
+    $null = Add-Step $s 278 132 126 46 "3" "Read the colour" "correct the light, compare with the blank, match the kit's colour bands"
+    $null = Add-Arrow $s 134 155 150 155; $null = Add-Arrow $s 262 155 278 155; $null = Add-Arrow $s 404 155 418 155
+    $dia = Add-Box $s 4 418 128 78 54 $WHITE $BLUE
+    $dia.Line.Weight = 1
+    Fill-Text $dia.TextFrame @((P (T "Result?" $true $NAVY) 9 $false 2 0)); $dia.TextFrame.VerticalAnchor = 3
+    $outs = @(
+        @("POSITIVE: drug list + NDPS warning", "FBE5D6", $ORANGE, 118, 26),
+        @("NO COLOUR CHANGE", "E2F0D9", $GREEN, 148, 16),
+        @("INCONCLUSIVE: retake", "EDEDED", $GREY, 168, 16))
+    foreach ($o in $outs) {
+        $b = Add-Box $s 5 510 $o[3] 86 $o[4] $o[1] $o[2]
+        Fill-Text $b.TextFrame @((P (T $o[0] $true $o[2]) 7 $false 1 0))
+        $tf = $b.TextFrame; $tf.MarginLeft = 4; $tf.MarginRight = 3; $tf.VerticalAnchor = 3
+        $null = Add-Arrow $s 496 155 510 ($o[3] + $o[4] / 2)
     }
-    # server box
-    $null = Add-Box $s 5 344 96 256 268 $CARD $LINE
-    $null = Add-Text $s 356 104 236 18 @((P (T "THIN SERVER (design): NIC / MeitY cloud" $true $NAVY) 11))
-    $srv = @(
-        @("Enrolment", "attestation + supervisor DSC (checker prototyped)"),
-        @("Sync", "idempotent, fork/replay checks (protocol prototyped)"),
-        @("Storage", "PostgreSQL + S3 write-once (prototype: SQLite)"),
-        @("Search + lab loop", "case search (prototyped); lab-result link (planned)"),
-        @("Never trusted", "records verify without the server"))
-    for ($i = 0; $i -lt 5; $i++) {
-        $y = 128 + $i * 46
-        $null = Add-Box $s 5 356 $y 232 40 $WHITE $LINE
-        $null = Add-Text $s 364 ($y + 5) 218 32 @((P (T $srv[$i][0] $true $INK) 10.5 $false 1 0), (P (T $srv[$i][1] $false $MUTED) 9 $false 1 0))
-    }
-    $null = Add-Arrow $s 304 230 342 230 $BLUE
-    $null = Add-Text $s 298 204 50 22 @((P (T "sync when online" $false $MUTED $true) 7.5 $false 2 0))
-    # trust strip
-    $null = Add-Box $s 5 22 374 578 56 $WHITE $LINE
-    $null = Add-Text $s 34 381 490 44 @(
-        (P @((T "Trust without trusting us: " $true $NAVY), (T "NCB signs the supervisor list; a supervisor's key (a Class 3 DSC in production) binds officer + phone + key; the phone signs and chains every test; every phone's chain head goes into the witness-signed panchnama. Our offline verifier checks all of it (prototype uses test keys).")) 9.5))
-    $null = Add-Pill $s 532 381 "code"
-    # tech chips row
-    $null = Add-Text $s 22 440 578 50 @(
-        (P @((T "Technologies to be used: " $true $NAVY), (T "Kotlin · CameraX/Camera2 · OpenCV · Android Keystore + attestation · SQLCipher · RFC 8785 JSON · ECDSA P-256 · Spring Boot · PostgreSQL · S3. Prototype today: Python, OpenCV, SQLite.")) 9.5 $false 1 3),
-        (P @((T "Deliberately not used: " $true $NAVY), (T "blockchain, cloud AI, a neural-network ""drug detector"" (a colour test cannot identify a drug; the court must be able to re-run the reading)")) 9.5))
+    # loop back to the next test
+    $null = Add-Line $s 457 182 457 196; $null = Add-Line $s 457 196 82 196; $null = Add-Arrow $s 82 196 82 179
+    $null = Add-Text $s 96 198 340 10 @((P (T "no colour change or inconclusive: next test, as the kit's flow chart says" $false $MUTED $true) 7.5))
+    # row B: sign -> anchor (right to left)
+    $null = Add-Arrow $s 553 184 553 214
+    $null = Add-Text $s 557 192 40 10 @((P (T "every result" $false $MUTED $true) 7))
+    $null = Add-Step $s 440 214 156 46 "4" "Sign and chain" "time, GNSS time, GPS, officer, image hash; signed, and linked to the last record"
+    $null = Add-Arrow $s 440 237 421 237
+    $null = Add-Step $s 236 214 184 46 "5" "Anchor" "a 14-character code goes into the panchnama that the witnesses sign"
+    $null = Add-Text $s 30 218 196 40 @((P (T "Every capture is recorded, retakes and negatives too, so a test cannot be quietly dropped or re-run." $false $MUTED $true) 8))
+    # row C: verify (anyone, offline) and sync (server, when online)
+    $null = Add-Arrow $s 280 260 280 300
+    $null = Add-Step $s 30 300 268 58 "" "Verify, any time" "a court expert, the defence or the lab re-checks signatures, the chain and the panchnama code: VERIFIED or tampering found"
+    $null = Add-Arrow $s 518 260 518 300
+    $null = Add-Step $s 324 300 268 58 "" "Sync and search" "each record checked on arrival (forks, replays, gaps); case search; our server is never trusted; lab-result link planned"
+    $null = Add-Text $s 22 367 578 11 @((P (T "Every step above runs today in our Python prototype (colour on simulated photos). The Android app and hardware-backed keys are next." $false $MUTED $true) 8))
+    # trust + technologies
+    $null = Add-Text $s 22 384 578 106 @(
+        (P @((T "Trust: " $true $NAVY), (T "NCB signs the supervisor list; a supervisor's key (a Class 3 DSC in production) binds officer + phone + key; the phone key is designed to live in StrongBox/TEE (prototype: test keys).")) 9 $false 1 4),
+        (P @((T "Technologies to be used: " $true $NAVY), (T "Kotlin · CameraX/Camera2 RAW · OpenCV · Android Keystore + attestation · SQLCipher · RFC 8785 JSON · ECDSA P-256 · Spring Boot · PostgreSQL · S3. Prototype today: Python, OpenCV, SQLite.")) 9 $false 1 4),
+        (P @((T "Deliberately not used: " $true $NAVY), (T "blockchain, cloud AI, a neural-network ""drug detector"" (a colour test cannot identify a drug; the court must be able to re-run the reading).")) 9))
+
     # working prototype: real engine output on simulated photos
     $null = Add-Text $s 620 98 240 16 @((P (T "WORKING PROTOTYPE OUTPUT" $true $NAVY) 11))
     $null = Add-Pill $s 888 100 "sim"
