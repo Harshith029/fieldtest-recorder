@@ -1,0 +1,15 @@
+Marquis                        24 reference colours | checker:  1 ERROR, 2 cross-reactants | region map built
+Mecke                          19 reference colours | checker:  0 ERROR, 1 cross-reactants | region map built
+Simon's                         4 reference colours | checker:  0 ERROR, 0 cross-reactants | region map built
+Cobalt thiocyanate             17 reference colours | checker:  0 ERROR, 6 cross-reactants | region map built
+Duquenois-Levine (modified)     4 reference colours | checker:  0 ERROR, 0 cross-reactants | rule only (no validation readings)
+== Duquenois-Levine (modified): 100 photos x 3 seeds; positive group = ['THC']
+   seed 101  JPEG+rule  correct  96.2%  wrong  0.5%  inconcl  3.2%  rejected photos 7
+   seed 101  RAW+rule   correct  96.3%  wrong  0.5%  inconcl  3.2%  rejected photos 6
+   seed 202  JPEG+rule  correct  88.9%  wrong  0.0%  inconcl 11.1%  rejected photos 5
+   seed 202  RAW+rule   correct  88.9%  wrong  0.0%  inconcl 11.1%  rejected photos 5
+   seed 303  JPEG+rule  correct  91.2%  wrong  0.5%  inconcl  8.2%  rejected photos 9
+   seed 303  RAW+rule   correct  91.8%  wrong  0.5%  inconcl  7.7%  rejected photos 9
+   POOLED (95% Clopper-Pearson):
+   JPEG+rule  correct 92.1% [89.6-94.2] (n=558) | wrong 0.4% [0.0-1.3] (n=558) | inconclusive 7.5% [5.5-10.0] (n=558) | true substance listed on positive calls 262/262
+   RAW+rule   correct 92.3% [89.8-94.4] (n=560) | wrong 0.4% [0.0-1.3] (n=560) | inconclusive 7.3% [5.3-9.8] (n=560) | true substance listed on positive calls 264/264

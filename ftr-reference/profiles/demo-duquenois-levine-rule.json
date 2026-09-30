@@ -1,0 +1,65 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-duquenois-levine-rule",
+  "version": 1,
+  "reagent": "Duquenois-Levine (modified)",
+  "reference": [
+   {
+    "substance": "Mace5",
+    "target": false,
+    "lab_x100": [
+     8048,
+     962,
+     -1121
+    ],
+    "munsell": "5P 8/4",
+    "colour_name": "Very light purple",
+    "phase": "chloroform"
+   },
+   {
+    "substance": "Nutmeg",
+    "target": false,
+    "lab_x100": [
+     7082,
+     1495,
+     -77
+    ],
+    "munsell": "5RP 7/4",
+    "colour_name": "Light gray purplish red",
+    "phase": "chloroform"
+   },
+   {
+    "substance": "Tea",
+    "target": false,
+    "lab_x100": [
+     8064,
+     -1943,
+     3944
+    ],
+    "munsell": "5GY 8/6",
+    "colour_name": "Light yellow green",
+    "phase": "not extracted"
+   },
+   {
+    "substance": "THC",
+    "target": true,
+    "lab_x100": [
+     4051,
+     4398,
+     -3049
+    ],
+    "munsell": "7.5P 4/12",
+    "colour_name": "Deep purple",
+    "phase": "chloroform"
+   }
+  ],
+  "decision": {
+   "type": "rule",
+   "r_x100": 600,
+   "m_x100": 200
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEQCIHiRemiZuVx4H1I5VK1ivMH7AQ502yMFJRZR8hgNfNpWAiAnld8/Lxwt8Q52teg4rNP5NmmEXWOF8r6nl1Bhxzi/wg=="
+}

@@ -1,0 +1,19 @@
+Marquis                        24 reference colours | checker:  1 ERROR, 2 cross-reactants | region map built
+Mecke                          19 reference colours | checker:  0 ERROR, 1 cross-reactants | region map built
+Simon's                         4 reference colours | checker:  0 ERROR, 0 cross-reactants | region map built
+Cobalt thiocyanate             17 reference colours | checker:  0 ERROR, 6 cross-reactants | region map built
+Duquenois-Levine (modified)     4 reference colours | checker:  0 ERROR, 0 cross-reactants | rule only (no validation readings)
+== Marquis: 100 photos x 3 seeds; positive group = ['Chlorpromazine HCl', 'Codeine', 'Diacetylmorphine HCl', 'Morphine monohydrate', 'Oxycodone HCl', 'Propoxyphene HCl']
+   seed 101  JPEG+rule  correct  85.2%  wrong  0.0%  inconcl 14.8%  rejected photos 2
+   seed 101  JPEG+map   correct  89.3%  wrong  0.0%  inconcl 10.7%  rejected photos 2
+   seed 101  RAW+rule   correct  89.8%  wrong  0.0%  inconcl 10.2%  rejected photos 2
+   seed 202  JPEG+rule  correct  85.3%  wrong  0.0%  inconcl 14.7%  rejected photos 5
+   seed 202  JPEG+map   correct  86.3%  wrong  0.5%  inconcl 13.2%  rejected photos 5
+   seed 202  RAW+rule   correct  89.5%  wrong  0.0%  inconcl 10.5%  rejected photos 5
+   seed 303  JPEG+rule  correct  86.8%  wrong  0.0%  inconcl 13.2%  rejected photos 5
+   seed 303  JPEG+map   correct  88.4%  wrong  0.0%  inconcl 11.6%  rejected photos 5
+   seed 303  RAW+rule   correct  88.9%  wrong  0.0%  inconcl 11.1%  rejected photos 5
+   POOLED (95% Clopper-Pearson):
+   JPEG+rule  correct 85.8% [82.6-88.5] (n=576) | wrong 0.0% [0.0-0.6] (n=576) | inconclusive 14.2% [11.5-17.4] (n=576) | true substance listed on positive calls 247/247
+   JPEG+map   correct 88.0% [85.1-90.6] (n=576) | wrong 0.2% [0.0-1.0] (n=576) | inconclusive 11.8% [9.3-14.7] (n=576) | true substance listed on positive calls 247/252
+   RAW+rule   correct 89.4% [86.6-91.8] (n=576) | wrong 0.0% [0.0-0.6] (n=576) | inconclusive 10.6% [8.2-13.4] (n=576) | true substance listed on positive calls 250/250

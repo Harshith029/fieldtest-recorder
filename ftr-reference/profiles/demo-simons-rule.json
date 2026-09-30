@@ -1,0 +1,65 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-simons-rule",
+  "version": 1,
+  "reagent": "Simon's",
+  "reference": [
+   {
+    "substance": "d-Methamphetamine HCl",
+    "target": true,
+    "lab_x100": [
+     2016,
+     -97,
+     -2647
+    ],
+    "munsell": "2.5PB 2/6",
+    "colour_name": "Dark blue",
+    "phase": ""
+   },
+   {
+    "substance": "Dimethoxy-meth HCl",
+    "target": false,
+    "lab_x100": [
+     3028,
+     -213,
+     -3479
+    ],
+    "munsell": "2.5PB 3/8",
+    "colour_name": "Deep blue",
+    "phase": ""
+   },
+   {
+    "substance": "MDMA HCl",
+    "target": true,
+    "lab_x100": [
+     2016,
+     -97,
+     -2647
+    ],
+    "munsell": "2.5PB 2/6",
+    "colour_name": "Dark blue",
+    "phase": ""
+   },
+   {
+    "substance": "Methylphenidate HCl",
+    "target": false,
+    "lab_x100": [
+     6099,
+     895,
+     -1297
+    ],
+    "munsell": "2.5P 6/4",
+    "colour_name": "Pale violet",
+    "phase": ""
+   }
+  ],
+  "decision": {
+   "type": "rule",
+   "r_x100": 600,
+   "m_x100": 200
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEUCIDQU+WAr6LBaQwxi2CMtwXHM67zzM0uXOpvBil+caOKuAiEA5LIYSFzbqlLPC2eITGYlGqGYF4tCSadbHUl6l4m69jA="
+}

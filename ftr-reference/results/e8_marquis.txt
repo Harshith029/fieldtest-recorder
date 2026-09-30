@@ -1,0 +1,11 @@
+== Marquis: 22 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Codeine                  7.5P 2/4     Very dark purple         nearest negative: Propoxyphene HCl       dE00   6.0  -> hard
+  Diacetylmorphine HCl     7.5RP 3/10   Deep purplish red        nearest negative: Chlorpromazine HCl     dE00   7.1  -> hard
+  Morphine monohydrate     10P 3/6      Very deep reddish purple nearest negative: Chlorpromazine HCl     dE00   4.8  -> UNRESOLVABLE
+  Oxycodone HCl            2.5P 6/4     Pale violet              nearest negative: Methadone HCl          dE00  26.2  -> resolvable
+== Marquis: R=6.0; known cross-reactants in the positive colour group: ['Chlorpromazine HCl', 'Propoxyphene HCl']
+  OLD substance-nearest (vs substance class)   correct  87.1%  inconclusive  11.9%  wrong   1.0%  (n=412)
+  NEW colour group (vs colour-group truth)     correct  83.7%  inconclusive  14.6%  wrong   1.7%  (n=412)
+  positive calls whose 'also consistent with' list contains the true substance: 202/202

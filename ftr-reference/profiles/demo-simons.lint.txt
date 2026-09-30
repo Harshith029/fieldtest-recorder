@@ -1,0 +1,6 @@
+Profile checker report: Simon's
+WARN  Dimethoxy-meth HCl is 8.4 dE00 from positive-group colour d-Methamphetamine HCl (8-10): validate before relying on it
+WARN  Dimethoxy-meth HCl is 8.4 dE00 from positive-group colour MDMA HCl (8-10): validate before relying on it
+WARN  d-Methamphetamine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Dimethoxy-meth HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  MDMA HCl colour is outside sRGB: requires RAW/linear capture (E13)

@@ -1,0 +1,30 @@
+== Cobalt thiocyanate: 17 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Cocaine HCl              5B 5/10      Strong greenish blue     nearest negative: Ephedrine HCl          dE00   0.0  -> UNRESOLVABLE
+
+Q2  Engine on 160 rendered photos (Daylight, Tube light, White LED torch, Incandescent bulb), 310 well readings:
+  correct                 117  ( 37.7%)
+  inconclusive            123  ( 39.7%)
+  WRONG false positive      0  (  0.0%)
+  WRONG false negative     70  ( 22.6%)
+  rejected photos: {'rejected:card_not_found': 5}
+
+  per substance (correct / inconclusive / wrong):
+   Cocaine HCl                n=145  correct   0  inconcl  75  wrong  70
+   Meperidine HCl             n= 11  correct   3  inconcl   8  wrong   0
+   Doxepin HCl                n= 11  correct   8  inconcl   3  wrong   0
+   Pseudoephedrine HCl        n= 12  correct   5  inconcl   7  wrong   0
+   Methadone HCl              n=  7  correct   6  inconcl   1  wrong   0
+   Quinine HCl                n= 10  correct   9  inconcl   1  wrong   0
+   Hydrocodone tartrate       n= 11  correct  11  inconcl   0  wrong   0
+   Chlorpromazine HCl         n= 17  correct  17  inconcl   0  wrong   0
+   Phencyclidine HCl          n=  5  correct   3  inconcl   2  wrong   0
+   Brompheniramine Maleate    n=  8  correct   8  inconcl   0  wrong   0
+   Diacetylmorphine HCl       n= 10  correct   8  inconcl   2  wrong   0
+   Propoxyphene HCl           n= 11  correct   5  inconcl   6  wrong   0
+   Ephedrine HCl              n= 14  correct   8  inconcl   6  wrong   0
+   Benzphetamine HCl          n=  9  correct   9  inconcl   0  wrong   0
+   Chlordiazepoxide HCl       n=  8  correct   7  inconcl   1  wrong   0
+   Methylphenidate HCl        n=  9  correct   7  inconcl   2  wrong   0
+   Procaine HCl               n= 12  correct   3  inconcl   9  wrong   0

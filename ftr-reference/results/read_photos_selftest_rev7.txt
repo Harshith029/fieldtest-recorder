@@ -1,0 +1,6 @@
+﻿9 photos, 18 well readings -> C:\Users\harsh\OneDrive\Desktop\SIH26231\ftr-reference\results\read_photos_selftest.csv
+rejected photos by reason: none
+reproducibility (same cup across phones/lights/variants), dE00 median / 95th:
+  C00    JPEG n=  6    2.8 /   6.4
+  C05    JPEG n=  6    2.9 /   5.7
+  C11    JPEG n=  6    1.8 /   3.8

@@ -1,0 +1,20 @@
+# Not ours to publish: working chat transcript, SIH portal files, third-party PDFs (see docs/sources/SOURCES.md)
+chat/
+docs/sih2026/
+docs/sources/*.pdf
+SIH2026_software_only.csv
+docs/pages/FieldTest-Recorder-Dossier.html
+
+# Secrets: the TEST-ONLY profile-signing key (build_profiles.py creates a fresh one when it is absent)
+ftr-reference/profiles/*_key.pem
+*.key
+
+# Generated / scratch
+__pycache__/
+*.pyc
+.pytest_cache/
+demo/output/
+docs/deck/unpacked/
+docs/deck/renders/
+docs/deck/template.pptx
+ftr-reference/results/read_photos_selftest*.csv

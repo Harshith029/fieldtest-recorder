@@ -1,0 +1,33 @@
+(a) THRESHOLD STUDY  colour-group rule; group radius R=6 fixed; sweep acceptance radius r and margin M
+    reagent    r   M  correct   wrong  inconcl
+    Marquis    5   3    86.0%    0.5%    13.4%
+    Marquis    6   2    89.1%    1.8%     9.0%
+    Marquis    8   0    93.0%    2.8%     4.1%
+    Marquis  best with wrong <= 0.5%: r=8 M=4 -> correct 92.5%, wrong 0.3%, inconclusive 7.2%
+    Mecke      5   3    69.3%    0.5%    30.2%
+    Mecke      6   2    81.2%    0.5%    18.3%
+    Mecke      8   0    94.0%    2.3%     3.8%
+    Mecke    best with wrong <= 0.5%: r=4 M=2 -> correct 67.6%, wrong 0.5%, inconclusive 31.9%
+    Simons     5   3    86.1%    0.0%    13.9%
+    Simons     6   2    92.0%    0.0%     8.0%
+    Simons     8   0    94.4%    0.3%     5.2%
+    Simons   best with wrong <= 0.5%: r=8 M=0 -> correct 94.4%, wrong 0.3%, inconclusive 5.2%
+
+(b) ML vs CARD  correct / wrong / abstain (%)
+    reagent  test                            RULE (card)     ML-raw (no card)          ML-raw+card               ML-lab
+    Marquis  random 50/50                 94.8/ 0.0/ 5.2       89.2/ 3.1/ 7.7       35.6/ 1.0/63.4       96.9/ 0.5/ 2.6       90.2/ 0.0/ 9.8       97.4/ 0.0/ 2.6
+    Marquis  unseen: Daylight             92.9/ 0.0/ 7.1       83.8/ 2.0/14.1       29.3/ 0.0/70.7       97.0/ 0.0/ 3.0       93.9/ 0.0/ 6.1       97.0/ 0.0/ 3.0
+    Marquis  unseen: Incandescent bulb       95.9/ 0.0/ 4.1       84.7/ 1.0/14.3       26.5/ 0.0/73.5       99.0/ 0.0/ 1.0       92.9/ 0.0/ 7.1       98.0/ 0.0/ 2.0
+    Marquis  unseen: Tube light           90.7/ 0.0/ 9.3       79.4/ 0.0/20.6       36.1/ 0.0/63.9       95.9/ 0.0/ 4.1       95.9/ 0.0/ 4.1       94.8/ 0.0/ 5.2
+    Marquis  unseen: White LED torch       90.3/ 1.1/ 8.6       86.0/ 3.2/10.8       48.4/ 1.1/50.5       98.9/ 0.0/ 1.1       88.2/ 1.1/10.8       95.7/ 1.1/ 3.2
+    Mecke    random 50/50                 73.4/ 0.5/26.1       95.5/ 0.5/ 4.0       63.3/ 0.0/36.7       97.0/ 0.5/ 2.5       97.5/ 2.5/ 0.0       97.0/ 3.0/ 0.0
+    Mecke    unseen: Daylight             65.3/ 0.0/34.7       94.9/ 1.0/ 4.1       70.4/ 0.0/29.6       92.9/ 0.0/ 7.1       99.0/ 0.0/ 1.0       98.0/ 1.0/ 1.0
+    Mecke    unseen: Incandescent bulb       66.7/ 0.0/33.3       96.1/ 0.0/ 3.9       59.8/ 0.0/40.2       98.0/ 0.0/ 2.0       99.0/ 0.0/ 1.0      100.0/ 0.0/ 0.0
+    Mecke    unseen: Tube light           74.0/ 0.0/26.0       93.0/ 3.0/ 4.0       72.0/ 0.0/28.0       93.0/ 0.0/ 7.0       95.0/ 5.0/ 0.0       93.0/ 7.0/ 0.0
+    Mecke    unseen: White LED torch       64.3/ 2.0/33.7       99.0/ 0.0/ 1.0       78.6/ 0.0/21.4       96.9/ 0.0/ 3.1       95.9/ 0.0/ 4.1       98.0/ 2.0/ 0.0
+    Simons   random 50/50                 93.8/ 0.0/ 6.2       84.0/ 2.1/13.9       63.2/ 1.4/35.4       95.1/ 0.0/ 4.9       95.8/ 4.2/ 0.0       98.6/ 1.4/ 0.0
+    Simons   unseen: Daylight             97.3/ 0.0/ 2.7       86.5/ 5.4/ 8.1       59.5/ 0.0/40.5       95.9/ 0.0/ 4.1       97.3/ 1.4/ 1.4      100.0/ 0.0/ 0.0
+    Simons   unseen: Incandescent bulb       90.1/ 0.0/ 9.9       81.7/ 5.6/12.7       43.7/ 0.0/56.3       93.0/ 0.0/ 7.0       94.4/ 4.2/ 1.4       98.6/ 1.4/ 0.0
+    Simons   unseen: Tube light           94.5/ 0.0/ 5.5       86.3/ 4.1/ 9.6       61.6/ 1.4/37.0       95.9/ 0.0/ 4.1       95.9/ 1.4/ 2.7      100.0/ 0.0/ 0.0
+    Simons   unseen: White LED torch       95.7/ 1.4/ 2.9       89.9/ 2.9/ 7.2       69.6/ 2.9/27.5       95.7/ 0.0/ 4.3       97.1/ 0.0/ 2.9      100.0/ 0.0/ 0.0
+    (last two columns: explainable learned boundaries on card-corrected Lab: kNN-15, QDA)

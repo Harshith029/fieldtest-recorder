@@ -1,0 +1,6 @@
+Profile checker report: Marquis
+ERROR Doxepin HCl is 6.4 dE00 from positive-group colour Propoxyphene HCl (< 8): not separable by camera; merge or drop
+WARN  Dristan is 10.0 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Dimethoxy-meth HCl colour is outside sRGB: requires RAW/linear capture (E13)
+INFO  cross-reactant in positive group: Chlorpromazine HCl
+INFO  cross-reactant in positive group: Propoxyphene HCl

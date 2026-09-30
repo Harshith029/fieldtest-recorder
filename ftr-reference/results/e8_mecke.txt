@@ -1,0 +1,11 @@
+== Mecke: 19 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Codeine                  2.5BG 2/4    Very dark bluish green   nearest negative: MDA HCl                dE00   0.0  -> UNRESOLVABLE
+  Diacetylmorphine HCl     2.5BG 3/8    Deep bluish green        nearest negative: MDA HCl                dE00  12.3  -> resolvable
+  Hydrocodone tartrate     5BG 3/6      Dark bluish green        nearest negative: MDA HCl                dE00   9.8  -> hard
+  Morphine monohydrate     2.5BG 2/4    Very dark bluish green   nearest negative: MDA HCl                dE00   0.0  -> UNRESOLVABLE
+== Mecke: R=6.0; known cross-reactants in the positive colour group: ['MDA HCl']
+  OLD substance-nearest (vs substance class)   correct  56.2%  inconclusive  43.3%  wrong   0.5%  (n=418)
+  NEW colour group (vs colour-group truth)     correct  77.3%  inconclusive  22.2%  wrong   0.5%  (n=418)
+  positive calls whose 'also consistent with' list contains the true substance: 121/142

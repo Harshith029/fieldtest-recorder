@@ -1,0 +1,8 @@
+== Cobalt thiocyanate: 17 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Cocaine HCl              5B 5/10      Strong greenish blue     nearest negative: Ephedrine HCl          dE00   0.0  -> UNRESOLVABLE
+== Cobalt thiocyanate: R=6.0; known cross-reactants in the positive colour group: ['Ephedrine HCl', 'Meperidine HCl', 'Phencyclidine HCl', 'Procaine HCl', 'Propoxyphene HCl', 'Pseudoephedrine HCl']
+  OLD substance-nearest (vs substance class)   correct  32.1%  inconclusive  40.4%  wrong  27.5%  (n=302)
+  NEW colour group (vs colour-group truth)     correct  18.5%  inconclusive  53.0%  wrong  28.5%  (n=302)
+  positive calls whose 'also consistent with' list contains the true substance: 4/4

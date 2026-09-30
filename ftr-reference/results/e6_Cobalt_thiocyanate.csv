@@ -1,0 +1,311 @@
+light,truth,truth_class,outcome,reason,nearest,de_nearest,margin
+Daylight (D65),Meperidine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.54,0.0
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.51,0.0
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.38,9.11
+Tube light (FL2),Pseudoephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,5.83,2.56
+White LED torch (LED-B3),Methadone HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Quinine HCl,negative,negative,matched_profile,Quinine HCl,5.68,11.5
+Incandescent bulb (A),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,4.55,7.59
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.82,6.22
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.96,8.05
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.46,2.41
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.16,4.4
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.97,4.58
+White LED torch (LED-B3),Phencyclidine HCl,negative,inconclusive,low_margin,Quinine HCl,6.99,1.32
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.33,2.49
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.17,5.44
+Incandescent bulb (A),Meperidine HCl,negative,inconclusive,glare,,,
+Daylight (D65),Pseudoephedrine HCl,negative,inconclusive,low_margin,Cocaine HCl,5.73,0.0
+Daylight (D65),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,2.38,7.88
+Tube light (FL2),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,7.38,7.96
+Tube light (FL2),Propoxyphene HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Propoxyphene HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Pseudoephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.58,4.67
+Incandescent bulb (A),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.24,8.77
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.51,5.36
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.53,3.44
+Daylight (D65),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,3.93,8.13
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.64,0.0
+Tube light (FL2),Phencyclidine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.64,0.0
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.8,1.59
+White LED torch (LED-B3),Ephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,6.08,2.89
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.29,1.23
+Incandescent bulb (A),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,0.83,16.04
+Daylight (D65),Diacetylmorphine HCl,negative,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.77,6.2
+Tube light (FL2),Meperidine HCl,negative,inconclusive,low_margin,Quinine HCl,5.67,2.35
+Tube light (FL2),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,1.04,17.16
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Benzphetamine HCl,11.48,16.71
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.99,6.51
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.31,4.56
+Incandescent bulb (A),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,4.56,5.88
+Daylight (D65),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,3.25,8.2
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.6,0.84
+Tube light (FL2),Chlordiazepoxide HCl,negative,negative,matched_profile,Hydrocodone tartrate,1.59,9.25
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.08,4.0
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.66,4.99
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.91,4.8
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.37,3.75
+Incandescent bulb (A),Quinine HCl,negative,negative,matched_profile,Quinine HCl,3.8,12.42
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.35,2.91
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.83,2.25
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,7.28,7.92
+Tube light (FL2),Chlordiazepoxide HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.25,0.2
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,7.22,0.0
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.44,0.0
+Incandescent bulb (A),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,1.24,15.72
+Daylight (D65),Methylphenidate HCl,negative,inconclusive,unknown_colour,Benzphetamine HCl,15.29,16.63
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.29,0.0
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.5,8.92
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.25,6.41
+White LED torch (LED-B3),Hydrocodone tartrate,negative,negative,matched_profile,Diacetylmorphine HCl,6.25,8.21
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,glare,,,
+Incandescent bulb (A),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.58,8.66
+Incandescent bulb (A),Procaine HCl,negative,negative,matched_profile,Quinine HCl,5.54,3.45
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.61,4.03
+Daylight (D65),Propoxyphene HCl,negative,inconclusive,low_margin,Quinine HCl,7.1,2.99
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.6,3.98
+Tube light (FL2),Meperidine HCl,negative,negative,matched_profile,Quinine HCl,5.85,3.27
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.08,0.7
+White LED torch (LED-B3),Pseudoephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,6.4,1.55
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.87,3.6
+Daylight (D65),Methylphenidate HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,5.26,9.09
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.55,5.49
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Quinine HCl,4.55,5.49
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.77,4.43
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.77,4.43
+Incandescent bulb (A),Hydrocodone tartrate,negative,negative,matched_profile,Diacetylmorphine HCl,4.3,7.95
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.63,6.3
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Diacetylmorphine HCl,6.61,6.0
+Daylight (D65),Meperidine HCl,negative,negative,matched_profile,Quinine HCl,6.74,5.3
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.64,6.28
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Quinine HCl,4.34,7.45
+White LED torch (LED-B3),Procaine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.64,0.0
+White LED torch (LED-B3),Doxepin HCl,negative,inconclusive,glare,,,
+Incandescent bulb (A),Chlordiazepoxide HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,2.33,9.49
+Incandescent bulb (A),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,2.87,8.75
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.0,4.55
+Daylight (D65),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,5.44,8.51
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.44,7.41
+Tube light (FL2),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,4.12,13.96
+White LED torch (LED-B3),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.66,8.43
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,glare,,,
+Incandescent bulb (A),Meperidine HCl,negative,negative,matched_profile,Quinine HCl,4.79,5.22
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.08,2.72
+Daylight (D65),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,8.0,6.47
+Daylight (D65),Doxepin HCl,negative,inconclusive,glare,,,
+Tube light (FL2),Cocaine HCl,positive,inconclusive,glare,,,
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Hydrocodone tartrate,2.36,8.48
+White LED torch (LED-B3),Procaine HCl,negative,inconclusive,low_margin,Quinine HCl,6.66,2.21
+White LED torch (LED-B3),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,2.34,15.99
+Incandescent bulb (A),Procaine HCl,negative,inconclusive,low_margin,Quinine HCl,6.63,1.36
+Incandescent bulb (A),Quinine HCl,negative,negative,matched_profile,Quinine HCl,3.06,11.98
+Daylight (D65),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.64,4.79
+Daylight (D65),Quinine HCl,negative,negative,matched_profile,Quinine HCl,6.94,11.73
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.18,0.0
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.18,0.0
+White LED torch (LED-B3),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,6.74,8.13
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.82,4.27
+Incandescent bulb (A),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,1.98,15.64
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Benzphetamine HCl,4.87,14.13
+Daylight (D65),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.76,8.12
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.44,5.12
+Tube light (FL2),Cocaine HCl,positive,inconclusive,unknown_colour,Benzphetamine HCl,21.83,16.12
+Tube light (FL2),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,0.97,8.33
+White LED torch (LED-B3),Chlordiazepoxide HCl,negative,negative,matched_profile,Hydrocodone tartrate,2.78,9.22
+White LED torch (LED-B3),Propoxyphene HCl,negative,inconclusive,low_margin,Quinine HCl,6.29,2.7
+Incandescent bulb (A),Methylphenidate HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,3.35,10.39
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.11,1.59
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.88,3.64
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,5.62,8.41
+White LED torch (LED-B3),Procaine HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,5.71,8.56
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,5.96,2.69
+Incandescent bulb (A),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,2.81,8.37
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.36,0.11
+Daylight (D65),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,1.71,9.11
+Tube light (FL2),Phencyclidine HCl,negative,negative,matched_profile,Quinine HCl,5.13,7.89
+Tube light (FL2),Pseudoephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.36,7.77
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,7.25,0.0
+White LED torch (LED-B3),Procaine HCl,negative,inconclusive,low_margin,Cocaine HCl,7.27,0.0
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.78,3.16
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.02,2.7
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.96,5.21
+Daylight (D65),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,5.92,8.34
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.46,3.52
+Tube light (FL2),Quinine HCl,negative,negative,matched_profile,Quinine HCl,5.74,11.49
+White LED torch (LED-B3),Phencyclidine HCl,negative,negative,matched_profile,Quinine HCl,5.67,6.46
+White LED torch (LED-B3),Phencyclidine HCl,negative,negative,matched_profile,Quinine HCl,5.69,6.22
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,glare,,,
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.36,0.0
+Daylight (D65),Ephedrine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.71,0.0
+Daylight (D65),Meperidine HCl,negative,inconclusive,glare,,,
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.67,5.29
+Tube light (FL2),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,4.77,8.66
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.11,1.95
+White LED torch (LED-B3),Pseudoephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,6.29,1.79
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.01,0.18
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.51,0.92
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Quinine HCl,6.84,4.5
+Daylight (D65),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,6.71,4.86
+Tube light (FL2),Methylphenidate HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,3.32,9.8
+Tube light (FL2),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,7.27,7.99
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.64,9.1
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.47,8.93
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.24,1.88
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.41,1.74
+Daylight (D65),Doxepin HCl,negative,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.2,5.41
+Tube light (FL2),Pseudoephedrine HCl,negative,negative,matched_profile,Quinine HCl,4.96,4.84
+Tube light (FL2),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,3.03,8.57
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,7.22,8.37
+White LED torch (LED-B3),Propoxyphene HCl,negative,negative,matched_profile,Quinine HCl,5.38,7.19
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.19,1.96
+Incandescent bulb (A),Ephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,7.04,0.54
+Daylight (D65),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,7.7,6.67
+Tube light (FL2),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.3,8.36
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.5,8.97
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.24,2.47
+White LED torch (LED-B3),Procaine HCl,negative,negative,matched_profile,Quinine HCl,5.48,3.86
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.47,6.95
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.82,6.42
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.05,0.42
+Daylight (D65),Pseudoephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,6.92,0.5
+Tube light (FL2),Cocaine HCl,positive,inconclusive,glare,,,
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.47,0.69
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.02,9.16
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.09,3.03
+Incandescent bulb (A),Propoxyphene HCl,negative,negative,matched_profile,Quinine HCl,5.46,5.32
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.26,5.5
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,2.97,8.43
+Daylight (D65),Pseudoephedrine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.44,0.0
+Tube light (FL2),Pseudoephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.49,3.14
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.33,3.27
+White LED torch (LED-B3),Ephedrine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.67,0.0
+White LED torch (LED-B3),Meperidine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.7,0.0
+Incandescent bulb (A),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.62,8.97
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,6.92,7.79
+Daylight (D65),Brompheniramine Maleate,negative,negative,matched_profile,Benzphetamine HCl,5.15,16.59
+Tube light (FL2),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,2.58,8.83
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,5.46,2.92
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.77,5.0
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.77,5.0
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.21,2.57
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.43,3.73
+Daylight (D65),Quinine HCl,negative,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.34,5.16
+Tube light (FL2),Quinine HCl,negative,negative,matched_profile,Quinine HCl,3.85,12.13
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.14,1.15
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,5.76,0.0
+White LED torch (LED-B3),Chlordiazepoxide HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,1.43,9.51
+Daylight (D65),Diacetylmorphine HCl,negative,inconclusive,glare,,,
+Daylight (D65),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,4.46,8.6
+Tube light (FL2),Methylphenidate HCl,negative,negative,matched_profile,Methylphenidate HCl,1.62,11.35
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.93,0.59
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,glare,,,
+White LED torch (LED-B3),Meperidine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.93,0.0
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.8,0.42
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.68,0.5
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.26,4.48
+Daylight (D65),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,8.23,7.96
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.37,3.04
+Tube light (FL2),Ephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,5.55,2.85
+White LED torch (LED-B3),Methylphenidate HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,4.46,8.71
+White LED torch (LED-B3),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.47,4.92
+Incandescent bulb (A),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,1.7,16.05
+Incandescent bulb (A),Pseudoephedrine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.54,0.0
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.83,6.17
+Daylight (D65),Ephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.92,6.06
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.36,3.44
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,2.98,9.14
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.63,7.1
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,8.17,8.07
+Incandescent bulb (A),Meperidine HCl,negative,inconclusive,low_margin,Quinine HCl,6.47,0.86
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.47,0.86
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.4,5.15
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.91,4.13
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.85,5.79
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,5.59,8.77
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,7.25,0.0
+White LED torch (LED-B3),Methylphenidate HCl,negative,negative,matched_profile,Methylphenidate HCl,2.34,11.47
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.67,1.34
+Incandescent bulb (A),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.53,8.37
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,7.09,6.98
+Daylight (D65),Quinine HCl,negative,negative,matched_profile,Quinine HCl,10.44,9.73
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.02,6.28
+Tube light (FL2),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,2.59,16.49
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.77,1.1
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.63,1.19
+Incandescent bulb (A),Ephedrine HCl,negative,inconclusive,low_margin,Quinine HCl,6.53,1.02
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.53,1.02
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.49,0.52
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.53,8.78
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.63,9.1
+Tube light (FL2),Methadone HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.63,9.1
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.93,4.86
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.74,5.06
+Incandescent bulb (A),Quinine HCl,negative,negative,matched_profile,Quinine HCl,5.32,11.74
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,7.27,8.07
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,5.42,8.93
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.01,6.53
+Tube light (FL2),Methylphenidate HCl,negative,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.95,0.0
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Diacetylmorphine HCl,3.15,5.12
+Tube light (FL2),Meperidine HCl,negative,inconclusive,low_margin,Cocaine HCl,6.99,0.0
+White LED torch (LED-B3),Procaine HCl,negative,negative,matched_profile,Quinine HCl,5.93,6.12
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.16,5.92
+Incandescent bulb (A),Quinine HCl,negative,negative,matched_profile,Quinine HCl,2.41,11.83
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.13,0.43
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.42,0.59
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.42,0.59
+Tube light (FL2),Chlordiazepoxide HCl,negative,negative,matched_profile,Hydrocodone tartrate,2.82,9.15
+Tube light (FL2),Chlordiazepoxide HCl,negative,negative,matched_profile,Hydrocodone tartrate,2.67,9.23
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.14,2.75
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.76,3.36
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.36,2.28
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,5.96,2.86
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.13,4.58
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.13,4.58
+Tube light (FL2),Methylphenidate HCl,negative,negative,matched_profile,Chlordiazepoxide HCl,2.31,9.58
+Tube light (FL2),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,2.68,7.58
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.94,0.0
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.89,0.0
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.88,0.93
+Incandescent bulb (A),Ephedrine HCl,negative,negative,matched_profile,Benzphetamine HCl,9.01,16.6
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.82,1.37
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.65,7.74
+Tube light (FL2),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,5.95,1.97
+Tube light (FL2),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,2.14,9.53
+White LED torch (LED-B3),Brompheniramine Maleate,negative,negative,matched_profile,Hydrocodone tartrate,2.64,8.46
+White LED torch (LED-B3),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,2.49,9.15
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.84,3.25
+Incandescent bulb (A),Pseudoephedrine HCl,negative,negative,matched_profile,Quinine HCl,5.84,3.25
+Daylight (D65),Procaine HCl,negative,inconclusive,low_margin,Cocaine HCl,7.1,0.0
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Cocaine HCl,6.96,0.0
+Tube light (FL2),Brompheniramine Maleate,negative,negative,matched_profile,Diacetylmorphine HCl,2.3,9.31
+Tube light (FL2),Propoxyphene HCl,negative,inconclusive,low_margin,Quinine HCl,6.2,1.45
+White LED torch (LED-B3),Procaine HCl,negative,inconclusive,low_margin,Quinine HCl,6.15,2.22
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Diacetylmorphine HCl,3.16,8.25
+Incandescent bulb (A),Diacetylmorphine HCl,negative,negative,matched_profile,Diacetylmorphine HCl,6.31,7.48
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,7.04,3.42
+Daylight (D65),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.81,3.59
+Tube light (FL2),Propoxyphene HCl,negative,inconclusive,low_margin,Quinine HCl,5.78,2.02
+Tube light (FL2),Procaine HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Cocaine HCl,positive,inconclusive,glare,,,
+White LED torch (LED-B3),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,6.11,6.81
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.49,3.17
+Incandescent bulb (A),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,5.23,3.67
+Daylight (D65),Cocaine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,7.35,0.59
+Tube light (FL2),Benzphetamine HCl,negative,negative,matched_profile,Benzphetamine HCl,0.94,16.19
+Tube light (FL2),Cocaine HCl,positive,negative,matched_profile,Quinine HCl,4.82,4.92
+White LED torch (LED-B3),Chlordiazepoxide HCl,negative,negative,matched_profile,Hydrocodone tartrate,4.53,8.91
+White LED torch (LED-B3),Hydrocodone tartrate,negative,negative,matched_profile,Hydrocodone tartrate,5.41,7.57
+Incandescent bulb (A),Procaine HCl,negative,inconclusive,low_margin,Quinine HCl,6.37,1.48
+Incandescent bulb (A),Cocaine HCl,positive,inconclusive,low_margin,Quinine HCl,6.37,1.48

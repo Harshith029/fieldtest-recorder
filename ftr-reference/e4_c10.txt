@@ -1,0 +1,12 @@
+MODE=c10: profile violet=positive, look-alike (10 dE00)=negative, no change=negative
+300 rendered photos, 377s (1255 ms per photo incl. rendering)
+
+light                        card found                  rejected (reason) wells read  correct  inconcl.  WRONG
+Daylight (D65)                    95.0%                                  -        114    91.2%      8.8%   0.0%
+Tube light (FL2)                  98.3%                                  -        118    89.8%     10.2%   0.0%
+White LED torch (LED-B3)          98.3%                                  -        118    90.7%      9.3%   0.0%
+Incandescent bulb (A)             93.3%                                  -        112    92.9%      7.1%   0.0%
+Sodium street lamp (HP1)          95.0%                       bad_light 57          0        -         -      -
+
+all lights, detail: {'correct': 421, 'inconclusive:glare': 18, 'inconclusive:low_margin': 1, 'inconclusive:unknown_colour': 22, 'rejected:bad_light': 57, 'rejected:card_not_found': 12, 'wells': 462}
+baseline without card correction (accepted photos only): correct 85.7%, wrong 3.0%, inconclusive 11.3%

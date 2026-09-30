@@ -1,0 +1,22 @@
+sys:1: CryptographyDeprecationWarning: The parsed certificate contains a NULL parameter value in its signature algorithm parameters. This is invalid and will be rejected in a future version of cryptography. If this certificate was created via Java, please upgrade to JDK21+ or the latest JDK11/17 once a fix is issued. If this certificate was created in some other fashion please report the issue to the cryptography issue tracker. See https://github.com/pyca/cryptography/issues/8996 and https://github.com/pyca/cryptography/issues/9253 for more details.
+C:\Users\harsh\OneDrive\Desktop\SIH26231\ftr-reference\attestation.py:121: CryptographyDeprecationWarning: The parsed certificate contains a NULL parameter value in its signature algorithm parameters. This is invalid and will be rejected in a future version of cryptography. If this certificate was created via Java, please upgrade to JDK21+ or the latest JDK11/17 once a fix is issued. If this certificate was created in some other fashion please report the issue to the cryptography issue tracker. See https://github.com/pyca/cryptography/issues/8996 and https://github.com/pyca/cryptography/issues/9253 for more details.
+  chain = [x509.load_pem_x509_certificate(p) for p in chain_pems]
+PASS  EC_TEE: genuine chain (strict policy: locked + verified boot)        -> verified boot state Unverified; bootloader unlocked
+PASS  EC_TEE: wrong challenge (replayed attestation)                       -> verified boot state Unverified; challenge mismatch (replayed or foreign attestation)
+PASS  EC_TEE: tampered intermediate certificate                            -> signature break at '2.5.4.12=TEE,2.5.4.5=2dc58b2d1a241326'; verified boot state Unverified
+PASS  EC_TEE: chain out of order                                           -> signature break at '2.5.4.12=TEE,2.5.4.5=2dc58b2d1a241326'; signature break at 'CN=Android Keys
+PASS  EC_TEE: intermediate on revocation list                              -> certificate 13206311789638820911 revoked (KEY_COMPROMISE); verified boot state Unverified
+PASS  EC_TEE: attested key differs from enrolled key                       -> verified boot state Unverified; attested key is not the key being enrolled
+PASS  EC_StrongBox: genuine chain (strict policy: locked + verified boot)  -> root is not a Google hardware attestation root; verified boot state Unverified; bootloader unlo
+PASS  EC_StrongBox: wrong challenge (replayed attestation)                 -> root is not a Google hardware attestation root; verified boot state Unverified; challenge misma
+PASS  EC_StrongBox: tampered intermediate certificate                      -> signature break at '2.5.4.12=StrongBox,2.5.4.5=ccce263fd08da'; root is not a Google hardware at
+PASS  EC_StrongBox: chain out of order                                     -> signature break at '2.5.4.12=StrongBox,2.5.4.5=ccce263fd08da'; signature break at 'CN=Android K
+PASS  EC_StrongBox: intermediate on revocation list                        -> root is not a Google hardware attestation root; certificate 14297399094464266078 revoked (KEY_C
+PASS  EC_StrongBox: attested key differs from enrolled key                 -> root is not a Google hardware attestation root; verified boot state Unverified; attested key is
+PASS  forged chain claiming StrongBox (attacker's own root)                -> root is not a Google hardware attestation root; verified boot state Unverified
+
+EC_TEE decoded: attestation v3, key in TrustedEnvironment, verified boot Unverified, bootloader locked False, challenge b'abc'
+
+EC_StrongBox decoded: attestation v3, key in StrongBox, verified boot Unverified, bootloader locked False, challenge b'abc'
+
+13/13 checks behave as expected; revocation list entries loaded: 1757

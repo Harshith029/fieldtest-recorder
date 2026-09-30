@@ -1,0 +1,221 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-cobalt-thiocyanate-rule",
+  "version": 1,
+  "reagent": "Cobalt thiocyanate",
+  "reference": [
+   {
+    "substance": "Benzphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     7087,
+     -2521,
+     -2427
+    ],
+    "munsell": "5B 7/8",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Brompheniramine Maleate",
+    "target": false,
+    "lab_x100": [
+     6104,
+     -2981,
+     -3208
+    ],
+    "munsell": "5B 6/10",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Chlordiazepoxide HCl",
+    "target": false,
+    "lab_x100": [
+     6107,
+     -3085,
+     -2102
+    ],
+    "munsell": "2.5B 6/8",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Chlorpromazine HCl",
+    "target": false,
+    "lab_x100": [
+     6104,
+     -2981,
+     -3208
+    ],
+    "munsell": "5B 6/10",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Cocaine HCl",
+    "target": true,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Diacetylmorphine HCl",
+    "target": false,
+    "lab_x100": [
+     6101,
+     -2208,
+     -3530
+    ],
+    "munsell": "7.5B 6/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Doxepin HCl",
+    "target": false,
+    "lab_x100": [
+     6104,
+     -2981,
+     -3208
+    ],
+    "munsell": "5B 6/10",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Ephedrine HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Hydrocodone tartrate",
+    "target": false,
+    "lab_x100": [
+     6104,
+     -2460,
+     -2547
+    ],
+    "munsell": "5B 6/8",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Meperidine HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Methadone HCl",
+    "target": false,
+    "lab_x100": [
+     6104,
+     -2981,
+     -3208
+    ],
+    "munsell": "5B 6/10",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Methylphenidate HCl",
+    "target": false,
+    "lab_x100": [
+     6109,
+     -3471,
+     -1619
+    ],
+    "munsell": "10BG 6/8",
+    "colour_name": "Brilliant greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Phencyclidine HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Procaine HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Propoxyphene HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Pseudoephedrine HCl",
+    "target": false,
+    "lab_x100": [
+     5098,
+     -2875,
+     -3320
+    ],
+    "munsell": "5B 5/10",
+    "colour_name": "Strong greenish blue",
+    "phase": ""
+   },
+   {
+    "substance": "Quinine HCl",
+    "target": false,
+    "lab_x100": [
+     5087,
+     -550,
+     -4780
+    ],
+    "munsell": "2.5PB 5/12",
+    "colour_name": "Strong blue",
+    "phase": ""
+   }
+  ],
+  "decision": {
+   "type": "rule",
+   "r_x100": 600,
+   "m_x100": 200
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEYCIQDevvgCetNFxLLDJ3J46N7uYWU5jYUJ9NC/yX9lJNgmyAIhAOWiCmoPZg29u855mtClsnf9jgciouGoGEyN+5MkQKlO"
+}

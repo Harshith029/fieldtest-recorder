@@ -1,0 +1,7 @@
+90 handheld trials under a sodium street lamp (flash:lamp ratios 0.5, 1, 2)
+
+variant                                    colour error dE00 (med / 95th)  correct  wrong  inconcl  rejected
+street lamp only (normal capture)                                       -     0.0%   0.0%     0.0%    100.0%
+one flash frame (auto processing)                             2.8 /   5.2    87.2%   0.0%     0.6%     12.2%
+flash/no-flash, LOCKED + LINEAR capture                       1.5 /   6.7   100.0%   0.0%     0.0%      0.0%
+flash/no-flash, AUTO processing                                         -     0.0%   0.0%     0.0%    100.0%

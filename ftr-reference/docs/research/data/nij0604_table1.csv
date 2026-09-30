@@ -1,0 +1,151 @@
+reagent_no,reagent,analyte,form,phase,iscc_nist_no,colour_name,munsell
+1,Cobalt thiocyanate,Benzphetamine HCl,CHCl3,,168,Brilliant greenish blue,5B 7/8
+1,Cobalt thiocyanate,Brompheniramine Maleate,CHCl3,,168,Brilliant greenish blue,5B 6/10
+1,Cobalt thiocyanate,Chlordiazepoxide HCl,CHCl3,,168,Brilliant greenish blue,2.5B 6/8
+1,Cobalt thiocyanate,Chlorpromazine HCl,CHCl3,,168,Brilliant greenish blue,5B 6/10
+1,Cobalt thiocyanate,Cocaine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Diacetylmorphine HCl,CHCl3,,169,Strong greenish blue,7.5B 6/10
+1,Cobalt thiocyanate,Doxepin HCl,CHCl3,,168,Brilliant greenish blue,5B 6/10
+1,Cobalt thiocyanate,Ephedrine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Hydrocodone tartrate,CHCl3,,168,Brilliant greenish blue,5B 6/8
+1,Cobalt thiocyanate,Meperidine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Methadone HCl,CHCl3,,168,Brilliant greenish blue,5B 6/10
+1,Cobalt thiocyanate,Methylphenidate HCl,CHCl3,,168,Brilliant greenish blue,10BG 6/8
+1,Cobalt thiocyanate,Phencyclidine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Procaine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Propoxyphene HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Pseudoephedrine HCl,CHCl3,,169,Strong greenish blue,5B 5/10
+1,Cobalt thiocyanate,Quinine HCl,CHCl3,,178,Strong blue,2.5PB 5/12
+2,Dille-Koppanyi (modified),Amobarbital,CHCl3,,222,Light purple,5P 7/8
+2,Dille-Koppanyi (modified),Pentobarbital,CHCl3,,222,Light purple,5P 7/8
+2,Dille-Koppanyi (modified),Phenobarbital,CHCl3,,222,Light purple,5P 7/8
+2,Dille-Koppanyi (modified),Secobarbital,CHCl3,,222,Light purple,5P 7/8
+3,Duquenois-Levine (modified),Mace5,crystals,aqueous,237,Strong reddish purple,2.5RP 5/12
+3,Duquenois-Levine (modified),Mace5,crystals,aqueous after chloroform extraction,237,Strong reddish purple,2.5RP 5/12
+3,Duquenois-Levine (modified),Mace5,crystals,chloroform,221,Very light purple,5P 8/4
+3,Duquenois-Levine (modified),Nutmeg,extract,aqueous,244,Pale reddish purple,10P 6/4
+3,Duquenois-Levine (modified),Nutmeg,extract,aqueous after chloroform extraction,244,Pale reddish purple,10P 6/4
+3,Duquenois-Levine (modified),Nutmeg,extract,chloroform,261,Light gray purplish red,5RP 7/4
+3,Duquenois-Levine (modified),Tea,extract,not extracted,119,Light yellow green,5GY 8/6
+3,Duquenois-Levine (modified),THC,EtOH,aqueous,204,Gray purplish blue,7.5PB 4/4
+3,Duquenois-Levine (modified),THC,EtOH,aqueous after chloroform extraction,199,Light purplish blue,7.5PB 7/8
+3,Duquenois-Levine (modified),THC,EtOH,chloroform,219,Deep purple,7.5P 4/12
+4,Mandelin,Acetaminophen,CHCl3,,107,Moderate olive,10Y 5/8
+4,Mandelin,Aspirin,powder,,127,Grayish olive green,2.5GY 4/2
+4,Mandelin,Benzphetamine HCl,CHCl3,,116,Brilliant yellow green,2.5GY 8/10
+4,Mandelin,Brompheniramine Maleate,CHCl3,,50,Strong orange,7.5YR 7/14
+4,Mandelin,Chlorpromazine HCl,CHCl3,,108,Dark olive,10Y 3/4
+4,Mandelin,Cocaine HCl,CHCl3,,69,Deep orange yellow,10YR 7/14
+4,Mandelin,Codeine,CHCl3,,108,Dark olive,10Y 3/4
+4,Mandelin,Contac,powder,,84,Strong yellow,2.5Y 6/10
+4,Mandelin,d-Amphetamine HCl,CHCl3,,164,Moderate bluish green,5BG 5/6
+4,Mandelin,d-Methamphetamine HCl,CHCl3,,137,Dark yellowish green,10GY 4/6
+4,Mandelin,Diacetylmorphine HCl,CHCl3,,43,Moderate reddish brown,10R 3/6
+4,Mandelin,Dimethoxy-meth HCl,CHCl3,,96,Dark olive brown,5Y 2/2
+4,Mandelin,Doxepin HCl,CHCl3,,44,Dark reddish brown,10R 2/4
+4,Mandelin,Dristan,powder,,110,Grayish olive,7.5Y 4/4
+4,Mandelin,Exedrine,powder,,108,Dark olive,7.5Y 3/4
+4,Mandelin,Mace5,crystals,,125,Moderate olive green,5GY 4/8
+4,Mandelin,MDA HCl,CHCl3,,193,Bluish black,10B 2/2
+4,Mandelin,Mescaline HCl,CHCl3,,78,Dark yellowish brown,10YR 3/4
+4,Mandelin,Methadone HCl,CHCl3,,187,Dark grayish blue,5B 3/2
+4,Mandelin,Methaqualone,CHCl3,,66,Very orange yellow,10YR 8/14
+4,Mandelin,Methylphenidate HCl,CHCl3,,67,Brilliant orange yellow,2.5Y 8/10
+4,Mandelin,Opium,CHCl3,,59,Dark brown,7.5YR 2/4
+4,Mandelin,Oxycodone HCl,CHCl3,,103,Dark greenish yellow,10Y 6/6
+4,Mandelin,Procaine HCl,CHCl3,,51,Deep orange,5YR 5/12
+4,Mandelin,Propoxyphene HCl,CHCl3,,44,Dark reddish brown,10R 2/4
+4,Mandelin,Quinine HCl,CHCl3,,100,Deep greenish yellow,10Y 9/6
+4,Mandelin,Salt,crystals,,50,Strong orange,5YR 7/12
+5,Marquis,Aspirin,powder,,13,Deep red,5R 3/10
+5,Marquis,Benzphetamine HCl,CHCl3,,41,Deep reddish brown,7.5R 2/6
+5,Marquis,Chlorpromazine HCl,CHCl3,,256,Deep purplish red,2.5RP 3/8
+5,Marquis,Codeine,CHCl3,,225,Very dark purple,7.5P 2/4
+5,Marquis,d-Amphetamine HCl,CHCl3,,35,Strong reddish orange,10R 6/12
+5,Marquis,d-Amphetamine HCl,CHCl3,,44,Dark reddish brown,7.5R 2/4
+5,Marquis,d-Methamphetamine HCl,CHCl3,,36,Deep reddish orange,10R 4/12
+5,Marquis,d-Methamphetamine HCl,CHCl3,,44,Dark reddish brown,7.5R 2/4
+5,Marquis,Diacetylmorphine HCl,CHCl3,,256,Deep purplish red,7.5RP 3/10
+5,Marquis,Dimethoxy-meth HCl,CHCl3,,107,Moderate olive,7.5Y 5/8
+5,Marquis,Doxepin HCl,CHCl3,,21,Blackish red,7.5R 2/2
+5,Marquis,Dristan,powder,,20,Dark grayish red,5R 3/2
+5,Marquis,Exedrine,powder,,16,Dark red,5R 3/8
+5,Marquis,LSD,CHCl3,,114,Olive black,10Y 2/2
+5,Marquis,Mace5,crystals,,87,Moderate yellow,7Y 7/8
+5,Marquis,MDA HCl,CHCl3,,267,Black,Black
+5,Marquis,Meperidine HCl,CHCl3,,56,Deep brown,5YR 3/6
+5,Marquis,Mescaline HCl,CHCl3,,50,Strong orange,5YR 6/12
+5,Marquis,Methadone HCl,CHCl3,,28,Light yellowish pink,2.5YR 8/4
+5,Marquis,Methylphenidate HCl,CHCl3,,71,Moderate orange yellow,10YR 8/8
+5,Marquis,Morphine monohydrate,CHCl3,,239,Very deep reddish purple,10P 3/6
+5,Marquis,Oxycodone HCl,CHCl3,,214,Pale violet,2.5P 6/4
+5,Marquis,Propoxyphene HCl,CHCl3,,230,Blackish purple,2.5RP 2/2
+5,Marquis,Sugar,crystals,,59,Dark brown,5YR 2/4
+6,Nitric acid,Acetaminophen,CHCl3,,67,Brilliant orange yellow,2.5Y 8/12
+6,Nitric acid,Codeine,CHCl3,,101,Light greenish yellow,7.5Y 9/6
+6,Nitric acid,Diacetylmorphine HCl,CHCl3,,89,Pale yellow,5Y 9/6
+6,Nitric acid,Dimethoxy-meth HCl,CHCl3,,82,Very yellow,2.5Y 8/14
+6,Nitric acid,Doxepin HCl,CHCl3,,83,Brilliant yellow,5Y 8.5/8
+6,Nitric acid,Dristan,powder,,51,Deep orange,5YR 6/12
+6,Nitric acid,Exedrine,powder,,67,Brilliant orange yellow,2.5Y 8/12
+6,Nitric acid,LSD,CHCl3,,55,Strong brown,5YR 5/10
+6,Nitric acid,Mace5,crystals,,102,Moderate greenish yellow,10Y 7/6
+6,Nitric acid,MDA HCl,CHCl3,,101,Light greenish yellow,7.5Y 9/6
+6,Nitric acid,Mescaline HCl,CHCl3,,16,Dark red,5R 3/6
+6,Nitric acid,Morphine monohydrate,CHCl3,,67,Brilliant orange yellow,2.5Y 8/12
+6,Nitric acid,Opium,Powder,,72,Dark orange yellow,10YR 6/10
+6,Nitric acid,Oxycodone HCl,CHCl3,,83,Brilliant yellow,5Y 8.5/8
+7,p-DMAB,LSD,CHCl3,,219,Deep purple,7.5P 3/10
+8,Ferric chloride,Acetaminophen MEOH,,,103,Dark greenish yellow,10Y 6/10
+8,Ferric chloride,Baking Soda,powder,,51,Deep orange,5YR 6/14
+8,Ferric chloride,Chlorpromazine HCl MEOH,,,48,Very orange,5YR 7/14
+8,Ferric chloride,Dristan,powder,,200,Moderate purplish blue,10PB 4/2
+8,Ferric chloride,Exedrine,powder,,200,Moderate purplish blue,10PB 4/2
+8,Ferric chloride,Morphine monohydrate MEOH,,,146,Dark green,5G 3/6
+9,Froede,Aspirin,powder,,228,Grayish purple,7.5P 5/2
+9,Froede,Chlorpromazine HCl,CHCl3,,14,Very deep red,5R 3/10
+9,Froede,Codeine,CHCl3,,147,Very dark green,7.5G 2/6
+9,Froede,Contac,powder,,95,Moderate olive brown,2.5Y 4/6
+9,Froede,Diacetylmorphine HCl,CHCl3,,256,Deep purplish red,5RP 3/10
+9,Froede,Dimethoxy-meth HCl,CHCl3,,115,Very yellow green,5GY 6/10
+9,Froede,Doxepin HCl,CHCl3,,41,Deep reddish brown,7.5R 2/8
+9,Froede,Dristan,powder,,163,Light bluish green,5BG 7/6
+9,Froede,Exedrine,powder,,177,Brilliant blue,10B 6/10
+9,Froede,LSD,CHCl3,,120,Moderate yellow green,5GY 6/6
+9,Froede,Mace5,crystals,,70,Light olive yellow,10YR 8/8
+9,Froede,MDA HCl,CHCl3,,157,Greenish black,7.5G 2/2
+9,Froede,Morphine monohydrate,CHCl3,,256,Deep purplish red,5RP 3/10
+9,Froede,Opium,Powder,,65,Brownish black,7.5R 2/2
+9,Froede,Oxycodone HCl,CHCl3,,84,Strong yellow,2.5Y 7/10
+9,Froede,Propoxyphene HCl,CHCl3,,20,Dark grayish red,2.5R 3/2
+9,Froede,Sugar,crystals,,83,Brilliant yellow,5Y 8.5/8
+10,Mecke,Chlorpromazine HCl,CHCl3,,21,Blackish red,5R 2/2
+10,Mecke,Codeine,CHCl3,,166,Very dark bluish green,2.5BG 2/4
+10,Mecke,Contac,powder,,95,Moderate olive brown,2.5Y 4/6
+10,Mecke,Diacetylmorphine HCl,CHCl3,,161,Deep bluish green,2.5BG 3/8
+10,Mecke,Dimethoxy-meth HCl,CHCl3,,59,Dark brown,5YR 2/4
+10,Mecke,Doxepin HCl,CHCl3,,17,Very dark red,5R 2/4
+10,Mecke,Dristan,powder,,94,Light olive brown,2.5Y 6/10
+10,Mecke,Exedrine,powder,,91,Dark grayish yellow,5Y 6/4
+10,Mecke,Hydrocodone tartrate,CHCl3,,165,Dark bluish green,5BG 3/6
+10,Mecke,LSD,CHCl3,,157,Greenish black,7.5G 2/2
+10,Mecke,Mace5,crystals,,111,Dark grayish olive,10Y 3/4
+10,Mecke,MDA HCl,CHCl3,,166,Very dark bluish green,2.5BG 2/4
+10,Mecke,Mescaline HCl,CHCl3,,107,Moderate olive,7.5Y 5/8
+10,Mecke,Morphine monohydrate,CHCl3,,166,Very dark bluish green,2.5BG 2/4
+10,Mecke,Nutmeg,leaves,,65,Brownish black,10YR 2/2
+10,Mecke,Opium,Powder,,114,Olive black,10Y 2/2
+10,Mecke,Oxycodone HCl,CHCl3,,107,Moderate olive,7.5Y 5/8
+10,Mecke,Propoxyphene HCl,CHCl3,,41,Deep reddish brown,10R 2/6
+10,Mecke,Sugar,crystals,,98,Brilliant greenish yellow,10Y 8.5/10
+11,Zwikker,Baking Soda,powder,,181,Light blue,2.5PB 7/6
+11,Zwikker,Exedrine,powder,,144,Light green,5G 7/6
+11,Zwikker,Pentobarbital,CHCl3,,222,Light purple,7.5P 7/6
+11,Zwikker,Phenobarbital,CHCl3,,222,Light purple,7.5P 7/6
+11,Zwikker,Secobarbital,CHCl3,,222,Light purple,7.5P 7/6
+11,Zwikker,Tea,leaves,,120,Moderate yellow green,2.5GY 7/8
+11,Zwikker,Tobacco,leaves,,136,Moderate yellowish green,10GY 6/6
+12,Simon's,d-Methamphetamine HCl,CHCl3,,183,Dark blue,2.5PB 2/6
+12,Simon's,Dimethoxy-meth HCl,CHCl3,,179,Deep blue,2.5PB 3/8
+12,Simon's,MDMA HCl,CHCl3,,183,Dark blue,2.5PB 2/6
+12,Simon's,Methylphenidate HCl,CHCl3,,214,Pale violet,2.5P 6/4

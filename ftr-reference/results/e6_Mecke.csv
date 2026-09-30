@@ -1,0 +1,461 @@
+light,truth,truth_class,outcome,reason,nearest,de_nearest,margin
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,1.66,35.97
+Daylight (D65),Contac,negative,negative,matched_profile,Contac,1.12,31.35
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,4.41,33.98
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,4.73,33.33
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,1.72,20.6
+White LED torch (LED-B3),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,3.79,32.59
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.54,59.33
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,glare,,,
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.76,0.0
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,0.74,16.08
+Tube light (FL2),MDA HCl,negative,inconclusive,glare,,,
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,2.26,0.0
+White LED torch (LED-B3),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,4.09,34.13
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.06,0.0
+Incandescent bulb (A),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,3.19,34.58
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.37,1.86
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.99,0.0
+Daylight (D65),Chlorpromazine HCl,negative,inconclusive,unknown_colour,Exedrine,18.18,15.44
+Tube light (FL2),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,4.21,31.95
+Tube light (FL2),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.88,3.02
+White LED torch (LED-B3),Codeine,positive,inconclusive,unknown_colour,Exedrine,17.48,25.79
+White LED torch (LED-B3),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,3.84,33.07
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,3.14,55.72
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.62,4.22
+Daylight (D65),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.06,3.33
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,3.25,37.64
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.68,0.0
+Tube light (FL2),Sugar,negative,negative,matched_profile,Sugar,1.05,59.31
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,5.68,2.93
+White LED torch (LED-B3),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,5.22,2.76
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.79,58.56
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.56,15.99
+Daylight (D65),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.25,1.87
+Daylight (D65),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,2.4,31.77
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.24,5.5
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.27,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.39,0.0
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,2.23,20.84
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.42,2.51
+Incandescent bulb (A),Mace5,negative,negative,matched_profile,Exedrine,9.54,29.44
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,0.66,16.07
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.36,4.02
+White LED torch (LED-B3),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,5.51,32.59
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,0.83,0.0
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,2.63,0.0
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.91,15.62
+Daylight (D65),MDA HCl,negative,inconclusive,low_margin,Codeine,0.51,0.0
+Daylight (D65),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.56,4.14
+Tube light (FL2),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,8.47,1.38
+Tube light (FL2),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,8.17,1.37
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.72,0.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.31,5.07
+Incandescent bulb (A),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.35,3.43
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.87,3.69
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.15,4.49
+Daylight (D65),Mace5,negative,negative,matched_profile,Mace5,1.36,21.37
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.66,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.79,0.0
+White LED torch (LED-B3),LSD,negative,negative,matched_profile,LSD,2.53,6.44
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,8.36,0.55
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.32,15.71
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.42,2.37
+Daylight (D65),Propoxyphene HCl,negative,inconclusive,unknown_colour,Contac,19.43,17.36
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,2.37,0.0
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,5.82,32.26
+Tube light (FL2),Diacetylmorphine HCl,positive,inconclusive,glare,,,
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,2.0,20.98
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.77,0.0
+Incandescent bulb (A),Contac,negative,negative,matched_profile,Contac,0.94,31.74
+Incandescent bulb (A),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.05,3.2
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,3.55,0.0
+Daylight (D65),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,0.63,32.86
+White LED torch (LED-B3),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,5.72,2.36
+White LED torch (LED-B3),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,4.52,31.92
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,3.91,0.0
+Incandescent bulb (A),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.29,36.37
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,7.19,3.04
+Daylight (D65),Nutmeg,negative,negative,matched_profile,Nutmeg,3.99,20.57
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,1.76,15.13
+Tube light (FL2),MDA HCl,negative,inconclusive,low_margin,Codeine,1.43,0.0
+White LED torch (LED-B3),Nutmeg,negative,inconclusive,unknown_colour,Exedrine,15.13,15.56
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,1.57,30.41
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,1.47,6.67
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.95,4.58
+Daylight (D65),LSD,negative,negative,matched_profile,LSD,1.94,4.62
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,1.84,0.0
+Tube light (FL2),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,4.97,31.62
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.44,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.22,0.0
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,glare,,,
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.66,2.71
+Incandescent bulb (A),Nutmeg,negative,negative,matched_profile,Nutmeg,3.5,21.37
+Daylight (D65),Diacetylmorphine HCl,positive,inconclusive,unknown_colour,Hydrocodone tartrate,15.96,5.56
+Daylight (D65),Contac,negative,negative,matched_profile,Contac,1.04,32.39
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.53,0.0
+Tube light (FL2),Sugar,negative,negative,matched_profile,Sugar,1.69,58.16
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,2.16,21.13
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,0.87,0.0
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.69,2.9
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,glare,,,
+Daylight (D65),Exedrine,negative,negative,matched_profile,Exedrine,3.72,37.87
+Daylight (D65),Nutmeg,negative,negative,matched_profile,Nutmeg,1.7,22.79
+Tube light (FL2),Mace5,negative,negative,matched_profile,Mace5,0.7,20.65
+Tube light (FL2),Mace5,negative,negative,matched_profile,Mace5,0.63,20.61
+White LED torch (LED-B3),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,4.43,32.12
+White LED torch (LED-B3),Exedrine,negative,negative,matched_profile,Exedrine,4.51,37.26
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.16,1.52
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,2.97,0.0
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,6.81,3.03
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.9,0.0
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.47,4.85
+Tube light (FL2),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,1.09,37.75
+White LED torch (LED-B3),Codeine,positive,inconclusive,unknown_colour,LSD,17.8,0.41
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.5,4.22
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.37,3.29
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.15,0.0
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,1.83,15.72
+Daylight (D65),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.02,1.66
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,5.95,18.96
+Tube light (FL2),Exedrine,negative,negative,matched_profile,Exedrine,3.82,37.84
+White LED torch (LED-B3),Contac,negative,negative,matched_profile,Contac,0.83,32.06
+White LED torch (LED-B3),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,4.76,32.2
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.89,0.0
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,unknown_colour,Exedrine,18.98,28.71
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Exedrine,5.34,34.98
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.12,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.33,0.0
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.73,0.0
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.95,5.25
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.18,5.58
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.7,0.0
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.2,2.62
+Daylight (D65),Mescaline HCl,negative,inconclusive,glare,,,
+Daylight (D65),Exedrine,negative,negative,matched_profile,Exedrine,1.61,39.05
+Tube light (FL2),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,3.39,33.34
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,1.3,22.87
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,2.47,29.64
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.42,36.4
+Incandescent bulb (A),Oxycodone HCl,negative,inconclusive,glare,,,
+Incandescent bulb (A),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,2.5,30.11
+Daylight (D65),MDA HCl,negative,inconclusive,low_margin,Codeine,1.19,0.0
+Daylight (D65),Dristan,negative,negative,matched_profile,Dristan,1.08,46.94
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,0.73,31.57
+Tube light (FL2),MDA HCl,negative,inconclusive,low_margin,Codeine,0.77,0.0
+White LED torch (LED-B3),Exedrine,negative,negative,matched_profile,Exedrine,1.73,39.21
+White LED torch (LED-B3),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,4.71,27.21
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,2.52,15.9
+Daylight (D65),Oxycodone HCl,negative,inconclusive,glare,,,
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.74,0.0
+Tube light (FL2),MDA HCl,negative,inconclusive,low_margin,Codeine,0.74,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.56,0.0
+White LED torch (LED-B3),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,5.51,26.5
+Incandescent bulb (A),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,1.47,30.31
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.88,0.0
+Daylight (D65),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,8.2,0.98
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,2.95,35.69
+Tube light (FL2),Exedrine,negative,negative,matched_profile,Exedrine,4.57,37.41
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,3.52,13.5
+White LED torch (LED-B3),Contac,negative,negative,matched_profile,Contac,4.29,28.04
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,3.19,28.66
+Incandescent bulb (A),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.21,3.62
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.84,4.19
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,1.81,37.67
+Daylight (D65),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,9.31,0.83
+Tube light (FL2),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,5.84,2.59
+Tube light (FL2),Dristan,negative,negative,matched_profile,Dristan,6.98,40.95
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,glare,,,
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,0.88,0.0
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,1.49,0.0
+Incandescent bulb (A),Codeine,positive,inconclusive,unknown_colour,Exedrine,19.53,31.15
+Daylight (D65),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,2.09,35.31
+Daylight (D65),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,1.66,31.64
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.58,0.0
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.46,5.24
+White LED torch (LED-B3),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,1.33,31.74
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,1.77,0.0
+Incandescent bulb (A),Contac,negative,negative,matched_profile,Contac,1.93,30.8
+Incandescent bulb (A),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,1.69,37.7
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.85,4.3
+Daylight (D65),Exedrine,negative,negative,matched_profile,Exedrine,1.17,40.1
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.35,4.97
+Tube light (FL2),Exedrine,negative,negative,matched_profile,Exedrine,2.96,38.95
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.14,0.0
+White LED torch (LED-B3),Nutmeg,negative,negative,matched_profile,Nutmeg,1.61,22.7
+Incandescent bulb (A),Codeine,positive,inconclusive,unknown_colour,Exedrine,16.93,22.6
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.43,2.13
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,7.11,3.13
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,6.82,3.01
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.24,5.49
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,2.01,15.71
+White LED torch (LED-B3),MDA HCl,negative,inconclusive,low_margin,Codeine,2.54,0.0
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,2.73,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.15,0.0
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,0.98,14.67
+White LED torch (LED-B3),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,1.57,36.75
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.49,0.0
+Incandescent bulb (A),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,3.3,34.84
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,glare,,,
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,0.84,38.84
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.96,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.82,0.0
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,2.21,0.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.28,4.92
+White LED torch (LED-B3),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,1.15,36.79
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,unknown_colour,Exedrine,20.16,16.2
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,0.81,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.59,0.0
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,3.18,33.95
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,3.19,13.56
+Tube light (FL2),LSD,negative,negative,matched_profile,LSD,2.22,4.27
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,3.59,27.83
+White LED torch (LED-B3),Contac,negative,negative,matched_profile,Contac,2.15,30.49
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,3.19,0.0
+Incandescent bulb (A),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,1.73,31.43
+Daylight (D65),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,8.07,1.28
+Daylight (D65),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,1.19,31.92
+Tube light (FL2),LSD,negative,negative,matched_profile,LSD,0.66,7.44
+Tube light (FL2),Dristan,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Sugar,negative,negative,matched_profile,Sugar,2.83,56.59
+White LED torch (LED-B3),LSD,negative,negative,matched_profile,LSD,1.26,6.31
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.16,59.31
+Incandescent bulb (A),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.86,3.76
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,LSD,3.64,0.95
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,0.89,38.83
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.7,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.65,0.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.82,3.72
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.82,3.72
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.33,3.46
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,1.4,0.0
+Daylight (D65),Codeine,positive,inconclusive,low_margin,LSD,4.11,0.31
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,LSD,4.11,0.31
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.35,0.0
+Tube light (FL2),Sugar,negative,negative,matched_profile,Sugar,1.14,58.7
+White LED torch (LED-B3),Opium,negative,negative,matched_profile,Opium,0.84,16.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.05,3.78
+Incandescent bulb (A),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,0.77,31.93
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,0.43,16.02
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,1.78,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.84,0.0
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.33,4.07
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.31,3.84
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,glare,,,
+White LED torch (LED-B3),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.99,1.7
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,8.06,1.26
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.34,59.24
+Daylight (D65),Hydrocodone tartrate,positive,inconclusive,glare,,,
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,2.89,34.67
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,4.14,33.67
+Tube light (FL2),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,1.27,31.74
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.14,4.78
+White LED torch (LED-B3),Exedrine,negative,negative,matched_profile,Exedrine,1.4,40.03
+Incandescent bulb (A),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.69,35.55
+Incandescent bulb (A),Dristan,negative,negative,matched_profile,Dristan,2.8,44.7
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,0.97,0.0
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,1.98,36.95
+Tube light (FL2),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,2.09,35.0
+Tube light (FL2),Sugar,negative,negative,matched_profile,Sugar,0.32,60.0
+White LED torch (LED-B3),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,4.0,28.42
+White LED torch (LED-B3),Contac,negative,negative,matched_profile,Contac,0.8,32.36
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.91,0.0
+Incandescent bulb (A),Mace5,negative,negative,matched_profile,Mace5,2.28,19.95
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,3.07,13.47
+Daylight (D65),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.99,4.13
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,3.94,0.0
+Tube light (FL2),Oxycodone HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,5.17,3.31
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.02,0.0
+Incandescent bulb (A),Mace5,negative,negative,matched_profile,Mace5,1.05,21.33
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.26,3.74
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,0.69,16.14
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,0.89,38.13
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,3.67,34.76
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.43,0.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.43,5.22
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,0.49,0.0
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.46,4.26
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.55,4.32
+Daylight (D65),MDA HCl,negative,inconclusive,low_margin,Codeine,1.37,0.0
+Daylight (D65),Sugar,negative,negative,matched_profile,Sugar,0.2,60.26
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,0.61,32.12
+Tube light (FL2),MDA HCl,negative,inconclusive,low_margin,Codeine,2.02,0.0
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.85,4.65
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.94,4.94
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,0.16,0.0
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,unknown_colour,Exedrine,22.11,2.44
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,1.66,37.19
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,1.68,0.0
+Tube light (FL2),Chlorpromazine HCl,negative,inconclusive,glare,,,
+Tube light (FL2),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,2.54,34.61
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.87,3.82
+White LED torch (LED-B3),Opium,negative,negative,matched_profile,Opium,1.89,14.23
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,3.78,0.0
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,3.78,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.19,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.93,0.0
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,1.59,31.85
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.7,0.0
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,3.39,0.0
+White LED torch (LED-B3),Codeine,positive,inconclusive,glare,,,
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.78,58.74
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,0.95,6.98
+Daylight (D65),Dristan,negative,negative,matched_profile,Dristan,1.61,46.55
+Daylight (D65),MDA HCl,negative,inconclusive,low_margin,Codeine,2.73,0.0
+Tube light (FL2),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,4.06,28.05
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.34,0.0
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.94,1.77
+White LED torch (LED-B3),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.94,1.77
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.06,2.33
+Incandescent bulb (A),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,2.03,35.71
+Daylight (D65),Contac,negative,negative,matched_profile,Contac,0.59,32.11
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,3.76,0.0
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,1.89,23.21
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.64,0.0
+White LED torch (LED-B3),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,3.28,33.99
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.25,0.0
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.36,2.52
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.9,0.0
+Tube light (FL2),Opium,negative,negative,matched_profile,Opium,3.08,15.07
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.29,0.0
+White LED torch (LED-B3),Exedrine,negative,negative,matched_profile,Exedrine,1.28,39.85
+White LED torch (LED-B3),MDA HCl,negative,inconclusive,low_margin,Codeine,0.48,0.0
+Incandescent bulb (A),Codeine,positive,inconclusive,low_margin,Codeine,4.23,0.0
+Incandescent bulb (A),Dristan,negative,negative,matched_profile,Dristan,5.51,41.94
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.22,5.74
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,4.18,27.52
+White LED torch (LED-B3),Dimethoxy-meth HCl,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,2.72,0.0
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.68,15.23
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,1.67,6.34
+Daylight (D65),Contac,negative,negative,matched_profile,Contac,1.86,30.79
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.66,0.0
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.26,5.04
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.26,5.04
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,0.76,21.26
+White LED torch (LED-B3),LSD,negative,negative,matched_profile,LSD,0.94,6.66
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.78,2.72
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.0,2.91
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,0.93,0.0
+Daylight (D65),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.52,3.97
+Tube light (FL2),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,6.02,26.06
+Tube light (FL2),Nutmeg,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,2.93,29.47
+White LED torch (LED-B3),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.77,4.25
+Incandescent bulb (A),Dristan,negative,inconclusive,glare,,,
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,1.27,6.4
+Daylight (D65),Exedrine,negative,negative,matched_profile,Exedrine,1.23,40.02
+Daylight (D65),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,2.85,29.46
+Tube light (FL2),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,5.17,2.95
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,3.53,21.12
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,2.59,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,2.71,0.0
+Incandescent bulb (A),MDA HCl,negative,inconclusive,low_margin,Codeine,2.9,0.0
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.55,1.66
+Daylight (D65),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,4.73,3.97
+Daylight (D65),Mace5,negative,negative,matched_profile,Mace5,1.8,20.99
+Tube light (FL2),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.33,4.84
+Tube light (FL2),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.57,4.89
+White LED torch (LED-B3),LSD,negative,negative,matched_profile,LSD,0.85,7.13
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.93,0.0
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.54,1.92
+Incandescent bulb (A),Opium,negative,inconclusive,unknown_colour,Exedrine,23.56,31.64
+Tube light (FL2),Hydrocodone tartrate,positive,inconclusive,glare,,,
+Tube light (FL2),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.89,35.22
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.92,35.8
+White LED torch (LED-B3),MDA HCl,negative,inconclusive,low_margin,Codeine,0.85,0.0
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.46,2.98
+Incandescent bulb (A),Nutmeg,negative,negative,matched_profile,Nutmeg,14.35,9.93
+Daylight (D65),Sugar,negative,negative,matched_profile,Sugar,1.83,59.73
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,2.49,35.48
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,0.83,0.0
+Tube light (FL2),Exedrine,negative,negative,matched_profile,Exedrine,2.03,38.32
+White LED torch (LED-B3),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,8.2,1.32
+White LED torch (LED-B3),Codeine,positive,inconclusive,unknown_colour,Exedrine,20.06,29.74
+Daylight (D65),Mace5,negative,negative,matched_profile,Mace5,1.27,21.32
+Daylight (D65),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,2.71,35.11
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,6.29,17.98
+Tube light (FL2),Exedrine,negative,negative,matched_profile,Exedrine,3.68,37.83
+White LED torch (LED-B3),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,6.28,29.05
+White LED torch (LED-B3),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,7.09,1.67
+Incandescent bulb (A),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,2.45,28.54
+Incandescent bulb (A),Exedrine,negative,negative,matched_profile,Exedrine,2.05,38.77
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.42,4.44
+Daylight (D65),Codeine,positive,inconclusive,low_margin,Codeine,0.4,0.0
+Tube light (FL2),Diacetylmorphine HCl,positive,inconclusive,glare,,,
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,1.4,31.71
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,1.63,0.0
+White LED torch (LED-B3),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,0.94,38.01
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,6.12,2.18
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,glare,,,
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.66,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.53,0.0
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,1.79,30.49
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,2.35,30.22
+White LED torch (LED-B3),Opium,negative,negative,matched_profile,Opium,3.41,13.86
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,glare,,,
+Incandescent bulb (A),Mace5,negative,negative,matched_profile,Mace5,1.69,21.05
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.96,15.45
+Daylight (D65),Sugar,negative,negative,matched_profile,Sugar,0.55,60.1
+Daylight (D65),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,8.48,1.46
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,glare,,,
+Tube light (FL2),Hydrocodone tartrate,positive,positive,matched_profile,Hydrocodone tartrate,3.34,5.02
+White LED torch (LED-B3),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,3.92,33.86
+White LED torch (LED-B3),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,5.78,30.29
+Incandescent bulb (A),Dristan,negative,negative,matched_profile,Dristan,2.44,44.94
+Incandescent bulb (A),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,5.66,2.53
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.42,4.06
+Daylight (D65),LSD,negative,negative,matched_profile,LSD,2.11,4.31
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.27,4.94
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.27,4.94
+White LED torch (LED-B3),LSD,negative,negative,matched_profile,LSD,1.42,6.51
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,2.36,0.0
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,3.65,55.75
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,1.08,6.93
+Daylight (D65),Opium,negative,negative,matched_profile,Opium,1.61,15.24
+Daylight (D65),Dristan,negative,negative,matched_profile,Dristan,3.67,44.46
+Tube light (FL2),Hydrocodone tartrate,positive,inconclusive,low_margin,Hydrocodone tartrate,6.52,2.32
+Tube light (FL2),Contac,negative,negative,matched_profile,Contac,1.05,31.69
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.79,0.0
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,1.79,0.0
+Incandescent bulb (A),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,2.36,35.33
+Incandescent bulb (A),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.37,0.0
+Daylight (D65),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,5.73,3.97
+Daylight (D65),Dristan,negative,inconclusive,unknown_colour,Sugar,17.37,41.75
+Tube light (FL2),Mace5,negative,negative,matched_profile,Mace5,1.43,21.23
+Tube light (FL2),Codeine,positive,inconclusive,low_margin,Codeine,2.08,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.59,0.0
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,3.68,0.0
+Incandescent bulb (A),LSD,negative,negative,matched_profile,LSD,1.12,7.09
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,0.6,15.71
+Daylight (D65),Dimethoxy-meth HCl,negative,negative,matched_profile,Dimethoxy-meth HCl,0.37,32.78
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.84,0.0
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.34,0.0
+Tube light (FL2),Opium,negative,inconclusive,glare,,,
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,glare,,,
+White LED torch (LED-B3),MDA HCl,negative,inconclusive,low_margin,Codeine,1.56,0.0
+Incandescent bulb (A),Nutmeg,negative,negative,matched_profile,Nutmeg,1.24,22.34
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,4.89,4.45
+Daylight (D65),Contac,negative,negative,matched_profile,Contac,1.37,32.05
+Daylight (D65),Propoxyphene HCl,negative,negative,matched_profile,Propoxyphene HCl,5.38,32.49
+Tube light (FL2),Chlorpromazine HCl,negative,negative,matched_profile,Chlorpromazine HCl,2.5,29.18
+Tube light (FL2),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.91,0.0
+White LED torch (LED-B3),Mace5,negative,negative,matched_profile,Mace5,2.98,20.8
+White LED torch (LED-B3),Codeine,positive,inconclusive,low_margin,Codeine,1.07,0.0
+Incandescent bulb (A),Sugar,negative,negative,matched_profile,Sugar,1.52,59.36
+Incandescent bulb (A),Opium,negative,negative,matched_profile,Opium,1.11,15.58
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.03,37.03
+Daylight (D65),Doxepin HCl,negative,negative,matched_profile,Doxepin HCl,2.16,37.08
+Tube light (FL2),Nutmeg,negative,negative,matched_profile,Nutmeg,2.2,21.7
+Tube light (FL2),Dristan,negative,negative,matched_profile,Dristan,6.35,40.05
+Incandescent bulb (A),Oxycodone HCl,negative,negative,matched_profile,Mescaline HCl,3.51,33.66
+Incandescent bulb (A),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.79,5.01
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.55,0.0
+Daylight (D65),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.55,0.0
+Tube light (FL2),Sugar,negative,negative,matched_profile,Sugar,1.84,59.33
+Tube light (FL2),Diacetylmorphine HCl,positive,positive,matched_profile,Hydrocodone tartrate,3.33,5.04
+White LED torch (LED-B3),Contac,negative,negative,matched_profile,Contac,0.46,32.67
+White LED torch (LED-B3),Morphine monohydrate,positive,inconclusive,low_margin,Codeine,1.82,0.0
+Incandescent bulb (A),Mescaline HCl,negative,negative,matched_profile,Mescaline HCl,4.61,32.08
+Incandescent bulb (A),Diacetylmorphine HCl,positive,inconclusive,low_margin,Hydrocodone tartrate,7.09,2.11

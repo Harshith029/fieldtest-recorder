@@ -1,0 +1,15 @@
+PASS  duplicate submission is idempotent                              
+PASS  crash mid-batch rolls back, retry completes                     rows after crash=0, after retry=10
+PASS  network down keeps records, later sync delivers                 network down: kept locally
+PASS  replayed envelope rejected                                      replayed envelope
+PASS  fork (same counter, different record) detected, device frozen   device status=frozen
+PASS  gap flagged, then filled by late records                        
+PASS  revoked device cannot sync                                      device revoked
+PASS  malformed, oversized and forged envelopes rejected cleanly      
+PASS  clock skew does not break ordering (counter is authoritative)   
+PASS  admin deletion detected against a phone-held checkpoint         
+PASS  restore from stale backup, phones delete on ANY checkpoint      server lost 6 records; after phone re-sync server has 11/16
+PASS  restore from stale backup, phones delete on DURABLE checkpoint  server lost 6 records; after phone re-sync server has 16/16
+PASS  20 concurrent phones, 4,000 records, none lost                  5625 records/s (SQLite, laptop, single process)
+
+13/13 scenarios pass

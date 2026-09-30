@@ -1,0 +1,10 @@
+Profile checker report: Mecke
+WARN  LSD is 8.1 dE00 from positive-group colour Codeine (8-10): validate before relying on it
+WARN  LSD is 8.1 dE00 from positive-group colour MDA HCl (8-10): validate before relying on it
+WARN  LSD is 8.1 dE00 from positive-group colour Morphine monohydrate (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Dristan colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Hydrocodone tartrate colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Mescaline HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Oxycodone HCl colour is outside sRGB: requires RAW/linear capture (E13)
+INFO  cross-reactant in positive group: MDA HCl

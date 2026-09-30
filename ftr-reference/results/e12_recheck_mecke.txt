@@ -1,0 +1,13 @@
+Marquis                        24 colours | checker:  1 ERROR,  1 WARN,  1 need RAW, 2 cross-reactants | region map built
+Mecke                          19 colours | checker:  0 ERROR,  3 WARN,  5 need RAW, 1 cross-reactants | region map built
+Simon's                         4 colours | checker:  0 ERROR,  2 WARN,  3 need RAW, 0 cross-reactants | region map built
+Cobalt thiocyanate             17 colours | checker:  0 ERROR, 42 WARN, 16 need RAW, 6 cross-reactants | region map built
+Duquenois-Levine (modified)     4 colours | checker:  0 ERROR,  0 WARN,  0 need RAW, 0 cross-reactants | rule only (no validation readings)
+== Mecke: 60 photos x 1 seeds; positive group = ['Codeine', 'Diacetylmorphine HCl', 'Hydrocodone tartrate', 'MDA HCl', 'Morphine monohydrate']
+   seed 404  JPEG+rule  correct  79.8%  wrong  0.0%  inconcl 20.2%  rejected photos 3
+   seed 404  JPEG+map   correct  86.0%  wrong  0.0%  inconcl 14.0%  rejected photos 3
+   seed 404  RAW+rule   correct  87.7%  wrong  0.0%  inconcl 12.3%  rejected photos 3
+   POOLED (95% Clopper-Pearson):
+   JPEG+rule  correct 79.8% [71.3-86.8] (n=114) | wrong 0.0% [0.0-3.2] (n=114) | inconclusive 20.2% [13.2-28.7] (n=114) | true substance listed on positive calls 43/43
+   JPEG+map   correct 86.0% [78.2-91.8] (n=114) | wrong 0.0% [0.0-3.2] (n=114) | inconclusive 14.0% [8.2-21.8] (n=114) | true substance listed on positive calls 51/51
+   RAW+rule   correct 87.7% [80.3-93.1] (n=114) | wrong 0.0% [0.0-3.2] (n=114) | inconclusive 12.3% [6.9-19.7] (n=114) | true substance listed on positive calls 51/51

@@ -1,0 +1,35 @@
+== Mecke: 19 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Codeine                  2.5BG 2/4    Very dark bluish green   nearest negative: MDA HCl                dE00   0.0  -> UNRESOLVABLE
+  Diacetylmorphine HCl     2.5BG 3/8    Deep bluish green        nearest negative: MDA HCl                dE00  12.3  -> resolvable
+  Hydrocodone tartrate     5BG 3/6      Dark bluish green        nearest negative: MDA HCl                dE00   9.8  -> hard
+  Morphine monohydrate     2.5BG 2/4    Very dark bluish green   nearest negative: MDA HCl                dE00   0.0  -> UNRESOLVABLE
+
+Q2  Engine on 240 rendered photos (Daylight, Tube light, White LED torch, Incandescent bulb), 460 well readings:
+  correct                 267  ( 58.0%)
+  inconclusive            193  ( 42.0%)
+  WRONG false positive      0  (  0.0%)
+  WRONG false negative      0  (  0.0%)
+  rejected photos: {'rejected:card_not_found': 10}
+
+  per substance (correct / inconclusive / wrong):
+   Oxycodone HCl              n= 18  correct  15  inconcl   3  wrong   0
+   Contac                     n= 18  correct  18  inconcl   0  wrong   0
+   Propoxyphene HCl           n= 16  correct  15  inconcl   1  wrong   0
+   Mace5                      n= 16  correct  16  inconcl   0  wrong   0
+   Mescaline HCl              n= 13  correct  12  inconcl   1  wrong   0
+   Sugar                      n= 17  correct  17  inconcl   0  wrong   0
+   Hydrocodone tartrate       n= 51  correct  25  inconcl  26  wrong   0
+   Morphine monohydrate       n= 63  correct   0  inconcl  63  wrong   0
+   Opium                      n= 26  correct  24  inconcl   2  wrong   0
+   MDA HCl                    n= 14  correct   0  inconcl  14  wrong   0
+   Codeine                    n= 50  correct   0  inconcl  50  wrong   0
+   Chlorpromazine HCl         n= 13  correct  11  inconcl   2  wrong   0
+   Diacetylmorphine HCl       n= 62  correct  37  inconcl  25  wrong   0
+   Doxepin HCl                n= 13  correct  13  inconcl   0  wrong   0
+   Dimethoxy-meth HCl         n= 16  correct  15  inconcl   1  wrong   0
+   LSD                        n= 15  correct  15  inconcl   0  wrong   0
+   Nutmeg                     n= 14  correct  12  inconcl   2  wrong   0
+   Exedrine                   n= 14  correct  14  inconcl   0  wrong   0
+   Dristan                    n= 11  correct   8  inconcl   3  wrong   0

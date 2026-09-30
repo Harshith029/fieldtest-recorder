@@ -1,0 +1,1362 @@
+<title>FieldTest Recorder Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: single current engineering document — sticky section index on desktop, one reading column; tables, code and diagrams scroll in their own boxes. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#15202b; --muted:#566170; --line:#d6dbe3;
+  --cobalt:#1d4cb8; --cobalt-soft:#e5ebf8; --violet:#6a3d9a; --violet-soft:#efe8f7;
+  --ok:#1b7a4d; --warn:#9a5b06; --crit:#b3261e; --code:#eef1f6;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Noto Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1319; --surface:#151c24; --ink:#e5eaf0; --muted:#9ba7b5; --line:#2a3441;
+  --cobalt:#86a6ff; --cobalt-soft:#1a2640; --violet:#bfa2f2; --violet-soft:#241c33;
+  --ok:#5fca97; --warn:#f0b45c; --crit:#ff8b80; --code:#1b232d; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e1319; --surface:#151c24; --ink:#e5eaf0; --muted:#9ba7b5; --line:#2a3441;
+  --cobalt:#86a6ff; --cobalt-soft:#1a2640; --violet:#bfa2f2; --violet-soft:#241c33;
+  --ok:#5fca97; --warn:#f0b45c; --crit:#ff8b80; --code:#1b232d; color-scheme:dark }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;padding-inline:16px;padding-block:0 64px}
+a{color:var(--cobalt);text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px}
+@media (min-width:1040px){.wrap{grid-template-columns:230px minmax(0,1fr)}}
+nav.toc{display:none}
+@media (min-width:1040px){nav.toc{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);align-self:start;padding-top:36px;font-size:13px;max-height:calc(100vh - 40px);overflow-y:auto}}
+nav.toc p{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+nav.toc a{display:block;padding:3px 8px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--ink);border-left-color:var(--cobalt)}
+main{min-width:0}
+header.top{padding-block:36px 4px;display:grid;gap:14px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:85%;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.2rem);font-weight:800}
+h2{font-size:clamp(1.45rem,3vw,1.9rem);font-weight:750}
+h3{font-size:1.15rem;font-weight:700;margin-top:6px}
+.lede{font-size:1.1rem;max-width:68ch;margin:0}
+section{padding-block:32px 4px;border-top:1px solid var(--line);margin-top:26px;display:grid;gap:14px}
+section > p, section > ul, section > ol{max-width:74ch;margin:0}
+.kicker{font-family:var(--f-mono);font-size:12px;color:var(--cobalt);letter-spacing:.06em;text-transform:uppercase}
+ul,ol{padding-left:1.25em} li{margin-block:3px}
+.grid2{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.grid3{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:880px){.grid3{grid-template-columns:repeat(3,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;min-width:0;display:grid;gap:6px;align-content:start}
+.panel p{margin:0} .panel ul,.panel ol{margin:0}
+.panel.key{border-left:3px solid var(--violet)}
+.panel.bad{border-left:3px solid var(--crit)}
+.panel.good{border-left:3px solid var(--ok)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;padding:0 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.tag.ok{color:var(--ok)} .tag.warn{color:var(--warn)} .tag.crit{color:var(--crit)} .tag.info{color:var(--cobalt)} .tag.v{color:var(--violet)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:760px}
+th,td{text-align:left;vertical-align:top;padding:8px 11px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg)}
+tr.grp td{background:var(--cobalt-soft);font-family:var(--f-display);font-stretch:85%;font-weight:700;font-size:14.5px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+pre.code{background:var(--code);border:1px solid var(--line);border-radius:4px;padding:12px 14px;overflow-x:auto;font-family:var(--f-mono);font-size:12.3px;line-height:1.5;margin:0}
+code{font-family:var(--f-mono);font-size:.88em}
+pre.mermaid{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:12px;overflow-x:auto;margin:0}
+.fill{display:grid;gap:8px}
+.fill div{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px 14px}
+.fill b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--violet);display:block}
+.qa{display:grid;gap:8px}
+.qa details{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px 14px}
+.qa summary{cursor:pointer;font-weight:600}
+.qa details p{margin:6px 0 0}
+.verdict{border:1.5px solid var(--violet);background:var(--violet-soft);border-radius:4px;padding:14px 16px;display:grid;gap:6px;max-width:900px}
+.verdict p{margin:0}
+.note{font-size:13px;color:var(--muted)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:8px;max-width:none;margin:0}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px 14px 10px 48px;position:relative;margin:0}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:8px;font-family:var(--f-display);font-weight:800;font-stretch:80%;font-size:1.3rem;color:var(--cobalt)}
+footer{margin-top:40px;font-size:13px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Sections">
+  <p>Architecture</p>
+  <ol>
+    <li><a href="#status">Status</a></li>
+    <li><a href="#exec">Summary</a></li>
+    <li><a href="#insight">Core insight</a></li>
+    <li><a href="#trace">Requirement check</a></li>
+    <li><a href="#workflow">Officer workflow</a></li>
+    <li><a href="#proof">Evidence</a></li>
+    <li><a href="#verdict">Verdict</a></li>
+    <li><a href="#open">Open problems</a></li>
+    <li><a href="#p0">0 · The problem</a></li>
+    <li><a href="#p1">1 · Domain research</a></li>
+    <li><a href="#p2">2 · Audit of earlier plans</a></li>
+    <li><a href="#p3">3 · Approaches</a></li>
+    <li><a href="#p4">4 · Break it</a></li>
+    <li><a href="#p5">5 · Scale</a></li>
+    <li><a href="#p6">6 · Architecture</a></li>
+    <li><a href="#p7">7 · Data &amp; schema</a></li>
+    <li><a href="#p8">8 · Technology</a></li>
+    <li><a href="#p9">9 · Security</a></li>
+    <li><a href="#p10">10 · Failures</a></li>
+    <li><a href="#p11">11 · Government reality</a></li>
+    <li><a href="#p12">12 · Prototype → production</a></li>
+    <li><a href="#p13">13 · Differentiation</a></li>
+    <li><a href="#p14">14 · Red-team rounds</a></li>
+    <li><a href="#judge">Judge attack</a></li>
+    <li><a href="#p15">15 · Know vs assume</a></li>
+    <li><a href="#p16">16 · Final architecture</a></li>
+    <li><a href="#p17">17 · Build plan</a></li>
+    <li><a href="#p18">18 · Testing</a></li>
+    <li><a href="#p19">19 · Is this good?</a></li>
+    <li><a href="#px">X · Not just AI-generated</a></li>
+    <li><a href="#sources">Sources</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="top">
+  <div class="eyebrow"><span>SIH26231 · NCB (MHA)</span><span>Architecture · revision 7</span><span>29 Sep 2026</span></div>
+  <h1>FieldTest Recorder Architecture</h1>
+  <p class="lede">A digital companion for NCB's own Narcotic Drugs Detection Kit. It guides the officer through the kit's Tests A–E and reads each reaction against a blank well in the same photo and a published, signed colour standard. It reports the result with every substance that colour is consistent with. It produces a signed, tamper-evident, per-package record with time, GPS and officer that an independent expert can verify offline.</p>
+  <p class="note">This is the single current version. What earlier rounds got wrong, and what changed, is recorded in <a href="#p14">Phase 14</a>. Revision 7 applies an external review whose every claim we re-checked. Every rate comes from code in <code>ftr-reference/</code>, with a 95% interval. Evidence trail: <code>ftr-reference/docs/research/</code>.</p>
+</header>
+
+<section id="status">
+  <span class="kicker">Status</span>
+  <h2>What is proven, what is simulated, what is open</h2>
+  <div class="grid2">
+    <div class="panel good"><h3>Proven in code</h3><ul>
+      <li>Tamper evidence: 18/18 attacks caught, including insider-admin forgery, withheld records and one key posing as two phones (E5)</li>
+      <li>Every test record signs time, GNSS time, GPS with a mock-location flag, officer and image hash</li>
+      <li>One raid can be verified with every other case on the phone withheld</li>
+      <li>Sync protocol: 15/15 failure scenarios; searchable log on phone and server</li>
+      <li>Attestation verification, including the accept path (E15)</li></ul></div>
+    <div class="panel"><h3>Simulated</h3><ul>
+      <li>NCB kit bands built from the printed chart: 89.1% correct, 1.7% wrong across sample amounts (E17)</li>
+      <li>Band model + blank well: 0.0% false positives where the old rule reached 11.7% (E17)</li>
+      <li>Clear well read as "no colour change": 99–100%</li>
+      <li>RAW capture, night mode, staged-capture detection (E9, E13, E16)</li></ul></div>
+    <div class="panel bad"><h3>Not yet verified</h3><ul>
+      <li>Real phones and the printed card v2 (card, reader and protocol ready)</li>
+      <li>NCB's real reactions: chart colours come from a scan; Tests C and D are not printed</li>
+      <li>RAW support on officers' phones; a locked production phone's attestation</li>
+      <li>Officer time per package; court treatment; API access</li></ul></div>
+    <div class="panel key"><h3>Biggest risks</h3><ul>
+      <li>No app yet, while a public rival repo already has a working one</li>
+      <li>No officer, chemist or prosecutor consulted</li>
+      <li>Partially reacted wells cause the remaining errors</li>
+      <li>A swap timed at the drop, or a replayed video, can't be caught from colour alone</li></ul></div>
+  </div>
+</section>
+
+<section id="exec">
+  <span class="kicker">Summary</span>
+  <h2>The answer first</h2>
+  <div class="grid2">
+    <div class="panel key"><h3>The actual problem</h3><p>NCB needs a field kit test to leave a record a third party can trust. The record should show that this package was tested at this place and time by this officer, what it showed, and that nothing was changed or left out afterwards. The reading should not depend on who looks at it or under what light. The Bombay High Court found NCB "has not prescribed the standards" and called field testing "arbitrary" [S36]. Identifying the drug is the lab's job, and NCB says so explicitly.</p></div>
+    <div class="panel key"><h3>Root cause</h3><p>The record is made separately from the event. The colour is judged by eye against a printed chart, with no measured standard. Nothing binds the result to the numbered package, the witnesses or the time, and no lab result ever comes back to show how often field tests are wrong.</p></div>
+    <div class="panel bad"><h3>What earlier plans got wrong</h3><p>Each of these was found by experiment or review and fixed:</p><ul><li>naming a drug where the chemistry only gives a colour group (E6);</li><li>JPEG capture for saturated blues (E12);</li><li>deleting records before backup (E14);</li><li>designing around US reagents when NCB's own kit chart was in our sources;</li><li>single-point colour rules that fail when the sample amount changes (E17);</li><li>a record format that didn't sign time and GPS (review).</li></ul></div>
+    <div class="panel good"><h3>The derived solution</h3><p>An offline Android tool, built as an embeddable SDK:</p><ul><li>it walks the officer through NCB's kit, Tests A–E in the printed flow-chart order;</li><li>it photographs each reaction beside a reagent-only blank well, on a reference card;</li><li>it reads the colour against signed colour bands built from the kit's own ranges;</li><li>it combines results across tests and warns when the NDPS quantity category can't be told.</li></ul><p>Each result becomes a device-signed, chained record, anchored in the witness-signed panchnama. A thin server enrols devices, stores records and closes the Rule 14 lab loop.</p></div>
+  </div>
+  <div class="verdict">
+    <p><strong>Core insight.</strong> A colour test identifies a colour group, not a drug, and NCB's own kit says so: Test E's blue means "cocaine <em>or</em> methaqualone". A reading only means something against a documented standard, and the record is only trustworthy when bound to the witnessed seizure.</p>
+    <p><strong>AI.</strong> No model runs on the phone. Decisions use colour bands computed from the kit chart and published physics, which anyone can recompute. Learned region maps stay paused for NCB's kit until real validation data exists.</p>
+    <p><strong>Build for SIH:</strong> guided test → capture with blank → colour band → sign → anchor → verify, with a live tamper demo. <strong>Don't build:</strong> blockchain, microservices, a chatbot, a CNN drug classifier, or maps and heatmaps.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Final deliverable</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Actual problem</td><td>No verifiable, standardised record of the kit tests the NDPS Rules already depend on</td></tr>
+      <tr><td>2</td><td>Root cause</td><td>Record made apart from the event; reading by eye against a printed chart; no lab feedback</td></tr>
+      <tr><td>3</td><td>What earlier plans got wrong</td><td>Feature pile-up; trusted server; drug names from colours; JPEG-only capture; early deletion; US reagents instead of NCB's kit; single-point colour rules; time and GPS not signed</td></tr>
+      <tr><td>4</td><td>Derived solution</td><td>Guided NDDK protocol; blank-relative colour bands; device-signed records with time, GPS and officer, anchored in the witness-signed panchnama; thin server for enrolment, storage, search and the lab loop</td></tr>
+      <tr><td>5</td><td>Why it works</td><td>E5: 18/18 attacks caught. E17: 0.0% false positives across sample amounts. E14: 15/15 failure scenarios.</td></tr>
+      <tr><td>6</td><td>Architecture</td><td>FieldTest Engine SDK (record core, colour engine, kit protocol, profiles); reference Android app; one Spring Boot server; PostgreSQL; write-once object storage; offline verifier</td></tr>
+      <tr><td>7</td><td>Stack</td><td>Kotlin, Android Keystore + key attestation, Camera2 RAW, OpenCV; RFC 8785 JSON, SHA-256, ECDSA P-256; Spring Boot; PostgreSQL; S3 object lock; DSC for supervisors</td></tr>
+      <tr><td>8</td><td>Biggest risks</td><td>No app yet; real reactions untested; no user consulted; partially reacted wells</td></tr>
+      <tr><td>9</td><td>Biggest assumptions</td><td>NCB shares its kit sheet and validation data; chart colours are close to real reactions; supervisors have DSCs; NCB accepts records the defence can also use</td></tr>
+      <tr><td>10</td><td>Build for SIH</td><td>The four required features, done well; plus the guided kit protocol, blank well, colour bands, anchor, tamper demo and search</td></tr>
+      <tr><td>11</td><td>Don't build</td><td>Blockchain, ML classifier on the phone, chatbot, heatmaps, microservices, Kubernetes, a rival evidence vault</td></tr>
+      <tr><td>12</td><td>What makes it production-worthy</td><td>Validation on NCB's kit at several sample amounts; NCB-owned keys and profiles; cards printed into kits; a locked production phone enrolled; security audit; a measured 12-week pilot</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="insight">
+  <span class="kicker">Core insight</span>
+  <h2>A colour test identifies a colour group, not a drug</h2>
+  <p>NCB's Narcotic Drugs Detection Kit states its results as colour <em>ranges</em>, and some ranges cover more than one drug [S6]:</p>
+  <ul>
+    <li>Test E's blue is "positive for cocaine <em>and</em> methaqualone"; reagents E3/E4 then tell them apart.</li>
+    <li>Test A's purples cover morphine, codeine and heroin.</li>
+  </ul>
+  <p>The US standard (NIJ Std-0604.01) shows the same thing: cocaine and ephedrine give the identical colour [S35].</p>
+  <p>So the app never says "cocaine" from one test. It says: <strong>positive, consistent with cocaine or methaqualone</strong>. After E3/E4 it narrows to one, and it warns when the candidates fall under different NDPS quantity thresholds.</p>
+  <p>Colour depth also changes with how much sample went in. So each outcome is a band spanning the chart's range and realistic amounts, read against a reagent-only blank in the same photo.</p>
+  <p>The Delhi High Court held that a missing field test doesn't sink a case once the lab confirms [S37]. The record therefore matters most before the lab result: at seizure, remand, bail, charge-sheet completeness and Rule 10(2) sampling. In the Anuraj case, "MDMA" turned out to be methamphetamine [S39], which puts the accused in a different quantity category.</p>
+  <div class="verdict"><p>Every kit test becomes a <strong>guided, measured reading against a published, signed colour standard</strong>, and every result a <strong>verifiable report</strong> that anyone can re-check offline.</p></div>
+</section>
+
+<section id="trace">
+  <span class="kicker">Requirement check</span>
+  <h2>Does it match the problem statement, line by line?</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Statement says [S1]</th><th>Our design</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Mobile application</td><td>Native Android app, built on an embeddable SDK</td><td><span class="tag ok">Meets</span> <span class="tag warn">app not built yet</span></td></tr>
+      <tr><td>Works alongside existing colorimetric kits</td><td>NCB's Narcotic Drugs Detection Kit encoded as a signed guided protocol (Tests A–E, flow charts, lower-layer reading for Test B)</td><td><span class="tag ok">Meets</span> <span class="tag warn">chart colours approximate; C and D need the kit sheet</span></td></tr>
+      <tr><td>No new hardware</td><td>Phone plus the printed reference card the statement itself requires; flash is the phone's own</td><td><span class="tag ok">Meets</span></td></tr>
+      <tr><td>Capture an image of the result with a reference colour card in frame for lighting calibration</td><td>Guided capture; card markers located; colour correction fitted per image. The fit error rejects bad light, and faded or fake cards (E10). A blank well in the same frame.</td><td><span class="tag ok">Meets, goes further</span></td></tr>
+      <tr><td>Automatically classify against defined outcome categories (positive, negative, inconclusive)</td><td>Automatic, deterministic <strong>positive / negative / inconclusive</strong> against the kit's signed colour bands, with a reason code. "Negative" means no colour change against the blank well. Positives list every consistent substance. The officer's own reading is recorded too.</td><td><span class="tag ok">Meets</span> (E17)</td></tr>
+      <tr><td>Tamper-evident record with timestamp, GPS location, operator identifier</td><td>Signed in every record: device time, GNSS time, GPS with accuracy and a mock-location flag ("unavailable" recorded honestly), operator matched to the supervisor-signed binding. The server countersigns receive time.</td><td><span class="tag ok">Meets, in reference code</span></td></tr>
+      <tr><td>Together with a cryptographic hash of the captured image</td><td>SHA-256 of the image <strong>exactly as captured</strong>, inside the signed record</td><td><span class="tag ok">Meets, in reference code</span></td></tr>
+      <tr><td>Simple, searchable log of tests</td><td>On-device log, searchable offline by case, package, result, substance, place, kit batch and date. Opening a record re-verifies it (10/10 checks). Server search too.</td><td><span class="tag ok">Meets, in reference code</span></td></tr>
+      <tr><td>Deliverable: prototype showing capture, automated classification and a signed digital record</td><td>ECDSA-signed record, verified in-app and by the offline verifier</td><td><span class="tag ok">Meets</span> <span class="tag warn">phone prototype pending</span></td></tr>
+      <tr><td>Output is presumptive; doesn't replace lab testing</td><td>"Presumptive" on every screen and document. The lab result is imported later and compared, never overriding.</td><td><span class="tag ok">Meets</span></td></tr>
+      <tr><td>Background: "no verifiable record that a test was actually conducted at a given place and time"</td><td>Signed hash chain across all team phones, plus each phone's counter range and chain head in the witness-signed panchnama. It catches deletions and re-runs, not just edits (E3, E5).</td><td><span class="tag ok">Meets the root need</span></td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Beyond the statement</strong> (keep, but show after the four required features):</p>
+  <ul>
+    <li>the guided kit protocol, combined candidates and the NDPS quantity warning;</li>
+    <li>RAW capture and liveness;</li>
+    <li>multi-phone chains and the panchnama code;</li>
+    <li>one-raid disclosure;</li>
+    <li>night mode and same-photo comparison;</li>
+    <li>Form-1 text and the field-test report;</li>
+    <li>the lab-result loop and the thin server.</li>
+  </ul>
+</section>
+
+<section id="workflow">
+  <span class="kicker">Officer workflow</span>
+  <h2>One seizure, several packages, one or more phones</h2>
+  <ol class="steps">
+    <li>Open the operation: crime number, kit batch, optional e-Sakshya reference. Team phones join by QR.</li>
+    <li>Choose the nature of the material (powder, tablet, herb, paper). The app picks the first test from NCB's flow chart and shows its drops and wait time.</li>
+    <li>Put the card down, the sample well in the SAMPLE zone, a reagent-only well in the BLANK zone, and the package label (P-n) in view. Start capture <strong>before</strong> adding the reagent.</li>
+    <li>Add the reagent. The app follows the reaction to the read time and checks liveness, blur, glare and light. For Test B it reads the lower liquid layer.</li>
+    <li>The officer records what they see. The app shows positive, no colour change, or inconclusive, with the substances the colour is consistent with, then the next test the flow chart calls for.</li>
+    <li>After the last test the app combines the results, for example "cocaine" after E3/E4, and warns if the NDPS quantity category can't be told in the field.</li>
+    <li>Each result is signed on the phone's hardware key with time, GPS and officer, and chained. Nothing needs a network.</li>
+    <li>Close: every phone's range and chain head go into the panchnama as a QR plus a 14-character code with a check character, and the witnesses sign.</li>
+    <li>Generate the field-test report per package, the Form-1 item 5 text and the BSA s.63 certificate data. Sync when online; phones delete only after a durable checkpoint.</li>
+  </ol>
+</section>
+
+<section id="proof">
+  <span class="kicker">Evidence · built and tested</span>
+  <h2>Seventeen experiments, and what each one changed</h2>
+  <p>A Python reference implementation (<code>ftr-reference/</code>) covers the record and trust layer, attestation, the colour engine, signed kit profiles, the NCB kit protocol, the searchable log and the sync protocol. It is the executable spec the Kotlin code must match.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Test</th><th>Question</th><th>Result</th><th>What it changed</th><th>Kind</th></tr></thead>
+    <tbody>
+      <tr><td>E1</td><td>Card vs no card, 5 lights</td><td>Card cuts error 3–4× under normal light; sodium light still fails</td><td>Bad-light gate</td><td>Simulation</td></tr>
+      <tr><td>E1b</td><td>Detect bad light; flash/no-flash</td><td>Card fit error separates sodium light; flash/no-flash median 1.7 ΔE00</td><td>Night mode is core</td><td>Simulation</td></tr>
+      <tr><td>E2</td><td>Same photo vs separate photos</td><td>False "different" 18% → 2.2%</td><td>Side-by-side layout</td><td>Simulation</td></tr>
+      <tr><td>E3</td><td>Tamper-detection designs</td><td>Hash-only 0/6, signed chain 4/6, chain + anchor 6/6</td><td>Panchnama anchor</td><td>Logic</td></tr>
+      <tr><td>E4</td><td>Full engine, 900 rendered photos, illustrative colours</td><td>0 wrong in 1,384 wells (&lt; 0.27% at 95%); 88–94% correct</td><td>Bigger markers, 3 of 4 accepted; glare-robust reading</td><td>Simulation, real OpenCV code</td></tr>
+      <tr><td><strong>E5</strong></td><td>Attacks on the record format and verifier</td><td><strong>18/18 caught</strong>; one raid verifies with other cases withheld</td><td>Header/payload split; signed device ID; check character</td><td>Real code</td></tr>
+      <tr><td>E6</td><td>Published NIJ colours, 4 reagents</td><td>Cocaine = ephedrine (identical colour); morphine = codeine = MDA</td><td>Colour-group output</td><td>Simulation, published colours</td></tr>
+      <tr><td>E7</td><td>Thresholds; ML with and without the card</td><td>ML without the card: up to 5.6% wrong under an unseen light</td><td>Card stays; no model on the phone</td><td>Simulation</td></tr>
+      <tr><td>E8</td><td>Colour group vs nearest substance</td><td>Mecke correct 56 → 77%; Simon's wrong 1.3 → 0%</td><td>Colour groups + profile checker</td><td>Simulation</td></tr>
+      <tr><td>E9</td><td>Handheld night mode</td><td>Locked linear flash/no-flash: 100% correct, 0 of 180 wrong (&lt; 2.0%)</td><td>Tiered night mode</td><td>Simulation</td></tr>
+      <tr><td>E10</td><td>Hostile images, malformed bundles</td><td>Engine: 0 crashes. Verifier: 13/13 rejected cleanly</td><td>Fail-closed verifier</td><td>Real code</td></tr>
+      <tr><td>E11</td><td>Frozen region maps</td><td>0–1.0% wrong per unseen light; ~10 µs lookup</td><td>Maps as a guarded JPEG fallback only</td><td>Simulation</td></tr>
+      <tr><td>E12</td><td>Held-out photos through the real engine, 5 reagents, 3 seeds</td><td>RAW 0–1.6% wrong <em>at the reference amount</em>; cobalt on JPEG 21.2% wrong</td><td>RAW tier; whole-group lists</td><td>Simulation, published colours</td></tr>
+      <tr><td>E13</td><td>RAW vs JPEG for saturated colours</td><td>Cobalt wrong 21.9% → 0.0% [0–1.6]</td><td>RAW is the primary tier</td><td>Simulation</td></tr>
+      <tr><td>E14</td><td>Sync and user-failure scenarios</td><td>15/15, including malformed records in a signed batch and server search</td><td>Durable checkpoints; per-record validation</td><td>Real code (reference server)</td></tr>
+      <tr><td>E15</td><td>Android attestation</td><td>18/18 as expected, including the accept path end to end (test root)</td><td>Strict by default</td><td>Real code</td></tr>
+      <tr><td>E16</td><td>Staged capture</td><td>Staged 0.0% [0–0.9]; mid-capture swap 0.5% [0.1–1.8]; a swap at the drop passes</td><td>Capture starts before the drop</td><td>Simulation</td></tr>
+      <tr><td><strong>E17</strong></td><td>Sample amount; blank well; NCB kit</td><td>Old rule: up to 11.7% false positives. <strong>Bands: 0.0%</strong>. Clear well → negative 99–100%. NCB kit: 89.1% correct, 1.7% wrong</td><td>Band model, blank well, NDDK protocol</td><td>Colour-level simulation</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Sample amount (E17)</h3>
+  <p class="note">Pooled over 0.5–1.6× amount (Beer-Lambert) and 40–80% partial reaction, noise σ 1.0 per CIELAB channel. Positive group called positive / other substances called positive. Test colours also come from a second physics model, so the band model isn't graded only on its own assumption.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Reagent</th><th>Old point rule</th><th>Band model + blank well</th></tr></thead>
+    <tbody>
+      <tr><td>Marquis</td><td class="num">24.8% / 0.0%</td><td class="num">74.7% / 0.0%</td></tr>
+      <tr><td>Mecke</td><td class="num">27.0% / 0.0%</td><td class="num">66.1% / 0.0%</td></tr>
+      <tr><td>Simon's</td><td class="num">19.3% / <strong>9.2%</strong></td><td class="num">44.3% / 0.0% [0–0.6]</td></tr>
+      <tr><td>Cobalt thiocyanate</td><td class="num">17.1% / <strong>11.7%</strong></td><td class="num">29.2% / 0.0% [0–0.1]</td></tr>
+      <tr><td>NCB kit, all chart outcomes</td><td class="num">—</td><td class="num">89.1% correct / 1.7% [1.2–2.2] wrong</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The remaining NCB-kit errors all come from partially reacted wells, which the bands were not built from. Where same-hue substances overlap (Simon's, cobalt), the band model returns "inconclusive" instead of a guess.</p>
+
+  <h3>Physical card v2</h3>
+  <p>The card is about 150 × 105 mm:</p>
+  <ul>
+    <li>four 18 mm ArUco 4×4 markers, one per corner;</li>
+    <li>24 colour patches of 10.5 mm;</li>
+    <li>a SAMPLE zone and a BLANK zone for a reagent-only well;</li>
+    <li>a package-label zone;</li>
+    <li>a 50 mm scale bar.</li>
+  </ul>
+  <p>The printable file comes from <code>tools/make_card.py</code>, and the engine finds the card in its self-check. NCB's spot plate has three wells, so the final layout must follow the kit's real dimensions.</p>
+
+  <h3>Real-kit validation protocol (answers "have you tested on real kits?")</h3>
+  <ul>
+    <li><strong>Who:</strong> NCB or CRCL chemists, under their own licences. Our team never handles controlled substances.</li>
+    <li><strong>What:</strong> NCB kits from 2–3 batches (one near expiry). About 7 reference substances the lab already holds, plus about 5 legal look-alikes and cutting agents, plus blanks. <strong>Three sample amounts</strong> (½, 1 and 2 match-heads) and one cut sample per substance.</li>
+    <li><strong>Design:</strong> 12 substances × 3 replicates × 3 phones × 4 lights × 3 reading times = 1,296 captures, repeated at each amount for the Test A and E substances.</li>
+    <li><strong>Blinding:</strong> 3–5 officers read each reaction by eye without knowing the substance. The app reads the same reactions. The chemist holds the key.</li>
+    <li><strong>Pass criteria:</strong> false positives ≤ 1% proven at 95% confidence (≥ 299 negative controls with 0 false positives); inconclusive ≤ 15% outside night mode; app agreement with the lab's identity ≥ officers' visual agreement.</li>
+    <li><strong>Before that, this week:</strong> card v2 with safe dyes on 3 phones, run through <code>read_photos.py</code>.</li>
+  </ul>
+</section>
+
+<section id="verdict">
+  <span class="kicker">Verdict</span>
+  <h2>Confident in the design; real-world accuracy and the app not yet shown</h2>
+  <div class="verdict">
+    <p><strong>Decision:</strong> build this architecture on NCB's kit. The trust layer, record format and sync protocol are proven in code. Colour decisions hold up in simulation across sample amounts with no false positives.</p>
+    <p><strong>Condition:</strong> no accuracy claim beyond "simulated" until real phones and NCB's reactions are tested. The app must exist before the finale: a public rival already demos one.</p>
+    <p><strong>Pitch position:</strong> "We built NCB's own kit into a guided, measured, signed procedure, the standard and evidence trail the courts said were missing, and here is how we will validate it with NCB."</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Confidence</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Record and trust (format, chains, anchor, bindings, verifier, one-raid disclosure)</td><td><span class="tag ok">High</span></td><td>E5 18/18; E10 fail-closed; standard cryptography</td></tr>
+      <tr><td>Sync, storage and search</td><td><span class="tag ok">High</span> (design) · <span class="tag warn">Medium</span> (build)</td><td>E14 15/15 on the reference server; not yet on PostgreSQL</td></tr>
+      <tr><td>Device attestation</td><td><span class="tag warn">Medium-high</span></td><td>E15 accept and reject paths proven; no real locked phone enrolled yet</td></tr>
+      <tr><td>Colour decisions on NCB's kit</td><td><span class="tag warn">Medium-low</span></td><td>E17 in simulation; chart colours from a scan; Tests C and D not printed</td></tr>
+      <tr><td>Liveness</td><td><span class="tag warn">Medium</span></td><td>E16: staged captures rejected; a swap at the drop and replays are not</td></tr>
+      <tr><td>Government integrations</td><td><span class="tag crit">Low certainty</span></td><td>API access unknown; file exports are the baseline</td></tr>
+      <tr><td>Adoption by officers</td><td><span class="tag warn">Medium-low</span></td><td>No officer consulted; the guided protocol and paperwork are our levers</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Technology verdicts</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Technology</th><th>Verdict</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Kotlin Android, Keystore, key attestation</td><td><span class="tag ok">Keep</span></td><td>Hardware-backed, attested signing and camera control; verifier proven (E15)</td></tr>
+      <tr><td>Guided NDDK protocol (signed)</td><td><span class="tag ok">Add</span></td><td>NICFS Figs 8.12–8.16; E17 flow-chart scenarios</td></tr>
+      <tr><td>Blank well + colour bands</td><td><span class="tag ok">Replace point rules</span></td><td>E17: 0.0% false positives across amounts</td></tr>
+      <tr><td>RAW/linear capture</td><td><span class="tag ok">Keep, primary</span></td><td>E13</td></tr>
+      <tr><td>Region maps</td><td><span class="tag warn">Paused for NCB kit</span></td><td>Guarded; only after real validation data (review finding 2)</td></tr>
+      <tr><td>Header/payload record, signed device ID, check-character code</td><td><span class="tag ok">Keep</span></td><td>E5 18/18</td></tr>
+      <tr><td>Supervisor-signed bindings (DSC), durable checkpoints</td><td><span class="tag ok">Keep</span></td><td>E5, E14</td></tr>
+      <tr><td>Spring Boot monolith, PostgreSQL, S3 object lock</td><td><span class="tag ok">Keep</span></td><td>Phase 5 load; E14 protocol at ~5,200 records/s vs &lt; 1/s needed</td></tr>
+      <tr><td>Merkle log, C2PA, blockchain, ML on the phone, LLM, SPA dashboard, microservices</td><td><span class="tag crit">Drop</span></td><td>No requirement justifies them</td></tr>
+    </tbody>
+  </table></div>
+  <h3>When to change course</h3>
+  <ul>
+    <li>Real NCB reactions fall outside the chart bands, or false positives exceed 1% after profile tuning → lead with the record layer and guided protocol, with classification as an aid.</li>
+    <li>Most officers' phones can't capture RAW → JPEG path with stricter bands; saturated outcomes return "inconclusive on this phone".</li>
+    <li>Phone timing above about 2 s per capture on a mid-range device → capture first, then read at lower resolution around the card.</li>
+  </ul>
+  <h3>Build next</h3>
+  <ol>
+    <li>The Android slice: guided test → capture → read → sign → log/search → export → verify, in airplane mode.</li>
+    <li>Card v2 with safe dyes on 3 phones.</li>
+    <li>Interviews with officers, a forensic chemist and a prosecutor.</li>
+    <li>Ask NCB for the kit sheet.</li>
+  </ol>
+</section>
+
+<section id="open">
+  <span class="kicker">Open problems</span>
+  <h2>What we still cannot claim</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Open item</th><th>What would close it</th></tr></thead>
+    <tbody>
+      <tr><td>Real NCB reactions (chart colours are from a scan; C and D not printed; most read times not printed)</td><td>NCB kit sheet; lab validation with three sample amounts</td></tr>
+      <tr><td>Partially reacted wells (all remaining E17 errors)</td><td>Burst capture across the read window; test with the dye protocol</td></tr>
+      <tr><td>Real phones (simulation uses a DSLR sensor)</td><td>Card v2 + safe dyes + 3 phones</td></tr>
+      <tr><td>RAW and manual-control support on officers' phones</td><td>Capability probe on typical phones</td></tr>
+      <tr><td>Attestation on a locked production phone</td><td>Enrol one real phone</td></tr>
+      <tr><td>Officer time and acceptance; court and prosecutor view</td><td>3–5 interviews and a stopwatch study</td></tr>
+      <tr><td>Swap at the drop; replayed video</td><td>A fold-up parallax tab on the card; label tracking; s.105 video cross-link</td></tr>
+      <tr><td>Server on PostgreSQL under load</td><td>M4 build and load test</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p0">
+  <span class="kicker">Phase 0 · Establish the problem</span>
+  <h2>What NCB actually asked for</h2>
+  <p>The statement's own words: field kits "rely on visual interpretation of a colour-change reaction", making results "subjective, difficult to standardise across officers", and leaving "no verifiable record that a test was actually conducted at a given place and time", so outcomes "cannot presently be relied upon as documentary evidence" [S1]. It asks for a mobile or web app for <em>existing</em> kits with <em>no new hardware</em>. The app must capture the result with a reference colour card in frame, classify it (positive, negative, inconclusive), create a tamper-evident record (timestamp, GPS, operator ID, image hash) and keep a searchable log. The result stays presumptive [S1].</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Question</th><th>Answer</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Problem being solved</td><td>(a) A <strong>verifiable record</strong> of a field test. (b) <strong>Objective, standardised</strong> readings. (c) Implied: knowing how reliable field tests are.</td><td><span class="tag ok">a, b stated</span> <span class="tag warn">c inferred</span></td></tr>
+      <tr><td>2</td><td>Who experiences it</td><td>Seizing officers (their reasonable-belief basis is hard to prove); accused persons (misread positives lead to custody); prosecution (cases lost on procedure); NCB HQ (no data on kit quality)</td><td><span class="tag ok">Handbook [S4]</span></td></tr>
+      <tr><td>3</td><td>Who operates it</td><td>Seizing officers of NCB and other drug-law agencies (state police, customs, CBN) during search and seizure; supervisors; the investigating officer when the lab report arrives</td><td><span class="tag warn">Multi-agency use inferred from free kit supply [S6]</span></td></tr>
+      <tr><td>4</td><td>Stakeholders</td><td>NCB (problem owner, kit supplier, SIMS owner); witnesses (panchas); magistrates (s.52A certification, Rule 9); labs (CRCL, CFSL, FSL); courts; defence; NIC or the hosting provider</td><td><span class="tag ok">Rules [S5]</span></td></tr>
+      <tr><td>5</td><td>Current workflow</td><td>Search (video-recorded where required) → kit test on each package → colour matched to printed chart → result written in the panchnama → classification (Rule 3) → Form-1 to godown in 48 h → inventory and application to Magistrate (Forms 4–5) → sampling before the Magistrate, grouping only if colour results are identical (Rule 10(2)) → Test Memo to lab → report in 15 days to Magistrate and IO (Rule 14) → SIMS Form F entry within 48 h of the FIR</td><td><span class="tag ok">[S4][S5][S12]</span></td></tr>
+      <tr><td>6</td><td>Where it fails</td><td>At the reading (subjective), at recording (hand-written after the fact, not bound to the package or witnesses), and with no feedback from the lab</td><td><span class="tag ok">Stated</span> + <span class="tag warn">feedback inferred</span></td></tr>
+      <tr><td>7</td><td>Causes</td><td>Human colour judgement; uncontrolled light (night searches allowed; raid checklist lists torches and spotlights); printed chart colours differ from reaction colours; no timing discipline; paper records; no link from lab back to the field</td><td><span class="tag ok">[S4][S6]</span> <span class="tag warn">chart mismatch and timing inferred</span></td></tr>
+      <tr><td>8</td><td>Explicit constraints</td><td>Existing kits; no new hardware; reference card in frame; timestamp, GPS, operator ID and image hash; signed record; searchable log; presumptive only</td><td><span class="tag ok">[S1]</span></td></tr>
+      <tr><td>9</td><td>Implied constraints</td><td>Works offline in remote areas; runs on ordinary Android phones; hosted in India on government infrastructure; fits NDPS paperwork and evidence law; must not slow a raid; must stand up to defence cross-examination</td><td><span class="tag warn">Inferred</span></td></tr>
+      <tr><td>10</td><td>Real success</td><td>An independent expert can verify offline that the record set for an operation is complete, unaltered, from an enrolled officer's device, within a bounded time and place. Two officers reading the same test under different light reach the same outcome or both abstain. The tool adds little time and removes duplicate paperwork.</td><td>Our definition</td></tr>
+      <tr><td>11</td><td>What would NOT solve it</td><td>A better colour classifier alone (still no trusted record). An image hash alone (anyone can re-hash). Blockchain (doesn't bind the physical event and can't work offline). Dashboards, chatbots, or a CNN "drug detector" trained on synthetic images.</td><td>Reasoned below</td></tr>
+      <tr><td>12</td><td>Our assumptions</td><td>See Phase 15. Riskiest: that kit reactions are separable by phone camera after calibration; and that NCB wants records that could also be used by the defence.</td><td><span class="tag crit">Unverified</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="panel good"><h3>Facts</h3><ul>
+      <li>The four required app functions and the "presumptive" note [S1]</li>
+      <li>Kits are used to form <em>prima facie</em> belief; every package is tested; the result goes in the panchnama; lab negatives after field positives happen [S4][S13]</li>
+      <li>Kit result is named in Rule 3(1), Rule 10(2) and Form-1 item 5; lab reports go to the Magistrate and IO within 15 days (Rule 14) [S5]</li>
+      <li>BSA s.63 certificate carries hash value and algorithm; BPR&amp;D SOP asks for hashing on the phone [S7]</li>
+      <li>1,15,236 NDPS cases in 2022; 30 NCB zonal units [S8]</li>
+      <li>SIMS Form F within 48 hours of FIR [S12]</li>
+    </ul></div>
+    <div class="panel"><h3>Inferences (reasoned from facts)</h3><ul>
+      <li>"Documentary evidence" here means evidence of procedure, not substance identity</li>
+      <li>Poor lighting is common (night searches allowed; torches on the raid checklist)</li>
+      <li>No systematic field-vs-lab comparison exists today (no source shows one)</li>
+      <li>A wrong field classification can affect custody until the lab reports</li>
+    </ul></div>
+    <div class="panel bad"><h3>Assumptions (we are betting on these)</h3><ul>
+      <li>Kit reaction colours are separable by a phone camera after calibration</li>
+      <li>Officers carry smartphones that pass attestation</li>
+      <li>NCB can share kit instruction sheets and supply reference cards with kits</li>
+      <li>Supervising officers have, or can get, Class 3 DSCs</li>
+      <li>Officers will adopt a tool that also creates records the defence can use</li>
+    </ul></div>
+    <div class="panel"><h3>Unknown</h3><ul>
+      <li>Reagents in each bottle, read times, and the colours for Tests C and D (the kit chart in the NICFS guide gives Tests A, B and E)</li>
+      <li>API access to SIMS, e-Sakshya/ICJS and Parichay for NCB</li>
+      <li>Whether NCB uses e-Sakshya at all</li>
+      <li>Number of field users and phone models</li>
+      <li>How courts will treat this record type</li>
+    </ul></div>
+  </div>
+
+  <h3>Ambiguities, reasoned through</h3>
+  <ul>
+    <li><strong>"Relied upon as documentary evidence."</strong> Evidence of <em>what</em>? Not substance identity: the handbook says only the notified lab expert's report proves that [S4], and the statement says the output doesn't replace lab testing [S1]. So we read it as <strong>documentary evidence of the procedure</strong>: that a test happened on this package, with this result, at this time and place, by this officer.</li>
+    <li><strong>"Positive / negative / inconclusive."</strong> Positive for what? A kit step shows a colour pattern for a drug class. So the classifier answers "does this step's colour match outcome X in the kit profile", combined across steps as the kit sheet says. It never answers "this is heroin".</li>
+    <li><strong>Which colour test Rule 10(2) means.</strong> Sampling happens before the Magistrate (Rule 9), usually after the field operation [S5]. Grouping may rely on the field records or on a re-test at sampling. The same app must serve both.</li>
+    <li><strong>"Operator identifier."</strong> No identity scheme is specified. Parichay covers officials with government email [S22], but whether all seizing officers have it is unknown. The design needs a fallback: a device enrolment approved by a supervisor.</li>
+    <li><strong>"Mobile/web."</strong> A web app can't use hardware-backed keys with attestation, or control camera exposure. That decides it for native Android.</li>
+  </ul>
+</section>
+
+<section id="p1">
+  <span class="kicker">Phase 1 · Domain research</span>
+  <h2>What exists around this problem</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Area</th><th>Finding</th><th>Why it matters</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Kit use</td><td>NCB uses "DD kits" for <em>prima facie</em> determination; three kit types; each package tested; result recorded in the panchnama; a lab negative after a field positive is "often possible"</td><td>The record's legal role is reasonable belief and procedure, not identity</td><td>[S4][S13] primary</td></tr>
+      <tr><td>Kit format</td><td>NCB's Narcotic Drugs Detection Kit (NICFS guide Figs 8.12–8.16): Tests A–E, a 3-well spot plate and test tubes, Test B read in the lower liquid layer, positives stated as colour ranges, two screening flow charts. Tests C and D appear in the flow charts but not on the chart.</td><td>The app encodes this kit as a signed guided protocol; decisions use colour bands, not points</td><td>[S6] government training material (found in round 4)</td></tr>
+      <tr><td>Rules</td><td>Rule 3(1) classification by kit result; Rule 5 Form-1 within 48 h (item 5 is the kit result); Rule 10(2) grouping on identical colour results; Rule 13 Test Memo; Rule 14 report to IO in 15 days</td><td>Four places where the reading matters; the lab result already returns to the IO</td><td>[S5] primary</td></tr>
+      <tr><td>Evidence law</td><td>BNSS s.105 video of search/seizure; BSA s.63(4)(c) certificate with hash; BPR&amp;D SOP: hash on the phone and note it in the case diary</td><td>Our record needs a certificate path, and the hash vocabulary already exists in police SOPs</td><td>[S7] primary</td></tr>
+      <tr><td>Procedure failures</td><td>Supreme Court acquitted in a 20 kg heroin case for s.52A non-compliance (2023). NCB's handbook foreword: acquittals on technical grounds</td><td>Proof of procedure is valued</td><td>[S9][S4] primary</td></tr>
+      <tr><td>SIMS</td><td>NCB's Seizure Information Management System; every NDPS case must be entered on Form F within 48 h of the FIR</td><td>An integration point that removes duplicate entry, not a system to replace</td><td>[S12] secondary; [S23] portal</td></tr>
+      <tr><td>e-Sakshya</td><td>MHA/NIC evidence-capture app; Sakshya Lockers on government cloud; APIs through ICJS; rollout partial</td><td>Production should hand evidence to it rather than build a rival evidence vault</td><td>[S7] primary; [S14] secondary</td></tr>
+      <tr><td>Field-test reliability</td><td>US data: large false-positive rates in field tests; colour judgement subjective</td><td>The accuracy loop is not academic</td><td>[S10][S11]</td></tr>
+      <tr><td>Verified capture</td><td>eyeWitness (IBA) footage relied on in Ukrainian courts; ProofMode signs capture metadata</td><td>Signed capture is proven practice; our addition is domain binding</td><td>[S15][S16]</td></tr>
+      <tr><td>Commercial readers</td><td>MobileDetect reads only its own QR-coded pouches</td><td>Doesn't meet "existing kits"</td><td>[S17] vendor</td></tr>
+      <tr><td>Government rules</td><td>CERT-In: NTP from NIC/NPL, logs kept 180 days in India. GIGW 3.0: WCAG 2.1 AA. DPDP s.17(1)(c) exemption for offence investigation (security safeguards still apply)</td><td>Hosting, logging, accessibility and privacy rules</td><td>[S18][S19][S21]</td></tr>
+      <tr><td>Scale</td><td>1,15,236 NDPS cases in 2022; 30 NCB zonal units</td><td>Sizing in Phase 5</td><td>[S8] primary</td></tr>
+      <tr><td>Digital signatures</td><td>Class 3 DSCs under CCA-licensed CAs are legally recognised signatures (IT Act ss.3 and 5); CCA runs an offline root; e-governance usage guidelines exist</td><td>Lets supervisors sign device bindings with a credential the law already recognises</td><td>[S27][S28] primary</td></tr>
+      <tr class="grp"><td colspan="4">Colour standards and case law</td></tr>
+      <tr><td>Colour-test standard</td><td>NIJ Std-0604.01 (US): final colours in Munsell notation, final colour within 1–2 min, 12 reagents. Many substances share a colour: with cobalt thiocyanate, cocaine = ephedrine = pseudoephedrine; with Mecke, morphine = codeine = MDA</td><td>The only published colour data; the model for our signed kit profile; forces colour-group output</td><td>[S35] primary (US)</td></tr>
+      <tr><td>Bombay HC, <em>Sagar Parshuram Joshi</em> (2021)</td><td>Field testing is "arbitrary" without a standard like NIJ's; a bare reference in the panchnama is not sufficient material; bail granted</td><td>The standard and the report are the missing pieces</td><td>[S36] primary, read in full</td></tr>
+      <tr><td>Delhi HC, <em>Masibur Khan</em> (2023)</td><td>Field test is only indicative; its absence doesn't vitiate the case once the lab confirms</td><td>Narrows our legal claim to the pre-lab stage: seizure, remand, bail, sampling</td><td>[S37] primary, read in full</td></tr>
+      <tr><td>Camera colour gamut</td><td>Saturated reaction blues fall outside what a JPEG (sRGB) can store and get clipped</td><td>RAW/linear capture is the primary tier</td><td>Our E12b/E13</td></tr>
+      <tr class="grp"><td colspan="4">Academic and technical research</td></tr>
+      <tr><td>Phone-image colorimetry of drug colour tests</td><td>Digital image analysis of presumptive colour tests gave usable, semi-quantitative results for amphetamines and opiates</td><td>Our measurement approach has a research basis; it's not invented for the hackathon</td><td>[S29] peer-reviewed</td></tr>
+      <tr><td>Portable drug testing review</td><td>Reviews field techniques, including the subjectivity of colour tests and image-based alternatives</td><td>State of the art and limitations</td><td>[S30] peer-reviewed review</td></tr>
+      <tr><td>Colour correction</td><td>Root-polynomial regression corrects camera colour while staying exposure-invariant</td><td>Upgrade path from our 3×3 correction</td><td>[S31] peer-reviewed <span class="tag warn">citation not re-fetched this session</span></td></tr>
+      <tr><td>Colour difference</td><td>CIEDE2000 formula and its implementation pitfalls</td><td>Our decision metric; test vectors for unit tests</td><td>[S32] peer-reviewed <span class="tag warn">not re-fetched</span></td></tr>
+      <tr><td>Flash/no-flash</td><td>Flash and no-flash image pairs separate the flash's lighting from ambient light</td><td>Basis of night mode (our E1b)</td><td>[S33] peer-reviewed <span class="tag warn">not re-fetched</span></td></tr>
+      <tr><td>Fiducial markers</td><td>ArUco markers: reliable detection even when partly covered</td><td>Card and vessel localisation without ML</td><td>[S34] peer-reviewed <span class="tag warn">not re-fetched</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Rule followed: other teams' code was not used to derive this design. Earlier we noted that public SIH26231 repos exist; they are used only in Phase X to predict what generic solutions look like.</p>
+</section>
+
+<section id="p2">
+  <span class="kicker">Phase 2 · Audit of our old plan</span>
+  <h2>Earlier FieldTest Recorder plans, treated as untrusted</h2>
+  <p>"Existing solution" means our dossier page and the revised plan in chat (there is no code repository yet), plus our three simulations.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Verdict</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Offline native Android capture</td><td><span class="tag ok">Keep</span></td><td>Forced by offline use, hardware keys and camera control</td></tr>
+      <tr><td>Card calibration, colour distance, abstain</td><td><span class="tag ok">Keep</span></td><td>E1: cuts error 3–4×; deterministic and explainable</td></tr>
+      <tr><td>Same-photo comparison</td><td><span class="tag ok">Keep, but make layout format-agnostic</span></td><td>E2's strongest result. The "6-well mat" was an unverified assumption about kit format.</td></tr>
+      <tr><td>Flash/no-flash night mode</td><td><span class="tag ok">Keep</span></td><td>E1b: brings sodium-lamp error to daylight level. Needs frame alignment.</td></tr>
+      <tr><td>Device signatures, hash chain, panchnama anchor</td><td><span class="tag ok">Keep, extend</span></td><td>E3. But it assumed one phone per raid; teams use several. The anchor must list every device's chain head.</td></tr>
+      <tr><td>RFC 6962 Merkle transparency log</td><td><span class="tag crit">Discard (MVP)</span></td><td>No external auditors to consume proofs. A hash-chained server ledger plus daily signed checkpoints, copied to every phone and to NCB HQ, gives the same insider protection with less code.</td></tr>
+      <tr><td>C2PA manifests</td><td><span class="tag crit">Discard</span></td><td>No consumer in the Indian court workflow; adds a heavy dependency</td></tr>
+      <tr><td>"AI colour-curve classifier"</td><td><span class="tag crit">Discard</span></td><td>No training data, can't be validated, and legally hard to explain. Keep capturing the colour curve as data only.</td></tr>
+      <tr><td>React accuracy dashboard</td><td><span class="tag warn">Replace</span></td><td>A few server-rendered QA pages and a CSV/PDF report meet the need with a smaller attack surface</td></tr>
+      <tr><td>FastAPI server</td><td><span class="tag warn">Replace</span></td><td>A Kotlin/JVM server can share one record-verification library with the app and the offline verifier. One implementation of the format means fewer mismatch bugs.</td></tr>
+      <tr><td>Bhashini voice, RFC 3161 timestamps</td><td><span class="tag warn">Defer</span></td><td>Nice to have; not core</td></tr>
+      <tr><td>Officer reads first</td><td><span class="tag warn">Keep for pilot only</span></td><td>Needed to measure human vs app agreement; may be friction later</td></tr>
+      <tr><td>Profile integrity</td><td><span class="tag crit">Was missing</span></td><td>A tampered kit profile silently changes every classification. Profiles must be signed, versioned, and approved by two people.</td></tr>
+      <tr><td>Witnesses</td><td><span class="tag crit">Was missing</span></td><td>Panchas are the existing legal trust mechanism; the anchor must sit where they sign</td></tr>
+      <tr><td>Sample and Test Memo linkage</td><td><span class="tag crit">Was missing</span></td><td>Without SO/SD sample IDs and Test Memo numbers, lab results can't be matched to packages</td></tr>
+      <tr><td>Server trust</td><td><span class="tag crit">Was implicit</span></td><td>The server must be unable to forge records. Records are signed on devices; the server only stores, orders and counter-signs.</td></tr>
+      <tr><td>Device enrolment trust (found in revision 3)</td><td><span class="tag crit">Was wrong</span></td><td>Revision 2 had the <em>server</em> issue the device binding certificate. Then a server admin could enrol a fake device for any officer and sign fake records that would verify. Fix: the binding is signed by the supervising officer's own key: a Class 3 DSC in production (legally recognised under IT Act ss.3 and 5 [S27]), a test CA in the prototype. The verifier trusts only NCB's signed list of authorised supervisors, never the server.</td></tr>
+      <tr><td>Image privacy</td><td><span class="tag crit">Was missing</span></td><td>Full frames can capture faces and interiors. But cropping after capture would break "hash of the captured image". Fix: a viewfinder guide frames only the card, vessel and package label; the captured image is hashed and stored unmodified; any crop for QA views is a derived copy that references the original hash.</td></tr>
+      <tr><td>Evidence vault in production</td><td><span class="tag warn">Rethink</span></td><td>Don't compete with Sakshya Lockers. Our server is the enrolment, verification and QA layer; long-term evidence storage should go to government evidence infrastructure where available.</td></tr>
+      <tr><td>"Positive for drug X" output</td><td><span class="tag crit">Was wrong</span></td><td>Found by E6: cocaine and ephedrine give the identical published colour with cobalt thiocyanate. Output is now the colour group plus every substance consistent with it.</td></tr>
+      <tr><td>JPEG-only capture</td><td><span class="tag crit">Was wrong</span></td><td>Found by E12: JPEG can't store the saturated blues of the cocaine test (21% wrong). RAW/linear capture is now primary (E13).</td></tr>
+      <tr><td>Phone deletes records after any server checkpoint</td><td><span class="tag crit">Was wrong</span></td><td>Found by E14: after a restore from an older backup, 5 of 16 records were lost. Phones now wait for a durable, post-backup checkpoint.</td></tr>
+      <tr><td>Attestation "checked at enrolment"</td><td><span class="tag warn">Was a placeholder</span></td><td>Now a real verifier: chain to Google's roots, revocation list, secure hardware, verified boot, locked bootloader, challenge, key match (E15).</td></tr>
+      <tr><td>US (NIJ) reagents as the target kit</td><td><span class="tag crit">Was wrong</span></td><td>Found by an external review: NCB's own kit chart was in our sources as an image. The product now follows NCB's Narcotic Drugs Detection Kit; NIJ colours remain a second test dataset.</td></tr>
+      <tr><td>Single-point colour rule</td><td><span class="tag crit">Was wrong</span></td><td>Found by E17: at 20% less sample the cobalt rule called none of the cocaine group positive; at 40% more it called other blues positive. Replaced by colour bands plus a blank well.</td></tr>
+      <tr><td>Time and GPS "in the record"</td><td><span class="tag crit">Was not in code</span></td><td>The reference format signed neither. Now every test record signs device time, GNSS time, GPS with a mock-location flag, and the officer.</td></tr>
+      <tr><td>Verifying one raid</td><td><span class="tag crit">Disclosed every case</span></td><td>The chain needed every earlier record. Now the signed header carries only a payload hash, so other cases are disclosed as hashes.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p3">
+  <span class="kicker">Phase 3 · First principles</span>
+  <h2>Minimum system, then real alternatives</h2>
+  <p><strong>Minimum system that solves the root problem:</strong> something that (1) turns the observed colour into a number that doesn't depend on light or camera, (2) binds that number and the image to package, officer, place and time at the moment of the test, (3) makes later edits or omissions detectable by someone who doesn't trust the officer, the app vendor or the server, and (4) connects the result to the lab outcome.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Criterion</th><th>A · Signed capture, human reading</th><th>B · A + on-device calibrated measurement (chosen)</th><th>C · Server-side analysis / remote expert reading</th><th>D · Replace kits with handheld spectrometers</th><th>E · Blockchain ledger</th></tr></thead>
+    <tbody>
+      <tr><td>Problem coverage</td><td>Record: yes. Objectivity: no. Classification: no.</td><td>All three</td><td>Objectivity yes; record weaker when offline</td><td>Better chemistry, but not what was asked</td><td>Integrity only</td></tr>
+      <tr><td>Meets statement</td><td>No (no automatic classification)</td><td>Yes</td><td>Partly (fails offline)</td><td>No (new hardware)</td><td>Not by itself</td></tr>
+      <tr><td>Technical feasibility</td><td>High</td><td>High (E1–E3 support it)</td><td>Medium</td><td>High, but hardware</td><td>Medium</td></tr>
+      <tr><td>Complexity</td><td>Low</td><td>Medium</td><td>Medium, plus operations staff</td><td>Procurement-heavy</td><td>High</td></tr>
+      <tr><td>Cost</td><td>Very low</td><td>Low (phones, printed card)</td><td>Ongoing staff</td><td>High per unit (not quantified)</td><td>Nodes to run and maintain</td></tr>
+      <tr><td>Scalability</td><td>High</td><td>High (work done on phones)</td><td>Limited by expert staff</td><td>Limited by number of units</td><td>Fine at this volume</td></tr>
+      <tr><td>Reliability / offline</td><td>High, offline</td><td>High, offline</td><td>Needs network</td><td>High</td><td>Needs network for consensus</td></tr>
+      <tr><td>Security</td><td>High (same integrity core)</td><td>High</td><td>More data in transit and in one place</td><td>Vendor firmware trust</td><td>Garbage in stays garbage; doesn't bind the event</td></tr>
+      <tr><td>Privacy</td><td>Good</td><td>Good</td><td>Central image pool = bigger exposure</td><td>n/a</td><td>Replicated data is hard to delete</td></tr>
+      <tr><td>Maintainability</td><td>High</td><td>Medium (colour engine + profile governance)</td><td>Staff-heavy</td><td>Vendor-dependent</td><td>Low (specialist skills)</td></tr>
+      <tr><td>Deployment difficulty</td><td>Low</td><td>Moderate (enrolment, cards, profiles)</td><td>New service team</td><td>Procurement cycle</td><td>High</td></tr>
+      <tr><td>Government adoption difficulty</td><td>Easy</td><td>Moderate</td><td>Hard</td><td>Budget decision</td><td>Hard (audit, operations)</td></tr>
+      <tr><td>Data requirements</td><td>None</td><td>NCB kit sheets + validation reactions</td><td>Central image pool</td><td>Vendor spectral libraries</td><td>n/a</td></tr>
+      <tr><td>Integration requirements</td><td>Optional</td><td>Optional (file exports work without APIs)</td><td>Network-dependent</td><td>Vendor software</td><td>Heavy</td></tr>
+      <tr><td>Explainability</td><td>Human</td><td>Deterministic, can be re-run</td><td>Human expert</td><td>Instrument library match</td><td>n/a</td></tr>
+      <tr><td>Main failure mode</td><td>Still subjective</td><td>Kit colours may not separate → abstains</td><td>Network, latency</td><td>Cost, training</td><td>Doesn't bind the physical event</td></tr>
+      <tr><td>Time to build</td><td>2–3 weeks</td><td>6–8 weeks</td><td>6–8 weeks + staffing</td><td>n/a (procure)</td><td>8+ weeks</td></tr>
+      <tr><td>Prototype feasibility</td><td>Easy</td><td>Feasible</td><td>Feasible</td><td>Not for a software track</td><td>Feasible</td></tr>
+      <tr><td>Production feasibility</td><td>Easy</td><td>Feasible after kit validation</td><td>Questionable</td><td>Depends on budget</td><td>Poor</td></tr>
+      <tr><td>Verdict</td><td>Fallback mode inside B</td><td><strong>Chosen</strong></td><td>Remote reading kept as an optional QA queue in production</td><td>Out of scope; record format accepts other instruments later</td><td>Rejected</td></tr>
+    </tbody>
+  </table></div>
+  <p>A is not discarded: when capture quality fails or the kit isn't covered by a profile, B falls back to A. The officer's reading plus a signed, anchored image is still better than today.</p>
+</section>
+
+<section id="p4">
+  <span class="kicker">Phase 4 · Try to break it</span>
+  <h2>Hostile, messy and abnormal conditions</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Condition</th><th>What happens</th><th>Design response</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3">Data</td></tr>
+      <tr><td>Card missing, dirty, faded or partly covered</td><td>No calibration</td><td>Fewer than 4 markers or too few usable patches → capture rejected. Card serial ties to its batch characterisation file. Faded card shows as rising calibration error per card.</td></tr>
+      <tr><td>Wrong or outdated kit profile</td><td>Systematic misclassification</td><td>Signed, versioned profiles; version stored in every record; profile compared with kit batch; old records re-evaluated reproducibly</td></tr>
+      <tr><td>Duplicate sync, re-uploads</td><td>Double counting</td><td>Content addressing: record hash as primary key; upsert is a no-op</td></tr>
+      <tr><td>Conflicting records (same device and counter, different hash)</td><td>A "fork", strong sign of tampering or cloning</td><td>Reject the second, raise an alert, freeze the device</td></tr>
+      <tr><td>Corrupted image in storage</td><td>Evidence lost</td><td>Hash check on upload and periodic re-hash; WORM storage; phone keeps its copy until a durable (post-backup) checkpoint covers it (E14)</td></tr>
+      <tr><td>Lab result mis-entered</td><td>Wrong accuracy statistics</td><td>Two-person entry (enter + verify); hash of the source document; outliers flagged</td></tr>
+      <tr><td>Distribution shift (new cutting agents, new supplier)</td><td>Colours drift</td><td>Accuracy loop per batch shows it; abstention rate by profile monitored</td></tr>
+      <tr class="grp"><td colspan="3">Users</td></tr>
+      <tr><td>Non-technical officer under stress, at night</td><td>Skipped steps</td><td>One guided flow, large targets, every step optional except capture; the app never blocks the seizure, only records what happened</td></tr>
+      <tr><td>Workflow abandoned halfway</td><td>Incomplete operation</td><td>Each test is atomic; open operations auto-close with an "abandoned" record at the next launch; the anchor lists what exists</td></tr>
+      <tr><td>Officer tries to hide a negative or inconclusive</td><td>Selective record</td><td>Counter and chain; anchor in witness-signed panchnama (E3)</td></tr>
+      <tr><td>Officer re-runs a whole sequence to replace results</td><td>Fabrication</td><td>Monotonic device counter across operations; anchor mismatch (E3)</td></tr>
+      <tr><td>Staged photo (pre-reacted well, other substance)</td><td>False positive record</td><td>Capture starts before the reagent drop; a well that is already coloured, or an abrupt colour jump, is rejected (E16: staged 0.0% [0–0.9] accepted, mid-capture swap 0.5% [0.1–1.8]). Package label and card in frame; s.105 video. <span class="tag warn">Residual</span> a swap timed exactly at the drop, or a replayed video, passes colour checks; the system proves what the camera saw, not intent.</td></tr>
+      <tr><td>Several officers, several phones, one raid</td><td>Split chains</td><td>Operation ID shared by QR from the lead phone; anchor lists every device's chain head</td></tr>
+      <tr class="grp"><td colspan="3">System</td></tr>
+      <tr><td>No network for days</td><td>No sync</td><td>Fully offline; phones keep everything until a receipt and checkpoint confirm server storage</td></tr>
+      <tr><td>Server, database or storage down</td><td>No sync or reports</td><td>Field work unaffected; phones are the recovery source for anything not yet confirmed</td></tr>
+      <tr><td>Profile update fails verification</td><td>Unsafe profile</td><td>Keep the last good profile; alert</td></tr>
+      <tr class="grp"><td colspan="3">Security</td></tr>
+      <tr><td>Stolen phone</td><td>Forged signatures</td><td>Key use requires device unlock (user authentication); supervisor revokes the key; records after revocation are rejected</td></tr>
+      <tr><td>Rooted phone</td><td>Key extraction or app patching</td><td>Key attestation at enrolment (verified boot, app signing certificate, TEE/StrongBox) [S24]. Attestation is tied to key <em>creation</em>, so at each sync the phone creates a short-lived key with the server's fresh nonce and sends its attestation. Play Integrity is an extra signal only where Google Play services exist. The verifier is implemented and tested on Google's sample chains, including tampered, revoked and forged-root chains (E15). <span class="tag warn">Residual</span> hardware-level exploits exist; attestation raises the cost, it doesn't make compromise impossible.</td></tr>
+      <tr><td>Replay of old sync requests</td><td>Duplicate or out-of-order data</td><td>Idempotent by hash; counters must increase; nonce plus timestamp in signed sync envelopes</td></tr>
+      <tr><td>Malicious upload (oversized or malformed image)</td><td>Crash, disk exhaustion</td><td>Size caps; strict JPEG/PNG decoding in a sandboxed worker; content hash must match the record</td></tr>
+      <tr><td>Insider admin edits or deletes database rows</td><td>Tampering</td><td>Records are self-verifying (admin has no device keys); ledger hash chain; daily checkpoints copied to phones and NCB HQ; WORM object lock</td></tr>
+      <tr><td>Insider admin enrols a fake device for an officer</td><td>Forged records that verify</td><td>Bindings must carry a supervisor's signature (DSC in production) that chains to NCB's authorised-supervisor list; server-only bindings are rejected by the verifier</td></tr>
+      <tr><td>Account takeover (portal)</td><td>Approvals or lab entries by an attacker</td><td>Parichay SSO with its second factor; high-risk actions (binding approval, profile publish) need the DSC or two-person approval, not just a session</td></tr>
+      <tr><td>Privilege escalation, authorisation bypass</td><td>Cross-unit data access</td><td>Every query scoped by unit and case assignment in the service layer; authorisation matrix tests in CI</td></tr>
+      <tr><td>API abuse, rate-limit bypass</td><td>Server load, enumeration</td><td>Per-device rate limits keyed on the device key (not IP); unenrolled callers only reach enrolment; record IDs are unguessable hashes</td></tr>
+      <tr><td>Injection (SQL, template, path)</td><td>Data theft</td><td>Parameterised queries only; server-side templates auto-escape; content-addressed storage keys (no user-supplied paths)</td></tr>
+      <tr><td>Data poisoning through the lab loop</td><td>Bad lab entries shift future kit profiles</td><td>Lab data never changes profiles automatically. Profile updates are proposed offline, reviewed, and published by two people as a new signed version; two-person lab entry; outliers flagged.</td></tr>
+      <tr><td>Prompt injection, model failure, queue overload</td><td>—</td><td>Not applicable: no LLM, no model running on the phone or server, no message queue in the design</td></tr>
+      <tr class="grp"><td colspan="3">Scale and format</td></tr>
+      <tr><td>Very large seizure (hundreds of packages)</td><td>Slow, huge anchor</td><td>Batch mode; the anchor carries only one head per phone, however many records</td></tr>
+      <tr><td>Unexpected image format (HEIC, HDR, "beauty" processing)</td><td>Wrong colours or unreadable</td><td>The app captures through Camera2/CameraX in a fixed format with processing controls; it never imports gallery images</td></tr>
+      <tr><td>Reaction colour outside what a JPEG can store</td><td>Clipped colours misread (cobalt thiocyanate 21% wrong on JPEG, E12)</td><td>RAW/linear capture first (0% [0–1.6], E13); the profile checker flags reagents that need RAW; JPEG-only phones use the region map</td></tr>
+      <tr><td>More or less sample, cut or impure sample</td><td>Colour gets lighter or deeper; a single-point rule misreads it (E17)</td><td>Colour bands over 0.5–1.6× amount, read against the blank well; 0.0% false positives in E17. <span class="tag warn">Residual</span> partially reacted wells (1.7% wrong on NCB-kit bands)</td></tr>
+      <tr><td>No colour change (the most common real negative)</td><td>Was always "inconclusive"</td><td>Reagent-only blank well in every photo: within 6 ΔE00 of it = "negative, no colour change" (99–100%, E17)</td></tr>
+      <tr><td>Same batch submitted repeatedly</td><td>Duplicates</td><td>Idempotent by record hash</td></tr>
+      <tr><td>Data exfiltration</td><td>Raid locations leak</td><td>Minimal data (no informant data, accused name optional); encryption at rest; role and unit scoping; exports audited</td></tr>
+      <tr><td>Malicious profile</td><td>Mass misclassification</td><td>Profile signing key offline, two-person approval, app pins the profile authority's public key</td></tr>
+      <tr class="grp"><td colspan="3">"AI"</td></tr>
+      <tr><td>Is AI necessary?</td><td colspan="2"><strong>Not at run time.</strong> Locating the card and wells: ArUco markers plus a profile-defined layout (deterministic geometry). Correcting colour: least-squares fit against known patches (physics). Deciding: colour groups in the signed profile, with a margin and an abstain band (statistics). Quality: blur, glare and clipping checks (classical metrics). ML without the card made up to 5.6% wrong calls under an unseen light (E7), and a model on the phone would fail the "court can re-run it" requirement. <strong>Where ML could be used:</strong> for JPEG-only phones, a boundary learned offline from validation reactions can be frozen into a signed CIELAB lookup table (E11, E12), guarded so it can only say positive near a documented colour. It is paused for NCB's kit until real validation data exists. The primary decision uses colour bands computed from the kit chart and Beer-Lambert physics (E17), with no learned component. Profiles change only as new signed versions, never by a silent model update.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p5">
+  <span class="kicker">Phase 5 · Scale</span>
+  <h2>How big this really is</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Quantity</th><th class="num">Estimate</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>NDPS cases per year (all India)</td><td class="num">~1.15 lakh</td><td>2022 figure [S8], verified</td></tr>
+      <tr><td>Test records per year (all agencies)</td><td class="num">7 lakh – 20 lakh</td><td><span class="tag warn">Estimate</span> about 3 packages × about 2 kit steps per case, plus tests in searches that led to no case</td></tr>
+      <tr><td>Records per day (average)</td><td class="num">2,000 – 5,500</td><td>Derived</td></tr>
+      <tr><td>Peak sync rate</td><td class="num">&lt; 10 requests/s</td><td><span class="tag warn">Estimate</span> bursts when teams return to network</td></tr>
+      <tr><td>Media per record (tightly framed still + ambient frame + low-resolution kinetic strip)</td><td class="num">~1–1.5 MB</td><td>Design target</td></tr>
+      <tr><td>Storage growth</td><td class="num">~1–3 TB/year</td><td>Derived; object storage</td></tr>
+      <tr><td>Database rows</td><td class="num">~2–6 M/year</td><td>Records, media, ledger</td></tr>
+      <tr><td>Enrolled field devices</td><td class="num">thousands – tens of thousands</td><td><span class="tag crit">Unknown</span> order-of-magnitude guess: NCB units first, then state agencies and police stations that register NDPS cases</td></tr>
+      <tr><td>Geography</td><td class="num">national</td><td>Clustered where NDPS cases concentrate; sync is bursty, arriving when teams return to network</td></tr>
+      <tr><td>Read/write pattern</td><td class="num">write-mostly</td><td>Records written once and never updated; reads are mostly bundle exports and QA aggregates</td></tr>
+      <tr><td>Concurrent admin/QA users</td><td class="num">&lt; 200</td><td><span class="tag warn">Estimate</span> supervisors, IOs, QA analysts</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Consequence:</strong> this is a small, write-mostly, append-only workload. One PostgreSQL primary with a streaming replica and S3-compatible object storage are more than enough. Two stateless app instances behind the hosting provider's load balancer give availability, not capacity. No Kafka, Redis, Elasticsearch or microservices: the load doesn't justify them, and each would add a part that government IT must patch and audit. Background work runs from a PostgreSQL job table (<code>SELECT … FOR UPDATE SKIP LOCKED</code>).</p>
+  <p><strong>At 10× scale</strong> (about 2 crore records a year): same design, with yearly table partitions. <strong>At 100×</strong>: partition by year and agency, read replicas for QA queries, object storage scales on its own. The first thing to break would be QA queries, not ingestion. Fix with materialised views.</p>
+</section>
+
+<section id="p6">
+  <span class="kicker">Phase 6 · Architecture</span>
+  <h2>Every component, and why it exists</h2>
+<pre class="mermaid">flowchart LR
+  subgraph Field["Field: FieldTest Engine SDK on officer phones, offline"]
+    P["Guided NDDK protocol<br/>Tests A-E, flow charts"] --> C["Capture<br/>RAW first, JPEG fallback,<br/>starts before the drop"]
+    C --> H0["Hash captured image<br/>as captured, unmodified"]
+    H0 --> G["Geometry<br/>ArUco + profile layout,<br/>locate card and vessels"]
+    G --> M["Colour measurement<br/>card fit, blank well, Lab,<br/>colour bands + consistent substances"]
+    M --> R["Record builder<br/>header + payload: time, GNSS,<br/>GPS, officer, image hash"]
+    R --> S["Signer<br/>Keystore key,<br/>needs device unlock"]
+    S --> L[("Local ledger<br/>counter + prev hash<br/>encrypted")]
+    L --> A["Anchor<br/>all devices' chain heads<br/>to panchnama + video"]
+    L --> D["Documents<br/>Form-1 item 5, panchnama text,<br/>s.63 Part A data"]
+  end
+  L -- "signed sync<br/>when online" --> API
+  subgraph Server["Thin server: one Spring Boot app, NIC or MeitY-empanelled cloud"]
+    API["Sync + enrolment API"] --> DB[("PostgreSQL<br/>records, ledger,<br/>checkpoints")]
+    API --> OBJ[("Object storage<br/>WORM, content-addressed")]
+    DB --> CK["Durable signed checkpoint<br/>(after backup)"]
+    DB --> QA["Lab results + QA statistics"]
+    DB --> UI["Server-rendered<br/>supervisor / QA pages"]
+  end
+  CK -- "copied to phones<br/>and NCB HQ" --> L
+  DB --> BUN["Evidence bundle"] --> V["Offline verifier<br/>(same record-core library)"]
+  API -. "production" .-> EXT["e-Sakshya / ICJS,<br/>SIMS Form F, Parichay"]</pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Why it exists</th><th>Would we miss it?</th></tr></thead>
+    <tbody>
+      <tr><td>record-core library (Kotlin/JVM)</td><td>One implementation of canonical encoding, hashing, signatures, chain and anchor checks, used by app, server and verifier</td><td>Yes. Three implementations would drift, and a mismatch is a court-grade bug.</td></tr>
+      <tr><td>colour-engine library</td><td>Deterministic measurement; the verifier re-runs it on stored frames to reproduce the result</td><td>Yes. Reproducibility is our explainability.</td></tr>
+      <tr><td>Guided kit protocol + signed profiles</td><td>NCB's kit is a sequence (Tests A–E, flow charts). The signed protocol holds steps, drops, vessels, the layer to read, timings, the next test and each test's colour bands; results are combined across tests with the NDPS quantity warning</td><td>Yes. Otherwise kit logic is hard-coded.</td></tr>
+      <tr><td>Local ledger + signer</td><td>Integrity at the point of the event, offline</td><td>Yes. This is the core.</td></tr>
+      <tr><td>Anchor</td><td>Catches tail deletions and re-runs; ties to witnesses</td><td>Yes (E3)</td></tr>
+      <tr><td>Liveness check</td><td>Capture starts before the reagent drop; rejects pre-coloured wells and abrupt swaps</td><td>Yes (E16). Otherwise a photo of a staged well is accepted.</td></tr>
+      <tr><td>On-device searchable log + "verify record" view</td><td>Required by the statement. Search offline by case number, package, date, result or kit batch. Opening a record re-checks its signature and chain on the spot, so judges see the signed record verified on the phone itself.</td><td>Yes. A stated requirement.</td></tr>
+      <tr><td>Documents</td><td>Removes duplicate paperwork; the reason officers will use it</td><td>Yes, for adoption</td></tr>
+      <tr><td>Enrolment API + attestation check</td><td>Checks the phone's key is hardware-backed and stores the supervisor-signed binding. The server records trust; it doesn't grant it.</td><td>Yes. Without it, anyone can sign.</td></tr>
+      <tr><td>Sync API</td><td>Moves records to durable storage; issues receipts</td><td>Yes</td></tr>
+      <tr><td>PostgreSQL</td><td>Relational integrity between operations, packages, samples and lab results; append-only enforcement</td><td>Yes</td></tr>
+      <tr><td>Object storage (WORM)</td><td>Large immutable media outside the database; object lock blocks deletion</td><td>Yes</td></tr>
+      <tr><td>Durable checkpoint</td><td>Makes server-side rewriting detectable without a Merkle log; taken after a backup, so phones can safely delete their copies (E14)</td><td>Yes (insider threat)</td></tr>
+      <tr><td>QA statistics</td><td>The only place field accuracy becomes visible</td><td>Yes, for NCB</td></tr>
+      <tr><td>Server-rendered pages</td><td>Supervisors approve devices, IOs enter lab results, QA reads reports</td><td>Yes, but kept minimal</td></tr>
+      <tr><td>Offline verifier CLI</td><td>Lets a court-side expert verify without our server</td><td>Yes</td></tr>
+      <tr><td>Redis, message queue, search cluster, microservices, LLM, blockchain</td><td>No requirement justifies them</td><td>Not included</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Operation flow</h3>
+<pre class="mermaid">sequenceDiagram
+  participant O as Lead officer phone
+  participant T as Team phone
+  participant W as Witnesses (panchas)
+  participant S as Server
+  O->>O: Open operation (crime no., kit batch, e-Sakshya ref)
+  O->>T: Share operation ID by QR
+  loop each package P-n
+    O->>O: Capture from before the drop, calibrate, measure
+    O->>O: Officer reading, then app reading
+    O->>O: Sign record, chain to previous
+  end
+  T->>T: Same for its packages
+  O->>O: Close: collect chain heads from all phones (QR)
+  O->>W: Anchor code written into panchnama, witnesses sign
+  O->>O: Anchor shown to the s.105 video
+  O-->>S: Sync when online (signed batch)
+  S-->>O: Receipts + latest checkpoint
+  Note over O,S: Phone deletes local copies only after receipt and a durable (post-backup) checkpoint</pre>
+
+  <h3>Anchor format</h3>
+  <p>The anchor is a QR code carrying, for every phone in the operation, the device ID, counter range and <strong>full</strong> SHA-256 chain head. It's printed or shown on screen and photographed onto the panchnama. A handwritten code of 14 base-32 characters (65 bits plus a check character, so a copying mistake reads as a typo, not as tampering) is also written in by the officer and signed by the witnesses. That's long enough that producing a different record set with the same code would take an infeasible number of hardware-rate-limited signatures. If a team phone can't join the closing step (dead battery), it writes its own code separately and the anchor records it as absent.</p>
+
+  <h3>Trust model: who vouches for what</h3>
+<pre class="mermaid">flowchart TB
+  ROOT["NCB authorised-supervisor list<br/>signed offline, two-person"] --> SUP["Supervising officer<br/>Class 3 DSC (production) / test CA (prototype)"]
+  SUP --> BIND["Device binding<br/>officer + device + key, signed by supervisor"]
+  GOOG["Google attestation roots<br/>+ revocation list"] --> ATT["Key attestation<br/>secure hardware, verified boot,<br/>locked bootloader, challenge"]
+  ATT --> BIND
+  BIND --> REC["Test records<br/>signed by device key, hash-chained"]
+  WIT["Witness-signed panchnama<br/>+ s.105 video"] --> ANC["Anchor: chain heads of all phones"]
+  REC --> ANC
+  SRV["Server"] -. "stores, orders, counter-signs;<br/>cannot create bindings or records" .-> REC</pre>
+  <p>An offline verifier needs only three things: NCB's supervisor list, Google's attestation root and the anchor from the panchnama. It never trusts the server or our team.</p>
+
+  <h3>Sync request flow</h3>
+  <ol>
+    <li>Phone batches up to 100 unconfirmed records into an envelope (device ID, nonce, time, body hash), signs it with the device key, and adds a short-lived attested key bound to the server's latest nonce.</li>
+    <li>Server: TLS → per-device rate limit → size and schema limits → envelope signature and device status → fresh attestation check.</li>
+    <li>For each record: re-encode with JCS and require byte equality, so non-canonical input is rejected. Then verify the header signature, the payload hash and schema (time, GPS, officer), and the binding valid at the record's time; check counter and previous hash against the last stored record. A gap is accepted and flagged; a fork is rejected and alerted. Check the profile is known.</li>
+    <li>Insert record and ledger entry in one transaction (idempotent); return per-record status, a signed receipt and the latest checkpoint.</li>
+    <li>Phone uploads media with <code>PUT /media/{sha256}</code>; server streams to object storage, re-hashes, compares, and sets object lock.</li>
+    <li>Phone deletes local copies only after the receipt, confirmed media and a <strong>durable</strong> checkpoint (taken after a backup) covering the ledger entry. Deleting on any checkpoint lost 5 of 16 records in a restore test (E14).</li>
+  </ol>
+
+  <h3>Authentication and authorisation</h3>
+  <ul>
+    <li><strong>Enrolment (online, once):</strong> officer signs in (Parichay in production; agency directory in pilot). App generates an EC P-256 key in Android Keystore with an attestation challenge from the server. Server verifies the chain against Google's attestation roots and revocation list, plus verified boot, locked bootloader, app signing certificate, security level and the challenge (<code>attestation.py</code>, E15). <strong>The supervising officer then signs the binding (officer, device, key) with their own DSC</strong>; the server only stores and logs it. One active binding per device.</li>
+    <li><strong>Field (offline):</strong> signing needs recent device authentication (PIN or biometric), so a stolen unlocked-then-locked phone can't sign.</li>
+    <li><strong>Sync:</strong> TLS plus a device-signed request envelope (key ID, nonce, time, body hash). No bearer tokens stored on the phone.</li>
+    <li><strong>Portal:</strong> SSO plus role, and attribute checks on agency, unit and case assignment. Roles: field officer, supervisor, IO / lab liaison, QA analyst (aggregates only), profile authority (two-person), auditor (read-only logs), system admin (operations, no case data).</li>
+  </ul>
+
+  <h3>API</h3>
+<pre class="code">POST /api/v1/enrolments                  attestation chain + officer auth  → 201 pending
+POST /api/v1/enrolments/{id}/approve     binding document signed with the supervisor's DSC → stored + logged (server never signs bindings)
+GET  /api/v1/profiles?since=v            signed kit profiles + card batch files
+POST /api/v1/sync                        signed envelope: [records]        → per-record {accepted|duplicate|fork|rejected}, receipt, latest checkpoint
+PUT  /api/v1/media/{sha256}              raw bytes; server re-hashes      → 201 | 409 mismatch
+POST /api/v1/operations/{id}/anchor      chain heads + short code + panchnama ref
+POST /api/v1/samples                     SO/SD ids, lot → packages, Test Memo no.
+POST /api/v1/lab-results                 entered, then /verify by a second person
+GET  /api/v1/records/{hash}/bundle       zip: records, media, profile, certs, attestation, ledger seq, checkpoint, README
+GET  /api/v1/checkpoints/{date}          signed head of the server ledger</pre>
+  <p><strong>Error handling:</strong> every sync item gets its own status, so one bad record never blocks the batch. Validation errors are explicit (<code>SIGNATURE_INVALID</code>, <code>COUNTER_GAP</code>, <code>FORK</code>, <code>DEVICE_REVOKED</code>, <code>PROFILE_UNKNOWN</code>). The phone retries with backoff and never deletes unconfirmed data.</p>
+  <p><strong>Observability:</strong> sync success rate, forks, counter gaps, attestation failures, capture rejections by device model, abstention rate by profile, checkpoint export success. Logs go to the host's log system, kept 180 days in India [S18]. Alerts on forks, gaps and checkpoint failures.</p>
+  <p><strong>Backup and disaster recovery:</strong> PostgreSQL WAL archiving plus nightly base backups to a second site; object-store replication; target RPO ≤ 15 minutes for the server. For records the effective loss is zero, because phones hold data until a durable checkpoint, taken after a backup, covers it (E14 restore test: 16/16 recovered). Quarterly restore drill.</p>
+</section>
+
+<section id="p7">
+  <span class="kicker">Phase 7 · Data architecture</span>
+  <h2>What data exists and how it's kept honest</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Data</th><th>Origin / owner</th><th>Validation</th><th>Retention</th><th>Conflicts &amp; corrections</th></tr></thead>
+    <tbody>
+      <tr><td colspan="5"><strong>Who can access:</strong> field officers see their own records; supervisors see their unit; IOs see cases assigned to them; QA analysts see aggregates without locations; auditors see logs; system admins see neither case data nor media. Every read of media or a bundle export is logged.</td></tr>
+      <tr><td>Test records</td><td>Officer's phone / seizing agency</td><td>Signature, chain, counter, profile version, device status at signing time</td><td>Until case disposal plus appeal period; legal hold <span class="tag warn">Policy to confirm with NCB</span></td><td>Never edited. Corrections are new signed "amendment" records pointing to the original.</td></tr>
+      <tr><td>Media (captured frames, unmodified)</td><td>Phone</td><td>SHA-256 must match the record; decoded in a sandbox; derived crops stored separately and marked as derived</td><td>Same as record; WORM lock</td><td>Content-addressed, so no duplicates</td></tr>
+      <tr><td>Anchors</td><td>Lead phone plus witnesses</td><td>Heads must match synced chains</td><td>Same as case</td><td>Mismatch means a tamper alert, never an overwrite</td></tr>
+      <tr><td>Kit profiles, card batches</td><td>NCB profile authority</td><td>Two-person approval, offline signing key</td><td>Forever (old records reference them)</td><td>New version only</td></tr>
+      <tr><td>Samples, Test Memo links</td><td>IO</td><td>Package IDs must belong to the operation</td><td>Same as case</td><td>Audited edits</td></tr>
+      <tr><td>Lab results</td><td>Lab report copy to IO (Rule 14)</td><td>Two-person entry; source document hash</td><td>Same as case</td><td>Superseded entries kept with reason</td></tr>
+      <tr><td>Device registry</td><td>Enrolment</td><td>Attestation</td><td>Forever (public keys verify old records)</td><td>Revocation has a timestamp, never deletion</td></tr>
+    </tbody>
+  </table></div>
+<pre class="mermaid">erDiagram
+  AGENCY ||--o{ UNIT : has
+  UNIT ||--o{ OFFICER : employs
+  OFFICER ||--o{ DEVICE_BINDING : holds
+  DEVICE ||--o{ DEVICE_BINDING : "bound by"
+  DEVICE ||--o{ TEST_RECORD : signs
+  OPERATION ||--o{ PACKAGE : contains
+  OPERATION ||--|| ANCHOR : "closed by"
+  PACKAGE ||--o{ TEST_RECORD : "tested in"
+  KIT_PROFILE ||--o{ TEST_RECORD : "read with"
+  KIT_BATCH ||--o{ TEST_RECORD : uses
+  TEST_RECORD ||--o{ MEDIA : has
+  OPERATION ||--o{ SAMPLE : yields
+  SAMPLE }o--o{ PACKAGE : "drawn from"
+  SAMPLE ||--o{ LAB_RESULT : "reported in"</pre>
+<pre class="code">-- PostgreSQL. Records are immutable: the app role has no UPDATE/DELETE on record tables, and a trigger rejects both.
+CREATE TABLE agency (id uuid PRIMARY KEY, code text UNIQUE NOT NULL, name text NOT NULL);
+CREATE TABLE unit (id uuid PRIMARY KEY, agency_id uuid NOT NULL REFERENCES agency,
+  code text NOT NULL, name text NOT NULL, UNIQUE (agency_id, code));
+CREATE TABLE officer (id uuid PRIMARY KEY, unit_id uuid NOT NULL REFERENCES unit,
+  service_id text NOT NULL, name text NOT NULL, rank text, roles text[] NOT NULL,
+  dsc_cert bytea,                            -- supervisors only; checked against NCB's authorised list
+  status text NOT NULL CHECK (status IN ('active','suspended','retired')), UNIQUE (unit_id, service_id));
+CREATE TABLE kit_batch (id uuid PRIMARY KEY, kit_type text NOT NULL, batch_no text NOT NULL,
+  expiry date, card_batch text, UNIQUE (kit_type, batch_no));
+CREATE TABLE device (
+  id uuid PRIMARY KEY, model text, security_level text CHECK (security_level IN ('TEE','StrongBox')),
+  public_key bytea UNIQUE NOT NULL, attestation_chain bytea[] NOT NULL,
+  status text NOT NULL CHECK (status IN ('pending','active','revoked')),
+  revoked_at timestamptz, compromise_suspected_since timestamptz);   -- records after this are flagged
+CREATE TABLE device_binding (
+  id uuid PRIMARY KEY, device_id uuid NOT NULL REFERENCES device, officer_id uuid NOT NULL REFERENCES officer,
+  approved_by uuid NOT NULL REFERENCES officer, binding_doc bytea NOT NULL,     -- JCS document that was signed
+  supervisor_signature bytea NOT NULL, supervisor_cert bytea NOT NULL,        -- DSC signature over binding_doc
+  valid_from timestamptz NOT NULL, valid_to timestamptz, CHECK (approved_by <> officer_id));
+CREATE UNIQUE INDEX one_active_binding ON device_binding(device_id) WHERE valid_to IS NULL;
+
+CREATE TABLE kit_profile (
+  id text PRIMARY KEY,                       -- e.g. 'nddk-1.3'
+  body jsonb NOT NULL,                       -- colour standard: groups + rule or frozen region map
+  body_sha256 bytea NOT NULL, signature bytea NOT NULL,
+  approvers uuid[] NOT NULL CHECK (cardinality(approvers) >= 2), published_at timestamptz NOT NULL);
+
+CREATE TABLE operation (
+  id uuid PRIMARY KEY,                       -- UUIDv7 created on the phone
+  unit_id uuid NOT NULL REFERENCES unit, lead_officer_id uuid NOT NULL REFERENCES officer,
+  ndps_crime_no text, esakshya_ref text, opened_device_time timestamptz, status text NOT NULL);
+CREATE TABLE package (
+  id uuid PRIMARY KEY, operation_id uuid NOT NULL REFERENCES operation,
+  label text NOT NULL CHECK (label ~ '^P-[0-9]+$'), UNIQUE (operation_id, label));
+
+CREATE TABLE test_record (
+  record_hash bytea PRIMARY KEY,             -- SHA-256 of the JCS header {device_id, counter, prev, payload_sha256}
+  device_id uuid NOT NULL REFERENCES device, counter bigint NOT NULL, prev_hash bytea NOT NULL,
+  signature bytea NOT NULL, body jsonb NOT NULL,          -- header, exactly what was signed
+  payload jsonb NOT NULL, payload_sha256 bytea NOT NULL,  -- kind, operation, package, officer, times, location, image hash, result
+  kind text NOT NULL CHECK (kind IN ('open','blank','test','amendment','close')),
+  operation_id uuid REFERENCES operation, package_id uuid REFERENCES package,
+  profile_id text REFERENCES kit_profile, kit_batch_id uuid REFERENCES kit_batch,
+  app_outcome text CHECK (app_outcome IN ('positive','negative','inconclusive')),   -- the statement's categories
+  outcome_reason text CHECK (outcome_reason IN ('matched_profile','no_colour_change','low_margin',
+                             'capture_rejected','not_covered')),               -- why, for inconclusive especially
+  colour_group text, consistent_with text[],  -- every substance the standard says gives this colour
+  capture_tier text CHECK (capture_tier IN ('raw','jpeg')),
+  lat_e7 integer, lon_e7 integer, acc_cm integer, mock_location boolean,   -- NULL when no GNSS fix
+  officer_reading text, device_time timestamptz, gnss_time timestamptz, received_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (device_id, counter));
+CREATE INDEX ON test_record (operation_id);
+CREATE INDEX ON test_record (profile_id, kit_batch_id);
+CREATE INDEX ON test_record (device_time);
+
+CREATE TABLE media (sha256 bytea PRIMARY KEY, record_hash bytea NOT NULL REFERENCES test_record,
+  kind text NOT NULL, bytes bigint NOT NULL CHECK (bytes < 20000000), storage_key text NOT NULL);
+CREATE TABLE anchor (operation_id uuid PRIMARY KEY REFERENCES operation,
+  heads jsonb NOT NULL,                      -- [{device_id, first_counter, last_counter, head_hash}]
+  short_code text NOT NULL, panchnama_ref text);
+CREATE TABLE sample (id uuid PRIMARY KEY, operation_id uuid NOT NULL REFERENCES operation,
+  label text NOT NULL, lot_label text, test_memo_no text, UNIQUE (operation_id, label));
+CREATE TABLE sample_package (sample_id uuid REFERENCES sample, package_id uuid REFERENCES package,
+  PRIMARY KEY (sample_id, package_id));
+CREATE TABLE lab_result (id uuid PRIMARY KEY, sample_id uuid NOT NULL REFERENCES sample,
+  lab text NOT NULL CHECK (lab IN ('CRCL','CFSL','FSL')), qualitative text NOT NULL, reported_on date,
+  source_doc_sha256 bytea, entered_by uuid NOT NULL, verified_by uuid, CHECK (verified_by IS NULL OR verified_by <> entered_by));
+CREATE TABLE ledger (seq bigserial PRIMARY KEY, entry_type text NOT NULL, ref bytea NOT NULL,
+  entry_hash bytea NOT NULL, prev_entry_hash bytea NOT NULL, at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE checkpoint (day date PRIMARY KEY, last_seq bigint NOT NULL, head_hash bytea NOT NULL, signature bytea NOT NULL);</pre>
+  <p><strong>Lineage:</strong> every derived artefact (Form-1 text, panchnama paragraph, certificate data, QA figure) stores the record hashes it came from. <strong>If upstream data disappears</strong> (a lab report never arrives, SIMS unavailable), the record stays valid and the gap is shown as "pending", never filled in.</p>
+</section>
+
+<section id="p8">
+  <span class="kicker">Phase 8 · Technology</span>
+  <h2>Boring, proven, government-deployable</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Choice</th><th>Why</th><th>Rejected</th></tr></thead>
+    <tbody>
+      <tr><td>Phone</td><td>Kotlin, Camera2/CameraX interop (RAW/DNG where supported, manual exposure and white balance), OpenCV (ArUco), Room + SQLCipher; packaged as an embeddable SDK</td><td>Hardware keys with attestation; exposure lock; ArUco is mature</td><td>Flutter/React Native (native plugins needed for exactly the critical parts); PWA (no attested keys, weak camera control)</td></tr>
+      <tr><td>Record format</td><td>JSON canonicalised by RFC 8785 (JCS), SHA-256, ECDSA P-256</td><td>Readable by experts, standard canonical form, algorithms available in Keystore</td><td>Ad-hoc "sorted keys" (edge cases in numbers and Unicode); CBOR (less inspectable); Ed25519 (not in all Keystores)</td></tr>
+      <tr><td>Server</td><td>Spring Boot (Kotlin), one deployable</td><td>Shares record-core with app and verifier; Java/Spring skills are common among government IT vendors (our belief, not sourced)</td><td>FastAPI (a second record-format implementation); Node; microservices</td></tr>
+      <tr><td>Database</td><td>PostgreSQL 16 with streaming replica</td><td>Relational constraints, partial indexes, partitioning, JSONB; open source; runs anywhere</td><td>MongoDB (weaker integrity constraints); a blockchain ledger</td></tr>
+      <tr><td>Media</td><td>S3-compatible object storage with object lock (MinIO on-premises, or the host's S3)</td><td>WORM, content addressing, no lock-in</td><td>Files in PostgreSQL (backup bloat); plain filesystem (no WORM)</td></tr>
+      <tr><td>Jobs</td><td>PostgreSQL job table</td><td>Low volume, one less system</td><td>Kafka, RabbitMQ, Redis</td></tr>
+      <tr><td>Cache</td><td>None</td><td>Reads are rare and mostly exports; PostgreSQL's own cache is enough</td><td>Redis (another system to secure for no measurable gain)</td></tr>
+      <tr><td>Search</td><td>PostgreSQL indexes (on phone: SQLite indexes)</td><td>Searches are by case number, package, date, result and batch: exact-match fields, not free text</td><td>Elasticsearch/OpenSearch</td></tr>
+      <tr><td>Portal UI</td><td>Server-rendered (Thymeleaf + htmx)</td><td>Few screens; easier GIGW accessibility; no tokens in the browser</td><td>SPA frameworks</td></tr>
+      <tr><td>Identity</td><td>Parichay (production), agency directory (pilot), device binding</td><td>Government SSO for officials [S22]</td><td>Custom passwords</td></tr>
+      <tr><td>Deployment</td><td>Container images on the host's VMs; docker compose for pilot</td><td>Simple; host-agnostic</td><td>Kubernetes (not justified at &lt;10 requests/s)</td></tr>
+      <tr><td>CI</td><td>Any Git CI: build, tests, dependency scan, SBOM, signed release APK</td><td>Supply-chain hygiene</td><td>—</td></tr>
+      <tr><td>Monitoring</td><td>Micrometer metrics plus the host's monitoring and log stack</td><td>Uses what the host already runs</td><td>A separate observability platform</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p8b">
+  <span class="kicker">Phase 8 · continued</span>
+  <h2>Operating cost of each major choice</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Choice</th><th>Operational complexity</th><th>Cost</th><th>Performance</th><th>Developer productivity</th><th>Government deployment</th><th>5-year maintainability</th></tr></thead>
+    <tbody>
+      <tr><td>Kotlin Android</td><td>App store or MDM releases</td><td>Free tooling</td><td>Native camera and crypto</td><td>Good with 1–2 Android developers</td><td>e-Sakshya is also an Android app [S14]</td><td>Kotlin is Android's primary language</td></tr>
+      <tr><td>Shared record-core (Kotlin/JVM)</td><td>One library, three consumers</td><td>—</td><td>Negligible</td><td>Write once</td><td>Format spec plus code can be audited together</td><td>Highest-value code to keep stable; versioned format</td></tr>
+      <tr><td>Spring Boot monolith</td><td>One deployable, two instances</td><td>2 small VMs for pilot</td><td>Far above &lt;10 requests/s</td><td>Mature, well documented</td><td>Common skill in government IT vendors <span class="tag warn">belief, not sourced</span></td><td>Long-term-support releases; one codebase</td></tr>
+      <tr><td>PostgreSQL</td><td>Primary + replica, WAL backups</td><td>Open source</td><td>Millions of rows per year is small</td><td>SQL, migrations</td><td>Runs on any host</td><td>Very stable</td></tr>
+      <tr><td>S3 object storage with lock</td><td>Replication, lifecycle rules</td><td>~1–3 TB/year</td><td>Streaming uploads</td><td>Standard API</td><td>Host S3 or MinIO on-premises</td><td>S3 API is a de facto standard</td></tr>
+      <tr><td>Server-rendered portal</td><td>Part of the monolith</td><td>—</td><td>Fast pages</td><td>Fewer moving parts than a single-page app</td><td>Easier GIGW accessibility audit</td><td>No front-end framework churn</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p9">
+  <span class="kicker">Phase 9 · Security &amp; privacy</span>
+  <h2>Threat model</h2>
+  <div class="grid2">
+    <div class="panel"><h3>Assets</h3><ul><li>Integrity of test records and media</li><li>Device signing keys</li><li>Kit profiles and the profile-signing key</li><li>Server checkpoint key</li><li>Confidentiality of operations (places, times, case links)</li><li>Officer identities</li></ul></div>
+    <div class="panel"><h3>Threat actors</h3><ul><li>Corrupt officer (fabricate or hide results)</li><li>Defence expert (discredit records; honest scrutiny we must survive)</li><li>External attacker (data theft, ransomware)</li><li>Insider administrator</li><li>Traffickers (want raid and informant data)</li><li>Malware on officer phones</li></ul></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Boundary</th><th>Threat (STRIDE)</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Camera → app</td><td>Spoofing (staged or replayed image)</td><td>In-app capture only, starting before the reagent drop; liveness rule (E16); label and card in frame; video cross-link</td></tr>
+      <tr><td>App → key</td><td>Elevation (key misuse)</td><td>Non-exportable Keystore key; needs user authentication; attestation</td></tr>
+      <tr><td>Phone storage</td><td>Tampering, information disclosure</td><td>Signed and chained records; SQLCipher; tightly framed capture</td></tr>
+      <tr><td>Phone → server</td><td>Tampering, replay</td><td>TLS; signed envelope with nonce; idempotent hashes; counter monotonicity</td></tr>
+      <tr><td>Server → database / storage</td><td>Tampering, repudiation</td><td>Self-verifying records; ledger chain; checkpoints copied to phones and HQ; WORM</td></tr>
+      <tr><td>Admin → system</td><td>Elevation, disclosure, spoofing a device</td><td>Separation of duties (ops admin can't read case data); all access audited; two-person profile publishing; the admin cannot create a trusted device, because bindings need a supervisor's DSC signature</td></tr>
+      <tr><td>Profile authority → phones</td><td>Tampering</td><td>Offline signing key; pinned public key; version in every record</td></tr>
+      <tr><td>Uploads</td><td>Denial of service, parser exploits</td><td>Size caps; strict decoding in a sandbox; rate limits per device</td></tr>
+      <tr><td>Dependencies</td><td>Supply chain</td><td>Pinned versions, SBOM, dependency scanning, reproducible signed APK builds</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Keys and secrets</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Key</th><th>Where it lives</th><th>Controlled by</th><th>Rotation</th><th>If compromised</th></tr></thead>
+    <tbody>
+      <tr><td>Device record key</td><td>Android Keystore (TEE/StrongBox), non-exportable, needs device unlock</td><td>Officer's phone</td><td>On re-enrolment</td><td>Supervisor revokes with a "suspected since" time. Records after it are flagged "disputed". Records before it stay valid, because anchors in panchnamas already fix them.</td></tr>
+      <tr><td>Per-sync attestation key</td><td>Keystore, short-lived</td><td>Phone</td><td>Every sync</td><td>Expires by design</td></tr>
+      <tr><td>Supervisor binding signature</td><td>Class 3 DSC token (production); test CA (prototype)</td><td>Supervising officer</td><td>DSC validity period</td><td>CA revocation; affected bindings re-signed; records re-checked against the revocation time</td></tr>
+      <tr><td>NCB authorised-supervisor list</td><td>Offline, two-person</td><td>NCB</td><td>When supervisors change</td><td>Re-issue list; the verifier reads the list version that applied at record time</td></tr>
+      <tr><td>Kit profile signing key</td><td>Offline laptop or token, two-person</td><td>NCB profile authority</td><td>Yearly</td><td>App pins two keys, so the spare takes over; affected profiles republished</td></tr>
+      <tr><td>Server receipt / checkpoint key</td><td>Host HSM if available, otherwise an encrypted keystore readable only by the app process</td><td>Hosting operations (no case-data access)</td><td>Yearly; old public keys kept</td><td>Rotate. Checkpoints already copied to phones and HQ still expose any rewrite.</td></tr>
+      <tr><td>Database and storage credentials, TLS</td><td>Host's secrets manager and PKI</td><td>Hosting operations</td><td>Per host policy</td><td>Standard rotation; nothing in them can forge records</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Privacy:</strong> no informant data; accused name optional (case reference is enough); a viewfinder guide keeps faces and rooms out of frame (the image itself is never altered after capture, because it is what gets hashed); aggregates for QA analysts; exports audited. The DPDP s.17(1)(c) exemption covers investigation processing, but we still apply security safeguards and minimisation [S21]. <strong>Standards to test against:</strong> OWASP MASVS (app), OWASP ASVS L2 (server), GIGW 3.0 (portal), plus the security audit NCB will require before go-live.</p>
+</section>
+
+<section id="p10">
+  <span class="kicker">Phase 10 · Failure engineering</span>
+  <h2>What happens when each part fails</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Failure</th><th>Impact</th><th>Detection</th><th>Recovery</th><th>Fallback</th></tr></thead>
+    <tbody>
+      <tr><td>Camera / light</td><td>Bad light, glare, blur</td><td>No reliable reading</td><td>Calibration error, blur and clipping checks</td><td>Guided retake; flash/no-flash</td><td>Record "capture rejected" + officer reading (approach A)</td></tr>
+      <tr><td>Camera</td><td>No RAW or manual control on this phone</td><td>Saturated colours may misread</td><td>Capability probe at enrolment</td><td>—</td><td>JPEG + signed region map; reagents flagged "needs RAW" return inconclusive</td></tr>
+      <tr><td>Card</td><td>Missing or damaged</td><td>No calibration</td><td>Marker or patch count</td><td>Spare card in kit</td><td>Officer reading, signed record, flagged "uncalibrated"</td></tr>
+      <tr><td>Kit profile</td><td>Kit not covered, or profile invalid</td><td>No classification</td><td>Profile lookup, signature check</td><td>Update profile</td><td>Record "not covered"</td></tr>
+      <tr><td>App</td><td>Crash mid-test</td><td>Partial test</td><td>Open test at next launch</td><td>Resume or mark abandoned</td><td>Atomic writes; nothing half-signed</td></tr>
+      <tr><td>Phone</td><td>Battery dead, lost, broken</td><td>Unsynced records at risk</td><td>Anchor lists expected counters</td><td>Sync from other team phones</td><td>Paper panchnama plus video remain the legal record</td></tr>
+      <tr><td>Keystore</td><td>Key invalidated (lock screen changed) or device revoked</td><td>Can't sign</td><td>Keystore exception</td><td>Re-enrol; old public key archived</td><td>Officer reading on paper</td></tr>
+      <tr><td>Network</td><td>None</td><td>No sync</td><td>Sync queue age</td><td>Automatic retry</td><td>Everything works offline</td></tr>
+      <tr><td>API server</td><td>Crash or overload</td><td>No sync or portal</td><td>Health checks</td><td>Second instance; restart</td><td>Phones keep data</td></tr>
+      <tr><td>PostgreSQL</td><td>Primary down or corrupt</td><td>Server down</td><td>Replica lag and health</td><td>Promote replica; restore from WAL</td><td>Re-sync unconfirmed records from phones</td></tr>
+      <tr><td>Backup</td><td>Restore from an older backup</td><td>Records after the backup missing on the server</td><td>Checkpoints held by phones and HQ are ahead of the server</td><td>Phones re-sync everything not covered by a durable checkpoint</td><td>Tested: E14, 16/16 recovered</td></tr>
+      <tr><td>Object storage</td><td>Object lost</td><td>Missing media</td><td>Periodic re-hash scrub</td><td>Replica copy</td><td>Phone copy (kept until checkpoint)</td></tr>
+      <tr><td>Attestation checks</td><td>Root or revocation list unreachable</td><td>Can't verify new devices</td><td>Job failure</td><td>Cached lists</td><td>Block new enrolments; keep syncing existing devices, flagged</td></tr>
+      <tr><td>SSO</td><td>Parichay down</td><td>Portal login fails</td><td>Login errors</td><td>Wait or break-glass accounts with MFA</td><td>Field work unaffected (device unlock)</td></tr>
+      <tr><td>Checkpoint export</td><td>Fails</td><td>Weaker insider protection</td><td>Missing checkpoint alert</td><td>Retry; manual export</td><td>Phones still hold earlier checkpoints</td></tr>
+      <tr><td>Lab result</td><td>Never arrives</td><td>No accuracy data for that case</td><td>Rule 14 overdue flag after 15 days</td><td>Follow up with IO</td><td>Shown as "pending"</td></tr>
+      <tr><td>Device key</td><td>Compromise suspected (rooted, cloned, stolen while unlocked)</td><td>Forged records possible after compromise</td><td>Fork, gap, attestation failure, supervisor report</td><td>Revoke with "suspected since"; re-enrol</td><td>Records after that time flagged "disputed"; earlier ones protected by anchors already in panchnamas</td></tr>
+      <tr><td>Supervisor DSC</td><td>Token lost, expired or revoked</td><td>No new device bindings</td><td>Signing failure; CA revocation list</td><td>Another authorised supervisor signs</td><td>Existing bindings keep working until their validity ends</td></tr>
+      <tr><td>Deployment</td><td>Bad release</td><td>Server or app regression</td><td>Canary; error rate</td><td>Roll back (migrations backward-compatible)</td><td>Old app versions still sync (versioned API)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p11">
+  <span class="kicker">Phase 11 · Government deployment reality</span>
+  <h2>Could NCB actually adopt this?</h2>
+  <ul>
+    <li><strong>Owner:</strong> NCB (operations plus IT). NCB already supplies kits free to agencies [S6], so it can also supply the reference card and publish profiles. <strong>The kit supplier prints the characterised card into every kit.</strong> This uses the existing supply chain and is not new hardware.</li>
+    <li><strong>Shape:</strong> the engine, colour standard and report format ship as an embeddable SDK. e-Sakshya or an NCB app can host it; our app is the reference host. This answers "why not ask NIC to add a module?"</li>
+    <li><strong>Hosting:</strong> NIC or MeitY-empanelled cloud in India; containers on VMs; nothing proprietary.</li>
+    <li><strong>Interoperability:</strong> pre-fill SIMS Form F fields (a 48-hour duty the officer already has) [S12]. Deposit evidence bundles in e-Sakshya / Sakshya Lockers through ICJS where NCB has access [S14]. Parichay for identity. <span class="tag crit">Access to these APIs is unverified.</span></li>
+    <li><strong>Security review:</strong> designed for MASVS, ASVS and GIGW; threat model and SBOM ready for an auditor.</li>
+    <li><strong>Migration:</strong> none needed. Today's field records are paper; the system starts fresh and links forward.</li>
+    <li><strong>Training:</strong> one short module plus a practice mode using a practice card and dye cups.</li>
+    <li><strong>Lock-in:</strong> open formats (JCS JSON, S3, PostgreSQL), open-source code (permissive licence), a documented verifier. NCB holds all signing keys.</li>
+    <li><strong>If our team disappears:</strong> NCB owns code, keys and profiles; the verifier and format specification are public to the court process; any Java/Kotlin vendor can maintain a single Spring Boot app.</li>
+    <li><strong>Cost drivers (sizing, not prices):</strong>
+      <ul>
+        <li>Pilot: 2 app VMs (about 4 vCPU / 16 GB each), 1 database VM, about 1 TB object storage plus backup.</li>
+        <li>Production: add a database replica, a DR copy, and roughly 1–3 TB/year of storage.</li>
+        <li>Per kit: one colour-controlled printed card.</li>
+        <li>The largest real cost is people: kit validation, profile governance, training. Prices depend on the host's tariff and aren't estimated here.</li>
+      </ul></li>
+    <li><strong>Procurement path:</strong> SIH win, then an MoU or pilot order with NCB (IP split per SIH guidelines [S2]), then a security audit, then hosting on NIC or empanelled cloud, then maintenance through NCB IT or an empanelled vendor. <span class="tag warn">Inferred path; NCB's actual process is unknown.</span></li>
+    <li><strong>Who operates it:</strong>
+      <ul>
+        <li>NCB HQ owns the system and publishes the supervisor list.</li>
+        <li>A profile authority of NCB-nominated chemists or forensic experts publishes kit profiles (two-person).</li>
+        <li>Zonal-unit supervisors enrol devices and handle revocation.</li>
+        <li>The host's operations team runs servers, backups and patches (no case-data access).</li>
+        <li>A small helpdesk handles training and device issues.</li>
+      </ul></li>
+  </ul>
+</section>
+
+<section id="p12">
+  <span class="kicker">Phase 12 · Prototype, pilot, production</span>
+  <h2>What must be real at each stage</h2>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>A · SIH prototype (Dec 2026)</th><th>B · Pilot (1 zonal unit, ~12 weeks)</th><th>C · Production</th></tr></thead>
+    <tbody>
+      <tr><td>Must be real</td><td>Record-core (time, GPS and officer signed), signing on real phones, chain, anchor, offline verifier, searchable log, guided NDDK protocol, card calibration with a blank well, colour bands with consistent substances, RAW tier (JPEG fallback), liveness, tamper demo</td><td>Everything in A, plus NCB kit profiles from real reactions, enrolment with attestation, server sync, checkpoints, lab result intake</td><td>Everything in B, plus Parichay, SIMS pre-fill, e-Sakshya hand-off, DR site, security audit</td></tr>
+      <tr><td>Can be mocked</td><td>Reaction colours (chart-derived bands; safe dyes for the demo), SSO, SIMS, e-Sakshya, lab results (labelled synthetic)</td><td>SIMS and e-Sakshya (manual reference fields)</td><td>Nothing core</td></tr>
+      <tr><td>Data</td><td>Proxy dataset: 3+ phones × 5 lights, all labelled SYNTHETIC</td><td>NCB reactions on known standards; field records with lab outcomes</td><td>National</td></tr>
+      <tr><td>Infrastructure</td><td>Laptop or one VM</td><td>2 VMs, object storage, backups</td><td>Host HA pair, replica, second site</td></tr>
+      <tr><td>Security</td><td>Real crypto, no shortcuts in the format</td><td>Threat model reviewed, pen test</td><td>Formal audit, GIGW compliance</td></tr>
+      <tr><td>Simplified</td><td>Supervisor binding signed with a test CA; one agency; bundles exported over USB instead of a server if time runs short</td><td>One agency; test CA or real DSCs depending on NCB</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Production deployment</h3>
+<pre class="mermaid">flowchart LR
+  PH["Officer phones<br/>(offline-first)"] -- "HTTPS, signed envelopes" --> LB["Host load balancer<br/>+ rate limits"]
+  LB --> A1["App instance 1<br/>Spring Boot"]
+  LB --> A2["App instance 2<br/>Spring Boot"]
+  A1 --> PG[("PostgreSQL primary")]
+  A2 --> PG
+  PG -- "streaming replication" --> PR[("Replica")]
+  A1 --> OS[("Object storage<br/>object lock")]
+  A2 --> OS
+  PG -- "WAL + base backups" --> DR[("DR site")]
+  OS -- "replication" --> DR
+  A1 --> MON["Host monitoring + logs<br/>(180-day retention)"]
+  ADM["Supervisors / IOs / QA<br/>via government network or VPN"] --> LB
+  HQ["NCB HQ<br/>checkpoint copies"] <-- "daily signed checkpoint" --> A1</pre>
+  <p>The prototype collapses this to one laptop or VM running the app and PostgreSQL with a local MinIO. Nothing in the record format changes between prototype and production.</p>
+</section>
+
+<section id="p13">
+  <span class="kicker">Phase 13 · Differentiation</span>
+  <h2>What would make this hard to replace</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Advantage</th><th>Claim</th><th>Justification</th><th>Durable?</th></tr></thead>
+    <tbody>
+      <tr><td>Technical</td><td>Records whose completeness, not just integrity, can be verified offline</td><td>E3: hash-only designs caught 0 of 6 attacks; signed chain caught 4; chain plus anchor caught 6</td><td>Copyable once seen; the <em>design reasoning</em> is our edge</td></tr>
+      <tr><td>Standard</td><td>Each kit becomes a published, signed colour standard; results name the colour group and every consistent substance</td><td>NIJ 0604.01 [S35]; the Bombay HC found India has none [S36]; E6, E8</td><td>Yes: NCB-owned, and the evidence behind it (17 experiments) takes time to rebuild</td></tr>
+      <tr><td>Kit fit</td><td>Built around NCB's own Narcotic Drugs Detection Kit: guided Tests A–E, flow charts, lower-layer reading, combined candidates, NDPS quantity warning</td><td>NICFS guide [S6]; E17</td><td>Yes: no public rival repo covers it</td></tr>
+      <tr><td>Accuracy</td><td>RAW-first reading; same-photo comparison for grouping</td><td>E17: 0.0% false positives across sample amounts with colour bands and a blank well; E12/E13: RAW 0–1.6% wrong at the reference amount; E2: false "different" 18% → 2.2% (all simulated)</td><td>Copyable; our measured evidence isn't</td></tr>
+      <tr><td>Explainability</td><td>Reproducible decisions: the verifier re-runs measurement from stored frames and the signed profile</td><td>Deterministic engine; region maps are frozen, signed lookup tables</td><td>Yes, if we build it cleanly</td></tr>
+      <tr><td>Workflow</td><td>Fits Rules 3, 5, 10(2), 13, 14, BSA s.63 and SIMS Form F</td><td>Primary sources [S5][S7][S12]</td><td>Domain depth is hard to fake in Q&amp;A</td></tr>
+      <tr><td>Data</td><td>Field-vs-lab accuracy per kit batch using the Rule 14 report copy</td><td>The report already reaches the IO by law [S5]</td><td>Yes: the dataset grows only for the deployed system</td></tr>
+      <tr><td>Operational</td><td>Reference card distributed through NCB's kit supply chain; profiles governed by NCB</td><td>NCB supplies kits free [S6]</td><td>Yes: institutional fit</td></tr>
+      <tr><td>Trust</td><td>Neither the server nor its admins can create records or trusted devices; phones witness the server log</td><td>Keys only on devices; supervisor DSC signs bindings; checkpoints copied out</td><td>Design-level</td></tr>
+      <tr><td>Government deployment</td><td>Uses credentials and infrastructure the government already has: DSCs for supervisors, Parichay, NIC hosting, the panchnama and witnesses, SIMS Form F</td><td>[S12][S22][S27]</td><td>Yes: less to procure and less to explain to auditors</td></tr>
+      <tr><td>Integration</td><td>Works with no API access at all (file exports, reference fields), and improves when APIs appear</td><td>API access is unverified, so we don't depend on it</td><td>Yes: survives the most likely integration failure</td></tr>
+      <tr><td>Scalability</td><td>Verification cost sits on phones and the offline verifier, not the server</td><td>Phase 5: small, append-only workload</td><td>Honest note: scale isn't a differentiator here, it's simply not a problem</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p14">
+  <span class="kicker">Phase 14 · Red-team rounds</span>
+  <h2>Attacking our own design in five rounds</h2>
+  <h3>Round 1</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Question</th><th>Finding</th><th>Change made</th></tr></thead>
+    <tbody>
+      <tr><td>Biggest weakness?</td><td>Classification depends on real kit colours being separable by a phone camera. Unverified.</td><td>Product value no longer depends on it: approach A fallback; abstain band; Phase-0 validation with NCB before pilot</td></tr>
+      <tr><td>Most dangerous assumption?</td><td>Kit format (wells vs tubes vs ampoules)</td><td>Capture layout moved into the signed profile; card beside a single vessel is the default; multi-vessel layouts optional</td></tr>
+      <tr><td>Unnecessary component?</td><td>Merkle log, C2PA, curve classifier, SPA dashboard</td><td>Removed or replaced (Phase 2)</td></tr>
+      <tr><td>Missing component?</td><td>Witnesses, multi-phone raids, sample and Test Memo linkage, profile signing</td><td>Added</td></tr>
+      <tr><td>Why would government reject it?</td><td>A parallel evidence vault next to e-Sakshya</td><td>Production hands bundles to government evidence infrastructure; our server is enrolment, verification and QA</td></tr>
+      <tr><td>What if the AI is wrong?</td><td>There's no AI in the decision; a wrong statistical call shows up as disagreement with the officer and the lab</td><td>Officer-first reading in pilot; lab loop monitors</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Round 2</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Question</th><th>Finding</th><th>Change made</th></tr></thead>
+    <tbody>
+      <tr><td>Administrator abuses privileges?</td><td>Could delete rows or media, or pause checkpoints</td><td>Checkpoints also copied to phones on every sync; WORM media; missing-checkpoint alert goes to NCB HQ, not the admin</td></tr>
+      <tr><td>Database compromised?</td><td>Confidentiality loss; can't forge records</td><td>Minimise and encrypt; tightly framed capture; exports audited</td></tr>
+      <tr><td>Stolen phone signs fake records?</td><td>Possible if unlocked</td><td>Keys need recent user authentication; supervisor revocation; fresh attestation at each sync via a short-lived nonce-bound key</td></tr>
+      <tr><td>Accuracy statistics gamed by fudged lab entries?</td><td>Yes</td><td>Two-person entry; source document hash</td></tr>
+      <tr><td>Internet unreliable for weeks?</td><td>Phone storage fills</td><td>Kinetic strip recorded at low resolution from the start (hashed as captured); storage warning; bundles exportable over USB to the unit's PC</td></tr>
+      <tr><td>Central assumption false (NCB doesn't want records the defence can use)?</td><td>Adoption risk</td><td>Frame as procedure protection for officers (their good-faith defence [S4]); records are made either way. Being honest is the point.</td></tr>
+      <tr><td>100× scale?</td><td>Fine</td><td>Partitioning and replicas already planned</td></tr>
+      <tr><td>Too expensive?</td><td>Infrastructure is small; the real cost is people (kit validation, profile governance, training)</td><td>Budget those explicitly in the pilot proposal; no licence costs</td></tr>
+      <tr><td>Impossible to maintain?</td><td>Risk: app and verifier disagreeing on colour maths across versions</td><td>Shared colour-engine library; golden-image tests in CI; profile and engine versions stored in every record</td></tr>
+      <tr><td>What could make it fail outright?</td><td>Officers not using it; NCB unable to supply kit data; kit colours not separable</td><td>First two: pilot design and NCB sponsorship. Third: approach A fallback keeps the record value.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Round 3: checking this document against the design brief</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Found</th><th>Why it mattered</th><th>Change made</th></tr></thead>
+    <tbody>
+      <tr><td>Server issued device bindings</td><td>An admin could mint a trusted device and forge verifiable records. This broke our own "server can't forge" claim.</td><td>Bindings signed by the supervising officer's DSC; verifier trusts NCB's supervisor list, not the server</td></tr>
+      <tr><td>"Re-attestation on each sync"</td><td>Technically wrong: attestation is produced when a key is created</td><td>Short-lived key per sync bound to the server's nonce; Play Integrity only as an extra signal</td></tr>
+      <tr><td>Anchor strength unspecified</td><td>A short handwritten code could, in principle, be matched by a different record set</td><td>QR with full hashes plus a 65-bit handwritten code; handling for absent phones</td></tr>
+      <tr><td>Lab loop could poison profiles</td><td>Bad lab entries could quietly shift classifications</td><td>Profiles change only by governed, signed releases, never automatically</td></tr>
+      <tr><td>No key-compromise procedure</td><td>A stolen or rooted device would cast doubt on all its records</td><td>"Suspected since" revocation; anchors protect earlier records</td></tr>
+      <tr><td>Crop-after-capture; wrong outcome labels; no searchable log</td><td>Didn't match the problem statement</td><td>Fixed (see Requirement check)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Round 4: published colours, real attestation chains and failure scenarios</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Found</th><th>Why it mattered</th><th>Change made</th></tr></thead>
+    <tbody>
+      <tr><td>Cocaine and ephedrine give the identical NIJ colour (E6)</td><td>"Positive for cocaine" is chemically impossible from this test</td><td>Output = colour group + consistent substances; kit profile = signed colour standard</td></tr>
+      <tr><td>Some kit categories are closer than a camera can resolve (E6, E8)</td><td>Wrong calls on fine distinctions</td><td>Profile checker: ERROR below 8 ΔE00, WARN 8–10</td></tr>
+      <tr><td>Cobalt thiocyanate 21% wrong on JPEG (E12)</td><td>Saturated blues are clipped</td><td>RAW primary (E13: 0% [0–1.6]); region map for JPEG-only phones; checker flags "needs RAW"</td></tr>
+      <tr><td>"Also consistent with" list missed the true substance (E12)</td><td>A misleading list</td><td>List the whole documented group: 100%</td></tr>
+      <tr><td>Verifier crashed on malformed bundles (E10)</td><td>A defence expert could crash it</td><td>Strict schema, size caps, fail-closed</td></tr>
+      <tr><td>Deleting on any checkpoint lost 5 of 16 records after a restore (E14)</td><td>Evidence loss</td><td>Durable checkpoints</td></tr>
+      <tr><td>Mid-capture swaps passed 29.5% of the time (E16, first version)</td><td>Noise masked colour jumps</td><td>3-frame median smoothing: 0.5%</td></tr>
+      <tr><td>Attestation verification was a placeholder</td><td>Fake devices could enrol</td><td>Real verifier (E15); strict by default</td></tr>
+      <tr><td>Rates reported without intervals, one seed</td><td>Overstated certainty</td><td>95% Clopper-Pearson on every rate; 3 seeds</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Round 5: an external review, every claim re-checked before acting</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Found</th><th>Why it mattered</th><th>Change made</th></tr></thead>
+    <tbody>
+      <tr><td>NCB's own kit chart (Tests A–E) was in our sources as an image</td><td>We had designed around US reagents</td><td>Guided NDDK protocol (<code>nddk.py</code>), bands from the chart</td></tr>
+      <tr><td>A clear well never read "negative"; the Simon's map called white positive</td><td>The commonest negative was impossible; a false positive was signed into a profile</td><td>Blank well + "no colour change"; map guard and outlier removal</td></tr>
+      <tr><td>Point rules fail when the sample amount changes (confirmed: E17)</td><td>Up to 11.7% false positives</td><td>Colour bands: 0.0% false positives</td></tr>
+      <tr><td>Time and GPS not signed; no searchable log; verifying one raid disclosed all cases</td><td>Problem-statement requirements; privacy of other cases</td><td>Signed header + payload with time/GPS/officer; log with search; one-raid disclosure</td></tr>
+      <tr><td>Integers above 2^53, unsigned device ID, no check character, a sync-server crash, an untested attestation accept path</td><td>Each could be exploited or embarrass a live demo</td><td>All fixed and tested (E5 18/18, E14 15/15, E15 18/18)</td></tr>
+      <tr><td>Two review claims did not hold</td><td>"Sugar also gives dark brown" is not in the judgment; 5 public repos, not 9</td><td>Not used</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="judge">
+  <span class="kicker">Phase X · 10-minute judge attack</span>
+  <h2>Twenty hard questions, rated honestly</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Judge asks</th><th>Our answer</th><th>Strength</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Why does this problem need your system?</td><td>The Rules already depend on the kit result (Rules 3, 10(2), Form-1), but nothing records it verifiably. NCB's statement says exactly this.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>2</td><td>Why doesn't the existing workflow solve it?</td><td>The panchnama records the officer's words, not the observation. The s.105 video records the search, not a calibrated reading. e-Sakshya stores media; it doesn't read kits.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>3</td><td>What exactly is novel?</td><td>Not the parts (signing and phone colorimetry both exist [S15][S29]). Novel: a signed colour standard per kit with colour-group output, RAW-first reading, binding records to the witnessed seizure, verifying completeness, re-runnable decisions, and the Rule 14 accuracy loop.</td><td><span class="tag ok">Strong</span> because it's honest</td></tr>
+      <tr><td>4</td><td>What happens in the worst case?</td><td>Staged wells and mid-capture swaps are caught (E16), but a swap exactly at the drop or a replayed video is not; kit chemistry can give false positives. We say what the record proves and what it doesn't.</td><td><span class="tag warn">Adequate</span></td></tr>
+      <tr><td>5</td><td>What if your data is wrong?</td><td>Profiles are signed and versioned; lab entries need two people; GPS accuracy is recorded; nothing is overwritten.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>6</td><td>Why this architecture?</td><td>The load is tiny and trust must not sit on the server: device signatures plus a thin monolith.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>7</td><td>Why this technology?</td><td>Hardware keys and camera control force native Android; Kotlin lets app, server and verifier share one format library.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>8</td><td>Why is AI necessary?</td><td>Not at run time. Deterministic measurement is reproducible in court; a model on the phone isn't. For JPEG-only phones we learn colour boundaries offline and freeze them into a signed lookup table anyone can re-run.</td><td><span class="tag ok">Strong</span> (frame as a deliberate choice)</td></tr>
+      <tr><td>9</td><td>What if the classification is wrong?</td><td>Officer's reading is recorded too; there is an abstain band; the lab loop exposes errors; the lab result is final.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>10</td><td>What if an external API fails?</td><td>Nothing in the field depends on one.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>11</td><td>How do you integrate with government systems?</td><td>Before this review: "via APIs", which we couldn't verify. <strong>Now:</strong> file exports and reference fields work with no API; SIMS pre-fill, e-Sakshya and Parichay APIs come in when NCB grants access.</td><td><span class="tag warn">Was weak → adequate</span></td></tr>
+      <tr><td>12</td><td>How does it scale?</td><td>7–20 lakh records a year estimated, under 10 requests per second at peak; partitioning plan for 100×.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>13</td><td>How much does it cost?</td><td>Before: no answer. <strong>Now:</strong> resource sizing and cost drivers (Phase 11), with people as the main cost; no rupee figure without NCB's host tariff.</td><td><span class="tag warn">Was weak → adequate</span></td></tr>
+      <tr><td>14</td><td>What if 10× users arrive?</td><td>Same design; stateless app instances; sync naturally spreads out.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>15</td><td>What prevents misuse?</td><td>Signatures, chain, anchor, DSC-signed bindings, attestation, revocation, audit. Limits stated.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>16</td><td>How do you protect sensitive data?</td><td>Minimal data, framing guide, encryption, unit scoping, India hosting, audited exports.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>17</td><td>How do you migrate existing data?</td><td>There is none: field results are on paper today. We link forward.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>18</td><td>Who operates it after deployment?</td><td>Before: vague. <strong>Now:</strong> named roles (Phase 11).</td><td><span class="tag warn">Was weak → adequate</span></td></tr>
+      <tr><td>19</td><td>What if your team disappears?</td><td>NCB owns code, keys and profiles; open formats; one standard Spring Boot app; published verifier.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>20</td><td>What makes this deployable, not just a prototype?</td><td>Offline-first, government hosting, audit-ready design, a pilot plan. But no real-kit validation yet.</td><td><span class="tag warn">Adequate</span></td></tr>
+      <tr><td>+</td><td>Have you tested on real NCB kits?</td><td>Not yet, and we can't lawfully handle narcotics. What we have: NCB's own kit encoded from the NICFS guide, colour bands that hold across sample amounts with 0% false positives in simulation (E17), a printable card, a photo reader, and a validation protocol with three sample amounts that NCB's chemists can run in a few lab days.</td><td><span class="tag warn">Was weak → adequate (still needs NCB)</span></td></tr>
+      <tr><td>+</td><td>Will a court accept this record?</td><td>That's for courts. We produce the hash and algorithm the BSA s.63 certificate asks for, and an independent verifier. The Delhi HC (2023) shows the record matters most before the lab result.</td><td><span class="tag warn">Adequate</span></td></tr>
+      <tr><td>+</td><td>Why not ask NIC to add this to e-Sakshya?</td><td>Please do. The engine, standard and report format ship as an SDK that e-Sakshya can embed; our app is the reference host.</td><td><span class="tag ok">Strong</span></td></tr>
+      <tr><td>+</td><td>Another team already shows a working app. Why you?</td><td>We follow NCB's own kit and the NDPS procedure: signed time and GPS, panchnama anchor, officer binding, searchable log, Rule 10(2), the lab loop. Our app must be as real as theirs by the finale.</td><td><span class="tag warn">Adequate until our app exists</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p15">
+  <span class="kicker">Phase 15 · Know vs assume</span>
+  <h2>Confidence in each major decision</h2>
+  <div class="grid2">
+    <div class="panel good"><h3>Verified (primary sources, or proven in code)</h3><ul><li>Statement requirements [S1]</li><li>Kit role, test each package, record in panchnama, lab negative "often possible" [S4]</li><li>Rules 3, 5, 10(2), 13, 14 and Form-1 item 5 [S5]</li><li>BSA s.63 certificate with hash; BPR&amp;D SOP [S7]</li><li>Case numbers; 30 zonal units [S8]</li><li>CERT-In directions [S18]</li><li>NIJ published colours; Bombay HC and Delhi HC judgments, read in full [S35][S36][S37]</li><li>NCB's kit: Tests A–E, flow charts, colour ranges (NICFS guide) [S6]</li><li>In code: 18/18 attacks caught (E5); verifier fails closed (E10); 15/15 sync failure scenarios (E14); attestation accept and reject paths (E15)</li></ul></div>
+    <div class="panel"><h3>Simulated (our experiments)</h3><ul><li>Card calibration 3–4× better under normal light (E1)</li><li>Sodium light detectable by card error; flash/no-flash fixes it (E1b)</li><li>Same-photo comparison far more reliable (E2)</li><li>Anchor catches tail deletion and re-runs (E3; this is logic, so high confidence)</li><li>E4: full engine on 900 rendered photos, 0 wrong answers</li><li>E12: held-out NIJ colours through the real engine, RAW 0–1.6% wrong at the reference amount</li><li>E17: colour bands + blank well, 0.0% false positives across amounts; NCB-kit bands 89.1% correct</li><li>E13: RAW fixes out-of-gamut colours</li><li>E16: staged captures rejected</li></ul><p class="note">All use a real DSLR sensor model and real light spectra, not a phone. E1–E4 used made-up reaction colours; E6 onward use NIJ published colours.</p></div>
+    <div class="panel"><h3>Believed (reasoned, not verified)</h3><ul><li>Officers will adopt it if it removes paperwork</li><li>NCB can distribute cards with kits</li><li>Estimated record volumes</li></ul></div>
+    <div class="panel bad"><h3>Assumed / not verified</h3><ul><li>NCB's printed chart colours are close to real reactions</li><li>Officers' phones support RAW capture</li><li>Kit vessel format</li><li>Access to e-Sakshya, SIMS or Parichay APIs</li><li>How BNSS s.105 applies to NDPS searches in practice</li><li>Courts accepting this record type</li></ul></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Decision</th><th>Confidence</th><th>What would change it</th></tr></thead>
+    <tbody>
+      <tr><td>Native Android, offline-first</td><td><span class="tag ok">High</span></td><td>NCB standardising on another platform</td></tr>
+      <tr><td>Device signatures + chain + panchnama anchor</td><td><span class="tag ok">High</span></td><td>NCB rejecting witness involvement</td></tr>
+      <tr><td>Blank well + colour bands on NCB's kit (RAW first)</td><td><span class="tag warn">Medium</span></td><td>Real reactions falling outside the chart bands; partially reacted wells</td></tr>
+      <tr><td>Colour-group output with consistent substances</td><td><span class="tag ok">High</span></td><td>Only NCB kit data showing a reagent that separates substances NIJ lists as identical</td></tr>
+      <tr><td>Durable checkpoints; strict attestation</td><td><span class="tag ok">High</span></td><td>A locked production phone failing attestation (then investigate, don't relax the policy)</td></tr>
+      <tr><td>Same-photo comparison</td><td><span class="tag warn">Medium</span></td><td>Kit format preventing side-by-side vessels</td></tr>
+      <tr><td>Flash/no-flash</td><td><span class="tag warn">Medium</span></td><td>Handheld misalignment on real phones</td></tr>
+      <tr><td>Thin Spring Boot monolith</td><td><span class="tag ok">High</span></td><td>NCB mandating an existing platform</td></tr>
+      <tr><td>Supervisor DSC signs device bindings</td><td><span class="tag warn">Medium</span></td><td>Supervisors lacking DSCs (fallback: NCB-issued keys on hardware tokens, same trust model)</td></tr>
+      <tr><td>Handing evidence to e-Sakshya in production</td><td><span class="tag crit">Low</span></td><td>API access, and whether NCB uses e-Sakshya at all</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p16">
+  <span class="kicker">Phase 16 · Final architecture</span>
+  <h2>The whole design in one place</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Final decision</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>1 Problem</td><td>Kit tests leave no verifiable, objective record, although the NDPS Rules depend on them</td><td><a href="#p0">Phase 0</a></td></tr>
+      <tr><td>2 Root cause</td><td>Record made separately from the event; subjective reading; no lab feedback</td><td><a href="#exec">Summary</a></td></tr>
+      <tr><td>3 Solution</td><td>Offline capture SDK and app producing self-verifying, anchored records; reading against a signed colour standard with colour-group output; thin server for enrolment, storage and QA</td><td><a href="#p6">Phase 6</a></td></tr>
+      <tr><td>4 Why it solves the root</td><td>Binding at the moment of the test; completeness checked against the witness-signed anchor; objective measurement; lab comparison</td><td>E1–E3, <a href="#p13">Phase 13</a></td></tr>
+      <tr><td>5–7 Diagrams, components, data flow</td><td>Component diagram, trust model, operation sequence, sync request flow</td><td><a href="#p6">Phase 6</a></td></tr>
+      <tr><td>8 Schema</td><td>PostgreSQL, immutable record tables, DSC-signed bindings</td><td><a href="#p7">Phase 7</a></td></tr>
+      <tr><td>9 API</td><td>Versioned REST with signed envelopes; per-record status</td><td><a href="#p6">Phase 6</a></td></tr>
+      <tr><td>10 Security</td><td>STRIDE model, key management, compromise procedure</td><td><a href="#p9">Phase 9</a></td></tr>
+      <tr><td>11 Failures</td><td>Failure matrix; phones as the recovery source</td><td><a href="#p10">Phase 10</a></td></tr>
+      <tr><td>12 Scale</td><td>Monolith is enough up to 100×</td><td><a href="#p5">Phase 5</a></td></tr>
+      <tr><td>13 Stack</td><td>Kotlin, Keystore, OpenCV; Spring Boot; PostgreSQL; S3 with lock</td><td><a href="#p8">Phase 8</a></td></tr>
+      <tr><td>14 Deployment</td><td>Two app instances, primary + replica, WORM storage, DR copy</td><td><a href="#p12">Phase 12</a></td></tr>
+      <tr><td>15 AI/ML</td><td>No model runs on the phone. Region maps are learned offline for JPEG-only phones, then frozen and signed; profiles change only as signed versions</td><td><a href="#p4">Phase 4</a></td></tr>
+      <tr><td>16–17 MVP / production</td><td>Prototype, pilot and production table plus deployment diagram</td><td><a href="#p12">Phase 12</a></td></tr>
+      <tr><td>18 Roadmap</td><td>M0–M6 below</td><td>Below</td></tr>
+      <tr><td>19–21 Risks, mitigations, assumptions</td><td>Kit separability, adoption, API access, DSC availability</td><td><a href="#p15">Phase 15</a></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Unresolved questions</h3>
+  <ol>
+    <li>What reagents are in NCB's kit bottles, what are the read times, and what do Tests C and D look like (the NICFS guide prints A, B and E)?</li>
+    <li>Will NCB run its kits on known reference standards so we can build real profiles (Phase-0 validation)?</li>
+    <li>Do supervising officers hold Class 3 DSCs, or will NCB issue them?</li>
+    <li>Does NCB use e-Sakshya, and can it get ICJS, SIMS or Parichay API access for this?</li>
+    <li>What retention period applies to field-test records after case disposal?</li>
+    <li>How is BNSS s.105 recording applied to NDPS searches in NCB practice?</li>
+    <li>Can the kit supplier print a colour-controlled card into each kit, and at what cost?</li>
+  </ol>
+</section>
+
+<section id="p17">
+  <span class="kicker">Phase 17 · Implementation plan</span>
+  <h2>Milestones</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Milestone</th><th>Goal</th><th>Components / APIs / DB</th><th>Tests and acceptance</th><th>Depends on</th><th>Expected output</th></tr></thead>
+    <tbody>
+      <tr><td>M0 · Format first (week 1)</td><td>Freeze the record format</td><td><code>record-core</code>: model, JCS, SHA-256, ECDSA verify, chain, anchor and binding verify; <code>verifier-cli</code>; test vectors; test CA for supervisor bindings</td><td>JCS vectors pass; all 6 E3 attacks detected; server-only binding rejected; untampered set verifies</td><td>—</td><td>Format spec v1, library, CLI</td></tr>
+      <tr><td>M1 · Signed ledger on phone (week 2)</td><td>Offline operation with 6 packages, no colour yet</td><td>Keystore key with user auth, attestation capture (verified server-side as in <code>attestation.py</code>); records sign time, GNSS time, GPS with the mock-location flag, and officer; operation, package, anchor (QR + 65-bit code) screens; SQLCipher ledger; searchable log with in-app verify; bundle export over USB</td><td>Exported bundle verifies in CLI; edit, delete and reorder caught; multi-phone anchor works; log search works offline</td><td>M0</td><td>Installable APK doing the full integrity loop</td></tr>
+      <tr><td>M2 · Measurement (weeks 3–4)</td><td>Reproducible colour reading</td><td><code>colour-engine</code>: RAW (DNG) and JPEG tiers, ArUco, homography, grey+3×3 fit, calibration-error gate, blank well, Lab, ΔE00, colour bands, liveness; the signed NDDK protocol (Tests A–E, flow charts)</td><td>Matches <code>colour_engine.py</code> + <code>kit_profile.py</code> + <code>nddk.py</code> on the E12/E17 sets exactly; on real photos of the printed card (<code>read_photos.py</code>): card found ≥95%, calibration error ≤3 ΔE00 median in 4 lights, 0 wrong answers</td><td>M0; proxy dataset captured</td><td>Classification on real phones; evaluation report</td></tr>
+      <tr><td>M3 · Hard conditions (week 5)</td><td>Night and grouping</td><td>Flash/no-flash with per-frame homography; same-photo comparison; grouping advisory</td><td>Sodium-like lamp → auto night mode; same-substance proxy pairs called identical ≥95%</td><td>M2</td><td>Night-mode and grouping demo</td></tr>
+      <tr><td>M4 · Thin server (weeks 5–6)</td><td>Durable storage</td><td>Spring Boot: enrolment (DSC-signed bindings), sync pipeline, media, ledger, checkpoints, bundles; full schema; MinIO with object lock</td><td>All 13 E14 scenarios pass on PostgreSQL (idempotent re-sync, fork, gap, replay, restore from an older backup with durable checkpoints); checkpoint copied to phone</td><td>M0, M1</td><td>Pilot-ready server (docker compose)</td></tr>
+      <tr><td>M5 · Paperwork and lab loop (week 7)</td><td>Adoption value</td><td>Form-1 item 5, panchnama text (English/Hindi), s.63 Part A data sheet; samples, Test Memo; two-person lab entry; QA report</td><td>Documents cite record hashes; QA figures reproducible from raw rows</td><td>M4</td><td>Documents and QA report</td></tr>
+      <tr><td>M6 · Hardening (week 8 onward)</td><td>Defensible demo</td><td>MASVS checks, API pen-test, load test, chaos tests, accessibility, reader-agreement study, demo script</td><td>No critical findings; 10× load sustained; demo runs fully in airplane mode</td><td>M1–M5</td><td>Test reports, demo script, judge Q&amp;A bank</td></tr>
+    </tbody>
+  </table></div>
+<pre class="code">fieldtest-recorder/
+├── record-core/        Kotlin/JVM: model, JCS, hashing, signatures, chain + anchor verification, test-vectors/
+├── colour-engine/      Kotlin/JVM: geometry, calibration, Lab/ΔE00, decision rule (pure functions, no Android deps)
+├── android-app/        capture, protocol runner, ledger, anchor, documents, sync
+├── server/             Spring Boot monolith: enrolment, sync, media, ledger, checkpoints, lab results, portal
+├── verifier-cli/       offline evidence-bundle verifier (uses record-core + colour-engine)
+├── profiles/           kit profiles, card batch files, signing tooling (two-person)
+├── research/           E1–E3 simulations, proxy dataset protocol, reader-agreement study
+├── docs/               threat model, format spec, OpenAPI, SOP drafts, s.63 certificate notes
+└── deploy/             docker compose (pilot), host runbooks, backup/restore scripts</pre>
+</section>
+
+<section id="p18">
+  <span class="kicker">Phase 18 · Testing</span>
+  <h2>Beyond the happy path</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>What we test</th><th>Edge cases</th></tr></thead>
+    <tbody>
+      <tr><td>Unit</td><td>JCS, hashing, signature, chain, anchor; colour math against reference values</td><td>Unicode case numbers, float formatting, empty chains, counter overflow</td></tr>
+      <tr><td>Property-based</td><td>Any single mutation of a record set is detected</td><td>Random edits, deletions, reorders, duplications</td></tr>
+      <tr><td>Golden images</td><td>Same frames give the same decision on app and CLI</td><td>Different phones' JPEGs, rotated or partial cards</td></tr>
+      <tr><td>Integration and API</td><td>Enrolment, sync, media, bundles</td><td>Re-sync, forks, revoked device, oversized upload, wrong hash, out-of-order counters</td></tr>
+      <tr><td>End-to-end</td><td>Raid simulation with 2 phones, 8 packages, 3 witnesses, sync after 3 days</td><td>Battery pull mid-test, lock screen changed, clock set back a day, airplane mode throughout</td></tr>
+      <tr><td>Security</td><td>MASVS checklist, API fuzzing, authorisation matrix</td><td>Rooted emulator enrolment, replayed envelopes, admin reading case data</td></tr>
+      <tr><td>Load</td><td>10× the estimated peak sync</td><td>Thousands of phones reconnecting at once</td></tr>
+      <tr><td>Failure</td><td>Kill the database mid-sync, fill the disk, break object storage, fail checkpoint export</td><td>Confirm phones retain data and recover</td></tr>
+      <tr><td>Measurement evaluation</td><td>Proxy dataset: accuracy, abstention and risk-coverage curve per light, device and sample amount</td><td>Sodium light, glare, dark samples, faded card</td></tr>
+      <tr><td>Red-team capture</td><td>Pre-reacted well, photo on a screen, mid-capture swap, swap at the drop (E16 as acceptance tests)</td><td>Dim light, shaky hands, slow reactions</td></tr>
+      <tr><td>Human</td><td>Reader-agreement study (10–15 volunteers, blinded) vs app</td><td>Colour-blind volunteers, torch light</td></tr>
+      <tr><td>Regression</td><td>All of the above in CI; profile changes re-run the golden set</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p19">
+  <span class="kicker">Phase 19 · Is this actually good?</span>
+  <h2>Final checks</h2>
+  <div class="qa">
+    <details open><summary>Would I approve this for a government deployment?</summary><p>For a pilot, yes, with conditions: Phase-0 validation on real kits, NCB-owned signing keys, and a security audit. For national rollout, only after the pilot shows agreement with lab results and acceptable time per package.</p></details>
+    <details open><summary>Maintaining it for 5 years, what would I remove?</summary><p>Anything that isn't the ledger, measurement, documents and QA. It's already down to one app, one server and one verifier. The next cut would be the portal UI in favour of reports, if NCB prefers.</p></details>
+    <details open><summary>Only 48 hours to show the core innovation?</summary><p>record-core plus verifier CLI; the Android capture → sign → chain → anchor flow; card calibration on two vessels in one photo; the E3 tamper demo live. No server: export the bundle over USB.</p></details>
+    <details open><summary>Could we defend every claim to judges?</summary><p>Yes, if we keep the labels honest: rules are verified; accuracy figures are simulated until the proxy study runs; kit separability is unverified. The most likely unanswerable question is "have you tested on real NCB kits?" The answer is no, and the plan for fixing that is Phase-0 validation.</p></details>
+    <details open><summary>Is there a simpler architecture?</summary><p>Yes: approach A with no server (signed, anchored bundles copied to the unit PC). It solves the record problem. We didn't choose it because it doesn't meet the statement's classification requirement, and it can't provide enrolment trust or the lab loop. We keep it as the fallback mode.</p></details>
+  </div>
+</section>
+
+<section id="px">
+  <span class="kicker">Phase X · Convergence test</span>
+  <h2>Why this is not just an AI-generated hackathon project</h2>
+  <div class="grid2">
+    <div class="panel"><h3>What 100 AI-assisted teams will probably build</h3><ul><li>Flutter or React Native app, or a web app</li><li>OpenCV colour matching, often a CNN/TFLite "drug classifier" trained on synthetic images with a high accuracy number</li><li>SHA-256 of the image, GPS, timestamp, QR code</li><li>Firebase/Supabase or FastAPI + PostgreSQL</li><li>Blockchain (Polygon/Hyperledger) "for immutability"</li><li>React dashboard with maps and heatmaps</li><li>NDPS law chatbot (LLM/RAG); PDF report; multilingual UI</li></ul></div>
+    <div class="panel"><h3>Which of our parts are also generic</h3><ul><li>Android app, reference card (mandated), colour distance, hashing, GPS, PDF text, bilingual UI, a server with PostgreSQL</li><li>These are necessary but earn no points. Judges have seen them in every demo.</li></ul></div>
+    <div class="panel bad"><h3>Our own "hackathon features" (demo appeal, low core value)</h3><ul><li>Accuracy dashboard charts: useful for NCB HQ, but in a demo it's synthetic data. One screen, clearly labelled.</li><li>Form-1 and panchnama text generation: real adoption value, but trivially copyable. Show in 20 seconds.</li><li>Kinetic colour curve: captured as data, but we make no claim from it until real data exists.</li></ul></div>
+    <div class="panel good"><h3>Obvious choices every AI agent would make, and we kept on purpose</h3><ul><li>PostgreSQL, a REST API, Docker, SHA-256. They're right for this load; being common isn't a reason to change them.</li><li>We differ where it counts: <em>what</em> the app claims (a colour group against a published standard, not a drug), <em>how</em> it captures (RAW first), <em>who</em> signs (hardware and supervisor keys, not the server), <em>where</em> trust anchors (panchnama and witnesses), and <em>how</em> decisions stay reproducible (no model on the phone).</li></ul></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Test</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Remove the gimmick</td><td>If copied tomorrow: grouping check, Form-1 text, flash mode are all copyable in days. What isn't: measured evidence (simulations now, proxy study and reader study later), NCB-governed profiles, and the design reasoning that shows in Q&amp;A.</td></tr>
+      <tr><td>No-AI test</td><td>Remove the region maps and nothing core is lost: RAW + rule uses no learned component (E12). The maps only help JPEG-only phones. The core value (a published standard, verifiable complete records, objective measurement) stands.</td></tr>
+      <tr><td>Boring but better</td><td>A monolith, PostgreSQL and a CLI verifier beat a blockchain + microservices + dashboard stack on correctness, cost, audit and maintenance for this workload.</td></tr>
+      <tr><td>Real-world advantage</td><td>Removes hand-copying of results into panchnama, Form-1 and SIMS (time saved: <span class="tag warn">to measure</span>). Catches deletion and fabrication patterns (E3). Gives NCB its first field-vs-lab accuracy figures. Reduces disputed grouping decisions (E2, simulated).</td></tr>
+      <tr><td>Copy us</td><td>Trivially reproducible: screens, colour distance, hashing, PDF. Hard to reproduce quickly: the anchor-to-witnesses design with multi-phone chains, reproducible decisions verified by an independent CLI, profile governance through the kit supply chain, and validation data.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="fill">
+    <div><b>Our key insight is</b> that a colour test identifies a colour group, not a drug, and means something only against a documented standard; and that the record's value comes from binding it to the legally witnessed seizure, not from hashing a photo.</div>
+    <div><b>Our solution is fundamentally different because</b> it makes the record set <em>complete</em> and <em>reproducible</em>: deletions and re-runs are detectable, and any expert can re-run the colour decision offline.</div>
+    <div><b>The hardest part of this problem is actually</b> trust under adversarial conditions (a motivated officer, a sceptical defence expert, an insider admin), and being honest about what a colour can mean.</div>
+    <div><b>Most straightforward implementations would probably</b> name a drug from a JPEG with a model, hash the image, and store it on a server or blockchain.</div>
+    <div><b>We instead</b> sign on hardware keys, chain per device, anchor in the panchnama and video, and decide with deterministic measurement, <b>because</b> those are the only properties a court-side expert can check without trusting us.</div>
+    <div><b>This matters because</b> NDPS cases are lost on procedure and no one knows how often kits are wrong. This makes the procedure provable and the kits measurable.</div>
+  </div>
+  <div class="verdict">
+    <p><strong>CORE INSIGHT:</strong> A field colour test identifies a colour group, not a drug, and only means something against a documented standard. India's courts found both the standard and a verifiable report missing. NCB's own kit says so: Test E's blue means cocaine or methaqualone.</p>
+    <p><strong>CORE ADVANTAGE:</strong> Every kit test becomes a verifiable report, interpreted against a published, signed colour standard. An independent expert can check its completeness, integrity and colour decision offline, using only a phone, the existing kit and a printed card.</p>
+    <p><strong>TECHNICAL DIFFERENTIATOR:</strong> Blank-relative colour bands built from NCB's kit chart (0.0% false positives across sample amounts in simulation), RAW-first capture, and hardware-signed, attested, per-device records carrying time, GPS and officer, anchored in the witness-signed panchnama (18/18 attacks caught).</p>
+    <p><strong>OPERATIONAL DIFFERENTIATOR:</strong> It guides the officer through NCB's own kit, Tests A–E in the printed order, and slots into existing NDPS paperwork (Form-1 item 5, panchnama, Rule 10(2), SIMS Form F). It uses the Rule 14 lab report the IO already receives to measure kit accuracy.</p>
+    <p><strong>WHY IT MATTERS:</strong> Seizure, remand and bail decisions before the lab report turn on this step. It turns the weakest, least-checked step of an NDPS case into one that can be proved and measured.</p>
+  </div>
+  <p><span class="tag v">Honest status</span> The earlier plan was <strong>not sufficiently differentiated</strong>: too many generic features. This version is differentiated on binding, completeness and reproducibility. Its biggest open risk is real kit data, which no amount of design can replace.</p>
+</section>
+
+<section id="sources">
+  <span class="kicker">Sources</span>
+  <h2>Evidence</h2>
+  <ol class="note" style="display:grid;gap:4px;padding-left:1.6em">
+    <li><a href="https://sih.gov.in/sih2026PS">SIH 2026 problem statements (SIH26231)</a> · primary</li>
+    <li><a href="https://sih.gov.in/letters/2026/SIH%202026%20Guidelines.pdf">SIH 2026 Guidelines</a> · primary</li>
+    <li><a href="https://sih.gov.in/letters/2026/SIH2026-IDEA-Presentation-Format.pptx">SIH 2026 idea presentation template</a> · primary</li>
+    <li><a href="https://narcoticsindia.nic.in/DLEA/1.pdf">NCB Drug Law Enforcement Field Officers' Handbook</a> · primary</li>
+    <li><a href="https://thehealthmaster.com/wp-content/uploads/2025/03/GSR-899E-dt-23-12-2022-NDPS-Seizure-Storage-Sampling-and-Disposal-Rules-2022.pdf">NDPS (Seizure, Storage, Sampling and Disposal) Rules 2022, GSR 899(E)</a> · primary gazette text (third-party copy)</li>
+    <li><a href="https://police.py.gov.in/Brief%20on%20Narcotics%20Drugs%20and%20Psychotrophic%20Substances%20-%20Chapter%208.pdf">NICFS Forensic Guide, ch. 8</a> · government training material</li>
+    <li><a href="https://bprd.nic.in/uploads/pdf/1723616060_2a3a0a30527ffcffc634.pdf">BPR&amp;D SOP, audio-video recording under BNSS</a> · primary</li>
+    <li><a href="https://www.mha.gov.in/MHA1/Par2017/pdfs/par2024-pdfs/RS11122024/1832.pdf">MHA Rajya Sabha USQ 1832 (11 Dec 2024)</a> · primary</li>
+    <li><a href="https://narcoticsindia.nic.in/Judgments/Yusuf%20@%20Asif%20vs%20state.pdf">Yusuf @ Asif v. State (SC, 2023)</a> · primary</li>
+    <li><a href="https://www.propublica.org/article/common-roadside-drug-test-routinely-produces-false-positives">ProPublica, "Busted" (2016)</a> · secondary</li>
+    <li><a href="https://nij.ojp.gov/topics/articles/improving-reliability-drug-tests-done-officers">NIJ (2016)</a> · primary (US)</li>
+    <li><a href="https://www.millenniumpost.in/delhi/every-ndps-case-should-be-uploaded-on-sims-within-48-hrs-of-registration-396043">SIMS Form F within 48 hours</a> · secondary (2020)</li>
+    <li><a href="https://www.mha.gov.in/MHA1/Par2017/pdfs/par2021-pdfs/rs-24032021/3259.pdf">MHA Rajya Sabha USQ 3259 (24 Mar 2021): DD kits for prima facie determination</a> · primary</li>
+    <li><a href="https://icjs.gov.in/esakshya/">e-Sakshya (ICJS)</a> and <a href="https://www.shankariasparliament.com/current-affairs/performance-of-new-criminal-laws">rollout status</a> · primary page / secondary</li>
+    <li><a href="https://www.ibanet.org/Ukrainian-court-cases-rely-footage-captured-IBA-founded-eyeWitness-to-Atrocities-app">IBA: eyeWitness footage in Ukrainian courts</a> · secondary</li>
+    <li><a href="https://blog.witness.org/2017/04/proofmode-helping-prove-human-rights-abuses-world/">WITNESS: ProofMode</a> · secondary</li>
+    <li><a href="https://detectachem.com/product-info/mobile-detect/">DetectaChem MobileDetect</a> · vendor</li>
+    <li><a href="https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf">CERT-In Directions (28 Apr 2022)</a> · primary</li>
+    <li><a href="https://guidelines.india.gov.in/introduction/">GIGW 3.0</a> · primary</li>
+    <li><a href="https://claude.ai/artifact/4ooQmXcoRhraskwFnJWCu4">Our earlier research dossier (the audited plan)</a> · internal</li>
+    <li><a href="https://indiankanoon.org/doc/2263704/">DPDP Act 2023, s.17(1)</a> · Act text</li>
+    <li><a href="https://www.nic.gov.in/project/parichay/">Parichay (NIC)</a> · primary</li>
+    <li><a href="https://www.india.gov.in/website-seizure-information-management-system-sims">SIMS (National Portal)</a> · primary listing</li>
+    <li><a href="https://developer.android.com/privacy-and-security/security-key-attestation">Android key attestation</a> · technical reference</li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc8785">RFC 8785 JSON Canonicalization Scheme</a> · standard</li>
+    <li><a href="https://developer.android.com/privacy-and-security/keystore">Android Keystore system (user-authentication-bound keys)</a> · technical reference</li>
+    <li><a href="https://egovstandards.gov.in/sites/default/files/2021-07/Usage%20of%20Digital%20Signature%20in%20e-Governance%20Ver1.0.pdf">Guidelines for Usage of Digital Signatures in e-Governance</a> · primary (e-Gov standards)</li>
+    <li><a href="https://cca.gov.in/sites/files/pdf/guidelines/CCA-IOG.pdf">CCA Interoperability Guidelines for Digital Signature Certificates</a> · primary</li>
+    <li><a href="https://pubmed.ncbi.nlm.nih.gov/21387569/">Choodum &amp; Nic Daeid, Digital image-based colourimetric tests for amphetamine and methylamphetamine, Drug Testing and Analysis 3(5), 2011</a> · peer-reviewed</li>
+    <li><a href="https://wires.onlinelibrary.wiley.com/doi/10.1002/wfs2.1461">Alonzo et al., Portable testing techniques for the analysis of drug materials, WIREs Forensic Science, 2022</a> · peer-reviewed review</li>
+    <li><a href="https://doi.org/10.1109/TIP.2015.2405336">Finlayson, Mackiewicz &amp; Hurlbert, Color correction using root-polynomial regression, IEEE Trans. Image Processing, 2015</a> · peer-reviewed (not re-fetched this session)</li>
+    <li><a href="https://doi.org/10.1002/col.20070">Sharma, Wu &amp; Dalal, The CIEDE2000 color-difference formula: implementation notes, Color Research &amp; Application, 2005</a> · peer-reviewed (not re-fetched)</li>
+    <li><a href="https://doi.org/10.1145/1015706.1015777">Petschnigg et al., Digital photography with flash and no-flash image pairs, ACM SIGGRAPH 2004</a> · peer-reviewed (not re-fetched)</li>
+    <li><a href="https://doi.org/10.1016/j.patcog.2014.01.005">Garrido-Jurado et al., Automatic generation and detection of highly reliable fiducial markers under occlusion, Pattern Recognition, 2014</a> · peer-reviewed (not re-fetched)</li>
+    <li><a href="https://www.ojp.gov/pdffiles1/nij/183258.pdf">NIJ Standard-0604.01, Color Test Reagents/Kits for Preliminary Identification of Drugs of Abuse (2000)</a> · primary (US)</li>
+    <li><a href="https://indiankanoon.org/doc/90970274/">Sagar Parshuram Joshi v. State of Maharashtra, Bombay HC, 15 Jan 2021</a> · primary (judgment text)</li>
+    <li><a href="https://indiankanoon.org/doc/91398841/">Masibur Khan v. State, Delhi HC, 31 May 2023</a> · primary (judgment text)</li>
+    <li><a href="https://narcoticsindia.nic.in/legislation/ndps-amendment-2001.pdf">NDPS small and commercial quantities, S.O. 1055(E), 19 Oct 2001</a> · primary (Gazette)</li>
+    <li><a href="https://kochhar.com/wp-content/uploads/2025/09/Bail-Under-The-Narcotic-Drugs-And-Psychotropic-Substances-Act-NDPS-Act.pdf">Anuraj v. State of Kerala (Kerala HC, 2024), as summarised by Kochhar &amp; Co.</a> · secondary</li>
+  </ol>
+</section>
+
+<footer>FieldTest Recorder · SIH26231 · Architecture, revision 7 (single current version). Colour results are simulated with a DSLR sensor model and published colours; nothing here has been measured on a real phone or an NCB kit. Labels on each claim show what is verified, simulated or assumed.</footer>
+</main>
+</div>

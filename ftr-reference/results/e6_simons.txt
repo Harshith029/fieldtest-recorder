@@ -1,0 +1,18 @@
+== Simon's: 4 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  d-Methamphetamine HCl    2.5PB 2/6    Dark blue                nearest negative: Dimethoxy-meth HCl     dE00   8.4  -> hard
+  MDMA HCl                 2.5PB 2/6    Dark blue                nearest negative: Dimethoxy-meth HCl     dE00   8.4  -> hard
+
+Q2  Engine on 160 rendered photos (Daylight, Tube light, White LED torch, Incandescent bulb), 300 well readings:
+  correct                 262  ( 87.3%)
+  inconclusive             36  ( 12.0%)
+  WRONG false positive      0  (  0.0%)
+  WRONG false negative      2  (  0.7%)
+  rejected photos: {'rejected:card_not_found': 8, 'rejected:bad_light': 2}
+
+  per substance (correct / inconclusive / wrong):
+   d-Methamphetamine HCl      n= 79  correct  71  inconcl   6  wrong   2
+   MDMA HCl                   n= 75  correct  70  inconcl   5  wrong   0
+   Methylphenidate HCl        n= 70  correct  65  inconcl   5  wrong   0
+   Dimethoxy-meth HCl         n= 76  correct  56  inconcl  20  wrong   0

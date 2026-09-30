@@ -1,0 +1,9 @@
+﻿E16 liveness, 400 sequences per case, 1 fps x 90 s
+
+  genuine (slow/normal)              genuine coloured reactions accepted: 99.8% [98.6-100.0] (n=400)
+  genuine (near-instant)             genuine coloured reactions accepted: 100.0% [99.1-100.0] (n=400)
+  STATIC pre-reacted well / screen   FAKE coloured results accepted: 0.0% [0.0-0.9] (n=400)
+  SWAP well mid-capture              FAKE coloured results accepted: 0.5% [0.1-1.8] (n=400)
+  SWAP timed exactly at the drop     FAKE coloured results accepted: 100.0% [99.1-100.0] (n=400)
+
+  REPLAY of a genuine recording: passes by construction -> needs non-colour controls (device-signed capture session, sensor timestamps, video cross-link)

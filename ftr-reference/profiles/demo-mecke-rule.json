@@ -1,0 +1,245 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-mecke-rule",
+  "version": 1,
+  "reagent": "Mecke",
+  "reference": [
+   {
+    "substance": "Chlorpromazine HCl",
+    "target": false,
+    "lab_x100": [
+     2021,
+     1066,
+     281
+    ],
+    "munsell": "5R 2/2",
+    "colour_name": "Blackish red",
+    "phase": ""
+   },
+   {
+    "substance": "Codeine",
+    "target": true,
+    "lab_x100": [
+     2028,
+     -1769,
+     -140
+    ],
+    "munsell": "2.5BG 2/4",
+    "colour_name": "Very dark bluish green",
+    "phase": ""
+   },
+   {
+    "substance": "Contac",
+    "target": false,
+    "lab_x100": [
+     4078,
+     520,
+     3995
+    ],
+    "munsell": "2.5Y 4/6",
+    "colour_name": "Moderate olive brown",
+    "phase": ""
+   },
+   {
+    "substance": "Diacetylmorphine HCl",
+    "target": true,
+    "lab_x100": [
+     3046,
+     -3940,
+     -266
+    ],
+    "munsell": "2.5BG 3/8",
+    "colour_name": "Deep bluish green",
+    "phase": ""
+   },
+   {
+    "substance": "Dimethoxy-meth HCl",
+    "target": false,
+    "lab_x100": [
+     2022,
+     1391,
+     1799
+    ],
+    "munsell": "5YR 2/4",
+    "colour_name": "Dark brown",
+    "phase": ""
+   },
+   {
+    "substance": "Doxepin HCl",
+    "target": false,
+    "lab_x100": [
+     2019,
+     1955,
+     498
+    ],
+    "munsell": "5R 2/4",
+    "colour_name": "Very dark red",
+    "phase": ""
+   },
+   {
+    "substance": "Dristan",
+    "target": false,
+    "lab_x100": [
+     6111,
+     704,
+     6766
+    ],
+    "munsell": "2.5Y 6/10",
+    "colour_name": "Light olive brown",
+    "phase": ""
+   },
+   {
+    "substance": "Exedrine",
+    "target": false,
+    "lab_x100": [
+     6110,
+     -188,
+     2870
+    ],
+    "munsell": "5Y 6/4",
+    "colour_name": "Dark grayish yellow",
+    "phase": ""
+   },
+   {
+    "substance": "Hydrocodone tartrate",
+    "target": true,
+    "lab_x100": [
+     3043,
+     -2836,
+     -658
+    ],
+    "munsell": "5BG 3/6",
+    "colour_name": "Dark bluish green",
+    "phase": ""
+   },
+   {
+    "substance": "LSD",
+    "target": false,
+    "lab_x100": [
+     2026,
+     -785,
+     156
+    ],
+    "munsell": "7.5G 2/2",
+    "colour_name": "Greenish black",
+    "phase": ""
+   },
+   {
+    "substance": "Mace5",
+    "target": false,
+    "lab_x100": [
+     3043,
+     -605,
+     2630
+    ],
+    "munsell": "10Y 3/4",
+    "colour_name": "Dark grayish olive",
+    "phase": ""
+   },
+   {
+    "substance": "MDA HCl",
+    "target": false,
+    "lab_x100": [
+     2028,
+     -1769,
+     -140
+    ],
+    "munsell": "2.5BG 2/4",
+    "colour_name": "Very dark bluish green",
+    "phase": ""
+   },
+   {
+    "substance": "Mescaline HCl",
+    "target": false,
+    "lab_x100": [
+     5109,
+     -558,
+     5792
+    ],
+    "munsell": "7.5Y 5/8",
+    "colour_name": "Moderate olive",
+    "phase": ""
+   },
+   {
+    "substance": "Morphine monohydrate",
+    "target": true,
+    "lab_x100": [
+     2028,
+     -1769,
+     -140
+    ],
+    "munsell": "2.5BG 2/4",
+    "colour_name": "Very dark bluish green",
+    "phase": ""
+   },
+   {
+    "substance": "Nutmeg",
+    "target": false,
+    "lab_x100": [
+     2024,
+     395,
+     1097
+    ],
+    "munsell": "10YR 2/2",
+    "colour_name": "Brownish black",
+    "phase": ""
+   },
+   {
+    "substance": "Opium",
+    "target": false,
+    "lab_x100": [
+     2026,
+     -291,
+     1066
+    ],
+    "munsell": "10Y 2/2",
+    "colour_name": "Olive black",
+    "phase": ""
+   },
+   {
+    "substance": "Oxycodone HCl",
+    "target": false,
+    "lab_x100": [
+     5109,
+     -558,
+     5792
+    ],
+    "munsell": "7.5Y 5/8",
+    "colour_name": "Moderate olive",
+    "phase": ""
+   },
+   {
+    "substance": "Propoxyphene HCl",
+    "target": false,
+    "lab_x100": [
+     2018,
+     2600,
+     1636
+    ],
+    "munsell": "10R 2/6",
+    "colour_name": "Deep reddish brown",
+    "phase": ""
+   },
+   {
+    "substance": "Sugar",
+    "target": false,
+    "lab_x100": [
+     8548,
+     -1528,
+     7303
+    ],
+    "munsell": "10Y 8.5/10",
+    "colour_name": "Brilliant greenish yellow",
+    "phase": ""
+   }
+  ],
+  "decision": {
+   "type": "rule",
+   "r_x100": 600,
+   "m_x100": 200
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEUCIQDAfonI8cZdSbX7ns1HPqixmViEa48c08FD4M4uGhCUeAIgavPo97/IscWQrUrj1A5m+3XsF9rDb7H9k8PVRlFULbk="
+}

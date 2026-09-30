@@ -1,0 +1,65 @@
+Profile checker report: Cobalt thiocyanate
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Cocaine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Ephedrine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Meperidine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Phencyclidine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Procaine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Propoxyphene HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate is 9.4 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Chlorpromazine HCl is 9.4 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Diacetylmorphine HCl is 10.0 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Doxepin HCl is 9.4 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Hydrocodone tartrate is 9.9 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Methadone HCl is 9.4 dE00 from positive-group colour Pseudoephedrine HCl (8-10): validate before relying on it
+WARN  Brompheniramine Maleate colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Chlordiazepoxide HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Chlorpromazine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Cocaine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Diacetylmorphine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Doxepin HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Ephedrine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Hydrocodone tartrate colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Meperidine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Methadone HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Methylphenidate HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Phencyclidine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Procaine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Propoxyphene HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Pseudoephedrine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+WARN  Quinine HCl colour is outside sRGB: requires RAW/linear capture (E13)
+INFO  cross-reactant in positive group: Ephedrine HCl
+INFO  cross-reactant in positive group: Meperidine HCl
+INFO  cross-reactant in positive group: Phencyclidine HCl
+INFO  cross-reactant in positive group: Procaine HCl
+INFO  cross-reactant in positive group: Propoxyphene HCl
+INFO  cross-reactant in positive group: Pseudoephedrine HCl

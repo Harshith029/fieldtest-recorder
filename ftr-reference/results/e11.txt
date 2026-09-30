@@ -1,0 +1,16 @@
+reagent  unseen light           forest c/w/a %   frozen table c/w/a %  agree  table size
+Marquis  Daylight            97.0/ 0.0/ 3.0       92.9/ 0.0/ 7.1        96.0%      535 KB
+Marquis  Incandescent bulb   99.0/ 0.0/ 1.0       96.9/ 0.0/ 3.1        98.0%      549 KB
+Marquis  Tube light          95.9/ 0.0/ 4.1       94.8/ 0.0/ 5.2        96.9%      528 KB
+Marquis  White LED torch     98.9/ 0.0/ 1.1       90.3/ 0.0/ 9.7        91.4%      549 KB
+         lookup latency ~10 us per reading (NumPy); table SHA-256 f1638a55bbf20c33… (signed inside the kit profile)
+Mecke    Daylight            92.9/ 0.0/ 7.1       86.7/ 0.0/13.3        93.9%      513 KB
+Mecke    Incandescent bulb   98.0/ 0.0/ 2.0       97.1/ 0.0/ 2.9        99.0%      520 KB
+Mecke    Tube light          93.0/ 0.0/ 7.0       92.0/ 1.0/ 7.0        96.0%      504 KB
+Mecke    White LED torch     96.9/ 0.0/ 3.1       94.9/ 0.0/ 5.1        98.0%      520 KB
+         lookup latency ~11 us per reading (NumPy); table SHA-256 718a7dd47d5ca46e… (signed inside the kit profile)
+Simons   Daylight            95.9/ 0.0/ 4.1       97.3/ 0.0/ 2.7        98.6%      106 KB
+Simons   Incandescent bulb   93.0/ 0.0/ 7.0       91.5/ 0.0/ 8.5        95.8%       72 KB
+Simons   Tube light          95.9/ 0.0/ 4.1       97.3/ 0.0/ 2.7        98.6%      106 KB
+Simons   White LED torch     95.7/ 0.0/ 4.3       97.1/ 0.0/ 2.9        98.6%      104 KB
+         lookup latency ~11 us per reading (NumPy); table SHA-256 e8c5ef3df99c5966… (signed inside the kit profile)

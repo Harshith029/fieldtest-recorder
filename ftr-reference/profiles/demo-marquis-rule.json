@@ -1,0 +1,305 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-marquis-rule",
+  "version": 1,
+  "reagent": "Marquis",
+  "reference": [
+   {
+    "substance": "Aspirin",
+    "target": false,
+    "lab_x100": [
+     3025,
+     4745,
+     2024
+    ],
+    "munsell": "5R 3/10",
+    "colour_name": "Deep red",
+    "phase": ""
+   },
+   {
+    "substance": "Benzphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     2017,
+     2721,
+     1143
+    ],
+    "munsell": "7.5R 2/6",
+    "colour_name": "Deep reddish brown",
+    "phase": ""
+   },
+   {
+    "substance": "Chlorpromazine HCl",
+    "target": false,
+    "lab_x100": [
+     3023,
+     3691,
+     -1334
+    ],
+    "munsell": "2.5RP 3/8",
+    "colour_name": "Deep purplish red",
+    "phase": ""
+   },
+   {
+    "substance": "Codeine",
+    "target": true,
+    "lab_x100": [
+     2016,
+     1620,
+     -1200
+    ],
+    "munsell": "7.5P 2/4",
+    "colour_name": "Very dark purple",
+    "phase": ""
+   },
+   {
+    "substance": "d-Amphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     6098,
+     4426,
+     4647
+    ],
+    "munsell": "10R 6/12",
+    "colour_name": "Strong reddish orange",
+    "phase": ""
+   },
+   {
+    "substance": "d-Amphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     2019,
+     1907,
+     784
+    ],
+    "munsell": "7.5R 2/4",
+    "colour_name": "Dark reddish brown",
+    "phase": ""
+   },
+   {
+    "substance": "d-Methamphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     4064,
+     4629,
+     4632
+    ],
+    "munsell": "10R 4/12",
+    "colour_name": "Deep reddish orange",
+    "phase": ""
+   },
+   {
+    "substance": "d-Methamphetamine HCl",
+    "target": false,
+    "lab_x100": [
+     2019,
+     1907,
+     784
+    ],
+    "munsell": "7.5R 2/4",
+    "colour_name": "Dark reddish brown",
+    "phase": ""
+   },
+   {
+    "substance": "Diacetylmorphine HCl",
+    "target": true,
+    "lab_x100": [
+     3021,
+     4805,
+     -271
+    ],
+    "munsell": "7.5RP 3/10",
+    "colour_name": "Deep purplish red",
+    "phase": ""
+   },
+   {
+    "substance": "Dimethoxy-meth HCl",
+    "target": false,
+    "lab_x100": [
+     5109,
+     -558,
+     5792
+    ],
+    "munsell": "7.5Y 5/8",
+    "colour_name": "Moderate olive",
+    "phase": ""
+   },
+   {
+    "substance": "Doxepin HCl",
+    "target": false,
+    "lab_x100": [
+     2021,
+     1032,
+     406
+    ],
+    "munsell": "7.5R 2/2",
+    "colour_name": "Blackish red",
+    "phase": ""
+   },
+   {
+    "substance": "Dristan",
+    "target": false,
+    "lab_x100": [
+     3036,
+     1090,
+     450
+    ],
+    "munsell": "5R 3/2",
+    "colour_name": "Dark grayish red",
+    "phase": ""
+   },
+   {
+    "substance": "Exedrine",
+    "target": false,
+    "lab_x100": [
+     3028,
+     3815,
+     1657
+    ],
+    "munsell": "5R 3/8",
+    "colour_name": "Dark red",
+    "phase": ""
+   },
+   {
+    "substance": "LSD",
+    "target": false,
+    "lab_x100": [
+     2026,
+     -291,
+     1066
+    ],
+    "munsell": "10Y 2/2",
+    "colour_name": "Olive black",
+    "phase": ""
+   },
+   {
+    "substance": "Mace5",
+    "target": false,
+    "lab_x100": [
+     7096,
+     -650,
+     5749
+    ],
+    "munsell": "7Y 7/8",
+    "colour_name": "Moderate yellow",
+    "phase": ""
+   },
+   {
+    "substance": "MDA HCl",
+    "target": false,
+    "lab_x100": [
+     1533,
+     0,
+     0
+    ],
+    "munsell": "Black",
+    "colour_name": "Black",
+    "phase": ""
+   },
+   {
+    "substance": "Meperidine HCl",
+    "target": false,
+    "lab_x100": [
+     3036,
+     1907,
+     2990
+    ],
+    "munsell": "5YR 3/6",
+    "colour_name": "Deep brown",
+    "phase": ""
+   },
+   {
+    "substance": "Mescaline HCl",
+    "target": false,
+    "lab_x100": [
+     6103,
+     3094,
+     6356
+    ],
+    "munsell": "5YR 6/12",
+    "colour_name": "Strong orange",
+    "phase": ""
+   },
+   {
+    "substance": "Methadone HCl",
+    "target": false,
+    "lab_x100": [
+     8052,
+     1299,
+     1747
+    ],
+    "munsell": "2.5YR 8/4",
+    "colour_name": "Light yellowish pink",
+    "phase": ""
+   },
+   {
+    "substance": "Methylphenidate HCl",
+    "target": false,
+    "lab_x100": [
+     8058,
+     993,
+     5088
+    ],
+    "munsell": "10YR 8/8",
+    "colour_name": "Moderate orange yellow",
+    "phase": ""
+   },
+   {
+    "substance": "Morphine monohydrate",
+    "target": true,
+    "lab_x100": [
+     3026,
+     2648,
+     -1460
+    ],
+    "munsell": "10P 3/6",
+    "colour_name": "Very deep reddish purple",
+    "phase": ""
+   },
+   {
+    "substance": "Oxycodone HCl",
+    "target": true,
+    "lab_x100": [
+     6099,
+     895,
+     -1297
+    ],
+    "munsell": "2.5P 6/4",
+    "colour_name": "Pale violet",
+    "phase": ""
+   },
+   {
+    "substance": "Propoxyphene HCl",
+    "target": false,
+    "lab_x100": [
+     2020,
+     1068,
+     -430
+    ],
+    "munsell": "2.5RP 2/2",
+    "colour_name": "Blackish purple",
+    "phase": ""
+   },
+   {
+    "substance": "Sugar",
+    "target": false,
+    "lab_x100": [
+     2022,
+     1391,
+     1799
+    ],
+    "munsell": "5YR 2/4",
+    "colour_name": "Dark brown",
+    "phase": ""
+   }
+  ],
+  "decision": {
+   "type": "rule",
+   "r_x100": 600,
+   "m_x100": 200
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEUCIHs1LIsUR8PNTrpaivgwOQXxs37jL+GX5CJynqCe5/cAAiEAy3r5guWp6f8s5/Z70B8M5fX3MG0RLWoqAi3m9hiRmp8="
+}

@@ -1,0 +1,13 @@
+Marquis                        24 reference colours | checker:  2 ERROR, 2 cross-reactants | region map built
+Mecke                          19 reference colours | checker:  3 ERROR, 1 cross-reactants | region map built
+Simon's                         4 reference colours | checker:  2 ERROR, 0 cross-reactants | region map built
+Cobalt thiocyanate             17 reference colours | checker: 42 ERROR, 6 cross-reactants | region map built
+Duquenois-Levine (modified)     4 reference colours | checker:  0 ERROR, 0 cross-reactants | rule only (no validation readings)
+== Cobalt thiocyanate: 60 photos x 1 seeds; positive group = ['Cocaine HCl', 'Ephedrine HCl', 'Meperidine HCl', 'Phencyclidine HCl', 'Procaine HCl', 'Propoxyphene HCl', 'Pseudoephedrine HCl']
+   seed 404  JPEG+rule  correct  35.1%  wrong 24.6%  inconcl 40.4%  rejected photos 3
+   seed 404  JPEG+map   correct  87.7%  wrong  0.0%  inconcl 12.3%  rejected photos 3
+   seed 404  RAW+rule   correct  87.7%  wrong  0.0%  inconcl 12.3%  rejected photos 3
+   POOLED (95% Clopper-Pearson):
+   JPEG+rule  correct 35.1% [26.4-44.6] (n=114) | wrong 24.6% [17.0-33.5] (n=114) | inconclusive 40.4% [31.3-49.9] (n=114) | true substance listed on positive calls 0/0
+   JPEG+map   correct 87.7% [80.3-93.1] (n=114) | wrong 0.0% [0.0-3.2] (n=114) | inconclusive 12.3% [6.9-19.7] (n=114) | true substance listed on positive calls 51/51
+   RAW+rule   correct 87.7% [80.3-93.1] (n=114) | wrong 0.0% [0.0-3.2] (n=114) | inconclusive 12.3% [6.9-19.7] (n=114) | true substance listed on positive calls 51/51

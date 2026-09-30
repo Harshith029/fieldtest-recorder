@@ -1,0 +1,344 @@
+{
+ "body": {
+  "type": "kit_profile",
+  "profile_id": "demo-duquenois-levine-band",
+  "version": 1,
+  "reagent": "Duquenois-Levine (modified)",
+  "reference": [
+   {
+    "substance": "Mace5",
+    "target": false,
+    "lab_x100": [
+     8048,
+     962,
+     -1121
+    ],
+    "munsell": "5P 8/4",
+    "colour_name": "Very light purple",
+    "phase": "chloroform"
+   },
+   {
+    "substance": "Nutmeg",
+    "target": false,
+    "lab_x100": [
+     7082,
+     1495,
+     -77
+    ],
+    "munsell": "5RP 7/4",
+    "colour_name": "Light gray purplish red",
+    "phase": "chloroform"
+   },
+   {
+    "substance": "Tea",
+    "target": false,
+    "lab_x100": [
+     8064,
+     -1943,
+     3944
+    ],
+    "munsell": "5GY 8/6",
+    "colour_name": "Light yellow green",
+    "phase": "not extracted"
+   },
+   {
+    "substance": "THC",
+    "target": true,
+    "lab_x100": [
+     4051,
+     4398,
+     -3049
+    ],
+    "munsell": "7.5P 4/12",
+    "colour_name": "Deep purple",
+    "phase": "chloroform"
+   }
+  ],
+  "decision": {
+   "type": "band",
+   "tol_x100": 500,
+   "margin_x100": 200,
+   "source": "NIJ Std-0604.01 chips + Beer-Lambert amount",
+   "outcomes": [
+    {
+     "name": "Mace5",
+     "substances": [
+      "Mace5"
+     ],
+     "positive": false,
+     "points_x100": [
+      [
+       7276,
+       1452,
+       -1682
+      ],
+      [
+       7400,
+       1375,
+       -1594
+      ],
+      [
+       7526,
+       1296,
+       -1503
+      ],
+      [
+       7653,
+       1215,
+       -1411
+      ],
+      [
+       7783,
+       1132,
+       -1317
+      ],
+      [
+       7914,
+       1048,
+       -1220
+      ],
+      [
+       8048,
+       962,
+       -1121
+      ],
+      [
+       8184,
+       874,
+       -1020
+      ],
+      [
+       8321,
+       785,
+       -916
+      ],
+      [
+       8461,
+       693,
+       -810
+      ],
+      [
+       8603,
+       600,
+       -702
+      ],
+      [
+       8747,
+       505,
+       -592
+      ]
+     ]
+    },
+    {
+     "name": "Nutmeg",
+     "substances": [
+      "Nutmeg"
+     ],
+     "positive": false,
+     "points_x100": [
+      [
+       5921,
+       2055,
+       -64
+      ],
+      [
+       6102,
+       1976,
+       -68
+      ],
+      [
+       6287,
+       1891,
+       -72
+      ],
+      [
+       6478,
+       1801,
+       -75
+      ],
+      [
+       6674,
+       1705,
+       -76
+      ],
+      [
+       6875,
+       1603,
+       -77
+      ],
+      [
+       7082,
+       1495,
+       -77
+      ],
+      [
+       7295,
+       1380,
+       -76
+      ],
+      [
+       7513,
+       1258,
+       -73
+      ],
+      [
+       7738,
+       1129,
+       -69
+      ],
+      [
+       7970,
+       993,
+       -64
+      ],
+      [
+       8207,
+       848,
+       -57
+      ]
+     ]
+    },
+    {
+     "name": "Tea",
+     "substances": [
+      "Tea"
+     ],
+     "positive": false,
+     "points_x100": [
+      [
+       7322,
+       -2451,
+       5212
+      ],
+      [
+       7441,
+       -2386,
+       5043
+      ],
+      [
+       7561,
+       -2314,
+       4858
+      ],
+      [
+       7684,
+       -2235,
+       4657
+      ],
+      [
+       7808,
+       -2147,
+       4438
+      ],
+      [
+       7935,
+       -2050,
+       4201
+      ],
+      [
+       8064,
+       -1943,
+       3944
+      ],
+      [
+       8195,
+       -1824,
+       3666
+      ],
+      [
+       8329,
+       -1693,
+       3366
+      ],
+      [
+       8466,
+       -1548,
+       3043
+      ],
+      [
+       8605,
+       -1388,
+       2695
+      ],
+      [
+       8747,
+       -1211,
+       2320
+      ]
+     ]
+    },
+    {
+     "name": "THC",
+     "substances": [
+      "THC"
+     ],
+     "positive": true,
+     "points_x100": [
+      [
+       2383,
+       4641,
+       -3276
+      ],
+      [
+       2612,
+       4658,
+       -3277
+      ],
+      [
+       2859,
+       4657,
+       -3266
+      ],
+      [
+       3124,
+       4634,
+       -3240
+      ],
+      [
+       3409,
+       4586,
+       -3196
+      ],
+      [
+       3718,
+       4509,
+       -3134
+      ],
+      [
+       4051,
+       4398,
+       -3049
+      ],
+      [
+       4412,
+       4248,
+       -2938
+      ],
+      [
+       4803,
+       4054,
+       -2798
+      ],
+      [
+       5228,
+       3809,
+       -2625
+      ],
+      [
+       5691,
+       3506,
+       -2413
+      ],
+      [
+       6194,
+       3138,
+       -2157
+      ]
+     ]
+    }
+   ]
+  },
+  "read_time_s": 60
+ },
+ "sig": "MEUCIQCSA4AqAtz/DUppiKuPbjqP8qLQ/WS5TpuG4iLPZG5v9gIgI6oUsfGtGOlMIGT0NBFYfy55QIhC8E49IMdnGEM6QYA="
+}

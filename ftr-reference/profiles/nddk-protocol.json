@@ -1,0 +1,220 @@
+{
+ "body": {
+  "type": "kit_protocol",
+  "kit": "NCB Narcotic Drugs Detection Kit",
+  "version": 1,
+  "source": "NICFS Forensic Guide ch.8 Fig 8.13 (scanned chart; colours approximate)",
+  "steps": {
+   "A": {
+    "vessel": "spot plate",
+    "read": "well",
+    "procedure": [
+     "opium: match-head of material + 2-3 drops water, smear 1-2 min, transfer the liquid to another well",
+     "add 1 drop A1",
+     "add 3 drops A2"
+    ],
+    "read_after_s": 60,
+    "note": "read time not printed; 60 s assumed until the kit sheet states it"
+   },
+   "B": {
+    "vessel": "test tube",
+    "read": "LOWER liquid layer (ignore upper layer)",
+    "procedure": [
+     "match-head of material in a tube",
+     "add match-head of B1",
+     "add 25 drops B2, shake 1 min",
+     "add 25 drops B3, shake 2 min",
+     "stand 2 min"
+    ],
+    "read_after_s": 120
+   },
+   "C": {
+    "vessel": "not printed",
+    "read": "not printed",
+    "procedure": [
+     "not printed in the guide: needs NCB kit sheet"
+    ],
+    "read_after_s": null,
+    "targets": [
+     "methamphetamine",
+     "methylphenidate"
+    ]
+   },
+   "D": {
+    "vessel": "not printed",
+    "read": "not printed",
+    "procedure": [
+     "not printed in the guide: needs NCB kit sheet"
+    ],
+    "read_after_s": null,
+    "targets": [
+     "barbiturates"
+    ]
+   },
+   "E": {
+    "vessel": "test tube",
+    "read": "solution",
+    "procedure": [
+     "powder the material; match-head in a tube",
+     "add 1 drop E1, shake 10 s",
+     "add 1 drop E2, shake 10 s"
+    ],
+    "read_after_s": 20,
+    "then_if_blue": "E34"
+   },
+   "E34": {
+    "vessel": "test tube (fresh)",
+    "read": "solution",
+    "procedure": [
+     "match-head of material in a tube",
+     "add 5 drops E3",
+     "add 3 drops E4"
+    ],
+    "read_after_s": 30
+   }
+  },
+  "flow": {
+   "start": {
+    "herb, resin or oil": "B-cannabis",
+    "resin or powder (opiate suspected)": "A-opiates-I",
+    "cigarettes, pipes, other": "submit-if-suspicion",
+    "impregnated paper or gelatine film": "AC-amphetamines",
+    "tablets, capsules, powders, liquids": [
+     "AC-amphetamines",
+     "A-opiates-II",
+     "A-barbiturates-as-printed"
+    ]
+   },
+   "B-cannabis": {
+    "tests": [
+     "B"
+    ],
+    "positive": "submit",
+    "negative": "stop-unless-suspicion"
+   },
+   "A-opiates-I": {
+    "tests": [
+     "A"
+    ],
+    "positive": "submit",
+    "negative": "B-cannabis"
+   },
+   "A-opiates-II": {
+    "tests": [
+     "A"
+    ],
+    "positive": "submit",
+    "negative": "stop-unless-suspicion"
+   },
+   "AC-amphetamines": {
+    "tests": [
+     "A",
+     "C"
+    ],
+    "positive": "submit",
+    "negative": "E-cocaine"
+   },
+   "E-cocaine": {
+    "tests": [
+     "E"
+    ],
+    "positive": "submit",
+    "negative": "D-barbiturates"
+   },
+   "D-barbiturates": {
+    "tests": [
+     "D"
+    ],
+    "positive": "submit",
+    "negative": "stop-unless-suspicion"
+   },
+   "A-barbiturates-as-printed": {
+    "tests": [
+     "A"
+    ],
+    "positive": "submit",
+    "negative": "AC-all"
+   },
+   "AC-all": {
+    "tests": [
+     "A",
+     "C"
+    ],
+    "positive": "submit",
+    "negative": "E-then-stop"
+   },
+   "E-then-stop": {
+    "tests": [
+     "E"
+    ],
+    "positive": "submit",
+    "negative": "stop-unless-suspicion"
+   }
+  },
+  "profiles": {
+   "A": "nddk-test-A@v1",
+   "B": "nddk-test-B@v1",
+   "E": "nddk-test-E@v1",
+   "E34": "nddk-test-E34@v1"
+  },
+  "ndps_quantity_mg": {
+   "heroin": [
+    5000,
+    250000
+   ],
+   "morphine": [
+    5000,
+    250000
+   ],
+   "codeine": [
+    10000,
+    1000000
+   ],
+   "opium": [
+    25000,
+    2500000
+   ],
+   "cocaine": [
+    2000,
+    100000
+   ],
+   "ganja": [
+    1000000,
+    20000000
+   ],
+   "charas": [
+    100000,
+    1000000
+   ],
+   "amphetamine": [
+    2000,
+    50000
+   ],
+   "methamphetamine": [
+    2000,
+    50000
+   ],
+   "mdma": [
+    500,
+    10000
+   ],
+   "methaqualone": [
+    20000,
+    500000
+   ],
+   "mescaline": [
+    5000,
+    100000
+   ],
+   "methylphenidate": [
+    2000,
+    50000
+   ],
+   "barbiturates": [
+    20000,
+    500000
+   ]
+  }
+ },
+ "sig": "MEUCIHX5b79cefXKYwrkFrhyA6iO9A89mkMMVWTUxekjGmMgAiEApQn0mj5lGCboRw5rbB4+ENDJmm4w/Jgs+ZKCXFS564Q="
+}

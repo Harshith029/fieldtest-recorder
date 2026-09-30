@@ -1,0 +1,38 @@
+== Marquis: 22 NIJ outcomes usable, 0 skipped []
+
+Q1  Separability: each positive outcome vs its nearest NEGATIVE outcome (dE00, D65)
+  Codeine                  7.5P 2/4     Very dark purple         nearest negative: Propoxyphene HCl       dE00   6.0  -> hard
+  Diacetylmorphine HCl     7.5RP 3/10   Deep purplish red        nearest negative: Chlorpromazine HCl     dE00   7.1  -> hard
+  Morphine monohydrate     10P 3/6      Very deep reddish purple nearest negative: Chlorpromazine HCl     dE00   4.8  -> UNRESOLVABLE
+  Oxycodone HCl            2.5P 6/4     Pale violet              nearest negative: Methadone HCl          dE00  26.2  -> resolvable
+
+Q2  Engine on 240 rendered photos (Daylight, Tube light, White LED torch, Incandescent bulb), 458 well readings:
+  correct                 393  ( 85.8%)
+  inconclusive             63  ( 13.8%)
+  WRONG false positive      2  (  0.4%)
+  WRONG false negative      0  (  0.0%)
+  rejected photos: {'rejected:card_not_found': 10, 'rejected:bad_light': 1}
+
+  per substance (correct / inconclusive / wrong):
+   Benzphetamine HCl          n= 13  correct  12  inconcl   0  wrong   1
+   Chlorpromazine HCl         n= 16  correct   5  inconcl  10  wrong   1
+   d-Methamphetamine HCl      n= 10  correct   9  inconcl   1  wrong   0
+   Codeine                    n= 46  correct  38  inconcl   8  wrong   0
+   Morphine monohydrate       n= 47  correct  43  inconcl   4  wrong   0
+   Mescaline HCl              n= 15  correct  14  inconcl   1  wrong   0
+   LSD                        n= 17  correct  12  inconcl   5  wrong   0
+   Oxycodone HCl              n= 62  correct  53  inconcl   9  wrong   0
+   Mace5                      n=  9  correct   8  inconcl   1  wrong   0
+   Diacetylmorphine HCl       n= 52  correct  41  inconcl  11  wrong   0
+   Sugar                      n= 14  correct  14  inconcl   0  wrong   0
+   MDA HCl                    n= 18  correct  17  inconcl   1  wrong   0
+   Exedrine                   n= 12  correct  11  inconcl   1  wrong   0
+   Propoxyphene HCl           n= 15  correct  15  inconcl   0  wrong   0
+   Meperidine HCl             n= 18  correct  18  inconcl   0  wrong   0
+   d-Amphetamine HCl          n= 21  correct  17  inconcl   4  wrong   0
+   Methadone HCl              n= 11  correct   9  inconcl   2  wrong   0
+   Doxepin HCl                n= 15  correct  13  inconcl   2  wrong   0
+   Dristan                    n= 10  correct  10  inconcl   0  wrong   0
+   Methylphenidate HCl        n= 13  correct  12  inconcl   1  wrong   0
+   Dimethoxy-meth HCl         n= 12  correct  11  inconcl   1  wrong   0
+   Aspirin                    n= 12  correct  11  inconcl   1  wrong   0

@@ -1,0 +1,17 @@
+Marquis                        24 reference colours | checker:  1 ERROR, 2 cross-reactants | region map built
+Mecke                          19 reference colours | checker:  0 ERROR, 1 cross-reactants | region map built
+Simon's                         4 reference colours | checker:  0 ERROR, 0 cross-reactants | region map built
+Cobalt thiocyanate             17 reference colours | checker:  0 ERROR, 6 cross-reactants | region map built
+Duquenois-Levine (modified)     4 reference colours | checker:  0 ERROR, 0 cross-reactants | rule only (no validation readings)
+== Cobalt thiocyanate
+   JPEG error med/95th  in-gamut:  2.7/  6.2 (n=10)   out-of-gamut:  7.4/ 11.9 (n=218)   | correct  46.5%  wrong 21.9% [95% CI 16.7-27.9]  inconcl 31.6%
+   RAW  error med/95th  in-gamut:  1.0/  1.9 (n=10)   out-of-gamut:  0.8/  1.8 (n=218)   | correct 100.0%  wrong  0.0% [95% CI 0.0-1.6]  inconcl  0.0%
+== Mecke
+   JPEG error med/95th  in-gamut:  1.6/  4.1 (n=174)   out-of-gamut:  4.0/ 10.1 (n=50)   | correct  93.3%  wrong  0.0% [95% CI 0.0-1.6]  inconcl  6.7%
+   RAW  error med/95th  in-gamut:  0.8/  2.9 (n=174)   out-of-gamut:  1.1/  2.3 (n=50)   | correct 100.0%  wrong  0.0% [95% CI 0.0-1.6]  inconcl  0.0%
+== Marquis
+   JPEG error med/95th  in-gamut:  2.3/  5.6 (n=209)   out-of-gamut:  2.9/  6.2 (n=11)   | correct  96.4%  wrong  0.0% [95% CI 0.0-1.7]  inconcl  3.6%
+   RAW  error med/95th  in-gamut:  1.3/  2.8 (n=209)   out-of-gamut:  1.2/  2.2 (n=11)   | correct 100.0%  wrong  0.0% [95% CI 0.0-1.7]  inconcl  0.0%
+== Simon's
+   JPEG error med/95th  in-gamut:  1.9/  2.8 (n=51)   out-of-gamut:  2.3/  5.5 (n=177)   | correct  97.8%  wrong  0.0% [95% CI 0.0-1.6]  inconcl  2.2%
+   RAW  error med/95th  in-gamut:  1.9/  3.1 (n=51)   out-of-gamut:  1.7/  3.1 (n=177)   | correct 100.0%  wrong  0.0% [95% CI 0.0-1.6]  inconcl  0.0%
