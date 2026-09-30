@@ -101,6 +101,39 @@ function Add-Step($slide, $l, $t, $w, $h, [string]$num, [string]$title, [string]
     return $b
 }
 
+function Add-Heading($slide, $l, $t, $w, [string]$text) {
+    $null = Add-Text $slide $l $t $w 15 @((P (T $text $true $NAVY) 11.5))
+    $ln = $slide.Shapes.AddLine($l, ($t + 17), ($l + $w), ($t + 17))
+    $ln.Line.ForeColor.RGB = (C $BLUE); $ln.Line.Weight = 1
+}
+
+# plain table: navy header row (optional), white / light rows, first column bold
+function Add-Table($slide, $l, $t, $colW, $header, $rows, [double]$size = 9.5, [bool]$boldFirst = $true) {
+    $nc = $colW.Count; $hr = if ($header) { 1 } else { 0 }; $nr = $rows.Count + $hr
+    $w = 0; foreach ($x in $colW) { $w += $x }
+    $shape = $slide.Shapes.AddTable($nr, $nc, $l, $t, $w, 18 * $nr)
+    $tb = $shape.Table
+    $tb.ApplyStyle("{2D5ABB26-0587-4C30-8999-92F81FD0307C}")
+    for ($c = 1; $c -le $nc; $c++) { $tb.Columns.Item($c).Width = $colW[$c - 1] }
+    if ($header) {
+        for ($c = 1; $c -le $nc; $c++) {
+            $cell = $tb.Cell(1, $c).Shape
+            $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $NAVY)
+            Fill-Text $cell.TextFrame @((P (T $header[$c - 1] $true $WHITE) $size $false 1 0))
+        }
+    }
+    for ($r = 0; $r -lt $rows.Count; $r++) {
+        for ($c = 1; $c -le $nc; $c++) {
+            $cell = $tb.Cell($r + 1 + $hr, $c).Shape
+            $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $(if ($r % 2 -eq 0) { $WHITE } else { $CARD }))
+            Fill-Text $cell.TextFrame @((P (T $rows[$r][$c - 1] ($boldFirst -and $c -eq 1)) $size $false 1 0))
+        }
+    }
+    for ($r = 1; $r -le $nr; $r++) { for ($c = 1; $c -le $nc; $c++) { $tf = $tb.Cell($r, $c).Shape.TextFrame; $tf.MarginLeft = 5; $tf.MarginRight = 5; $tf.MarginTop = 3; $tf.MarginBottom = 3 } }
+    for ($r = 1; $r -le $nr; $r++) { $tb.Rows.Item($r).Height = 16 }
+    return $shape
+}
+
 function Set-Chrome($slide, [string]$title, [double]$titleSize = 32) {
     foreach ($sh in @($slide.Shapes)) {
         if ($sh.Name -like "Oval*") {
@@ -154,79 +187,62 @@ try {
     Set-Chrome $s "FieldTest Recorder" 34
     $null = Add-Text $s 140 64 625 20 @((P (T "A guided, measured and signed field test for NCB's Narcotic Drugs Detection Kit" $false $NAVY $true) 13 $false 2 0))
 
-    # --- top: problem -> how the solution addresses it -> innovation (one row per problem)
-    $null = Add-Text $s 22 94 270 14 @((P (T "THE PROBLEM" $true $NAVY) 11))
-    $null = Add-Text $s 312 94 320 14 @((P (T "HOW THE SOLUTION ADDRESSES IT" $true $NAVY) 11))
-    $null = Add-Text $s 652 94 286 14 @((P (T "INNOVATION AND UNIQUENESS" $true $NAVY) 11))
-    $grid = @(
-        @("Read by eye", "the kit's colour is matched against a printed chart, in any light",
-          "Measured, not judged", "photo on a reference colour card beside a reagent-only blank well, read against the kit's own colour ranges",
-          "Holds up when sample amount varies", "colour bands + blank well: 0% false positives where a single-point rule gave 11.7%", "sim"),
-        @("No proof, no standard", "nothing proves a test happened there and then; Bombay HC (2021) called field testing ""arbitrary""",
-          "Signed at the scene", "time, GPS, officer and image hash in a signed, chained record; a short code goes into the witness-signed panchnama",
-          "Completeness, not just integrity", "deleted or re-run tests are caught; even a server admin cannot forge a record", "code"),
-        @("Wrong drug, wrong quantity", "Kerala HC (2024): seized ""MDMA"" was methamphetamine, a different NDPS quantity category",
-          "Says only what the chemistry supports", "lists every drug on the kit chart that the colour fits; warns when their NDPS quantity categories differ",
-          "An honest result", "Test E blue = ""cocaine or methaqualone"" until E3/E4 narrows it; ""inconclusive"" instead of a guess", ""))
-    for ($i = 0; $i -lt 3; $i++) {
-        $y = 112 + $i * 50
-        $g = $grid[$i]
-        $b1 = Add-Box $s 5 22 $y 270 44 "FBE5D6" $ORANGE
-        Fill-Text $b1.TextFrame @((P (T $g[0] $true $ORANGE) 10 $false 1 1), (P (T $g[1]) 8.5 $false 1 0))
-        $b2 = Add-Box $s 5 312 $y 320 44 $WHITE $BLUE
-        Fill-Text $b2.TextFrame @((P (T $g[2] $true $NAVY) 10 $false 1 1), (P (T $g[3]) 8.5 $false 1 0))
-        $b3 = Add-Box $s 5 652 $y 286 44 $CARD
-        Fill-Text $b3.TextFrame @((P (T $g[4] $true $NAVY) 10 $false 1 1), (P (T $g[5]) 8.5 $false 1 0))
-        foreach ($bx in @($b1, $b2, $b3)) { $tf = $bx.TextFrame; $tf.MarginLeft = 7; $tf.MarginRight = 6; $tf.MarginTop = 2; $tf.MarginBottom = 2; $tf.VerticalAnchor = 3 }
-        $null = Add-Arrow $s 292 ($y + 22) 312 ($y + 22); $null = Add-Arrow $s 632 ($y + 22) 652 ($y + 22)
-        if ($g[6]) { $null = Add-Pill $s (934 - $(if ($g[6] -eq "code") { 62 } else { 48 })) ($y + 3) $g[6] }
+    # left: the three template pointers as plain bullets, spaced from the measured text height
+    $secs = @(
+        @("Proposed solution", @(
+            "A phone app for NCB's existing Narcotic Drugs Detection Kit. The only addition is a printed colour card. It works offline.",
+            "It guides the officer through Tests A–E in the order of the kit's printed flow charts.",
+            "The officer takes one photo of the reaction, a reagent-only blank and the card.",
+            "The app reads the colour against the kit's colour ranges: positive, no colour change or inconclusive, with every drug on the kit chart that the colour fits.",
+            "Each result is saved as a signed record with time, GPS, officer and photo hash.",
+            "A 14-character code written in the panchnama ties the records to the witnesses' signatures, so anyone can check them later.")),
+        @("How it addresses the problem", @(
+            "Today the colour is judged by eye against a printed chart. Here it is measured.",
+            "Bombay HC (2021) called field testing ""arbitrary"", with no set standard. Here every test leaves a record of when, where and by whom.",
+            "Kerala HC (2024): seized ""MDMA"" was methamphetamine, a different NDPS quantity category. Our report lists every drug the colour fits and does not name one.")),
+        @("Innovation and uniqueness", @(
+            "Built on NCB's own kit and flow charts; it is not a generic colour matcher.",
+            "Deleted or repeated tests are detected, not only edited ones (tested in code).",
+            "Still correct when the sample amount varies: 0% false positives in simulation, against 11.7% for a simple rule.")))
+    $y = 96
+    foreach ($sec in $secs) {
+        Add-Heading $s 22 $y 436 $sec[0]
+        $paras = @(); foreach ($bullet in $sec[1]) { $paras += (P (T $bullet) 10.5 $true 1 3) }
+        $tbx = Add-Text $s 22 ($y + 22) 436 60 $paras 10.5
+        $y = $y + 22 + $tbx.TextFrame.TextRange.BoundHeight + 13
     }
 
-    # --- bottom: what the officer does, as five pictures (real output of the prototype demo)
-    $null = Add-Text $s 22 270 640 14 @((P (T "PROPOSED SOLUTION: WHAT THE OFFICER DOES (PHONE APP, OFFLINE)" $true $NAVY) 11))
-    $null = Add-Pill $s 890 272 "sim"
-    $tx = @(22, 208, 394, 580, 766)
-    for ($i = 0; $i -lt 5; $i++) { $fr = Add-Box $s 5 $tx[$i] 290 172 116 $WHITE $LINE; $fr.Adjustments.Item(1) = 0.06 }
-    for ($i = 0; $i -lt 4; $i++) { $null = Add-Arrow $s ($tx[$i] + 173) 348 ($tx[$i] + 185) 348 }
-    # 1 kit + card
-    $pic = $s.Shapes.AddPicture((Join-Path $root "ftr-reference\docs\validation\card\ftr-card-150x105mm.png"), 0, -1, 31, 294, 154, 108)
-    # 2 one photo per test
-    $pic = $s.Shapes.AddPicture((Join-Path $here "img\proto-positive.png"), 0, -1, 221, 294, 146, 108)
-    # 3 measured result
-    $null = Add-Text $s 402 296 156 106 @(
-        (P (T "Package P-1 · Test A" $false $MUTED) 8 $false 2 3),
-        (P (T "POSITIVE" $true $ORANGE) 17 $false 2 3),
-        (P (T "colour fits: codeine, heroin, morphine" $true $INK) 8.5 $false 2 4),
-        (P (T "NDPS quantity category cannot be decided in the field" $false $ORANGE $true) 8 $false 2 0))
-    # 4 signed record + panchnama code
-    $null = Add-Text $s 588 296 156 40 @(
-        (P (T "Signed record #5" $true $NAVY) 9 $false 2 2),
-        (P (T "time · GNSS time · GPS · officer · image hash · link to record #4" $false $MUTED) 7.5 $false 2 0))
-    $code = Add-Box $s 5 596 346 140 28 $CARD $BLUE
-    Fill-Text $code.TextFrame @((P (T "VRBUN-XZCSP-6TMM" $true $NAVY) 11.5 $false 2 0)); $code.TextFrame.VerticalAnchor = 3
-    $code.TextFrame.TextRange.Font.Name = "Consolas"
-    $null = Add-Text $s 588 378 156 22 @((P (T "code written into the panchnama and signed by the witnesses" $false $MUTED $true) 7.5 $false 2 0))
-    # 5 verified
-    $null = Add-Text $s 774 300 156 100 @(
-        (P (T "✔ VERIFIED" $true $GREEN) 17 $false 2 4),
-        (P (T "signatures, chain and panchnama code re-checked offline" $false $INK) 8.5 $false 2 4),
-        (P (T "changed, deleted or hidden records: caught" $false $GREEN $true) 8 $false 2 0))
-    $caps = @(
-        @("1  Same kit + a printed card", "NCB's own kit and a colour card per kit; no new hardware"),
-        @("2  One photo per test", "reaction, reagent-only blank and card in one frame"),
-        @("3  Measured result", "positive / no colour change / inconclusive, with every drug the colour fits"),
-        @("4  Signed and anchored", "every test chained; a 14-character code ties the set to the panchnama"),
-        @("5  Verified by anyone", "court expert, defence or lab. Planned: Field Test Memo, Form-1 item 5, BSA s.63 data"))
-    for ($i = 0; $i -lt 5; $i++) {
-        $null = Add-Text $s $tx[$i] 411 172 56 @((P (T $caps[$i][0] $true $NAVY) 10 $false 1 1), (P (T $caps[$i][1]) 8.5 $false 1 0))
+    # right: one real capture with callouts, and what its record says
+    Add-Heading $s 482 96 456 "One test in our prototype (simulated photo)"
+    $px = 482; $py = 120; $pw = 292; $ph = 219
+    $pic = $s.Shapes.AddPicture((Join-Path $here "img\capture-p1.png"), 0, -1, $px, $py, $pw, $ph)
+    $pic.Line.Visible = -1; $pic.Line.ForeColor.RGB = (C $GREY); $pic.Line.Weight = 0.75
+    $calls = @(
+        @(0.841, 0.183, 128, "Markers", "the app finds the card"),
+        @(0.687, 0.383, 176, "Sample well", "the reaction colour"),
+        @(0.675, 0.586, 224, "Blank well", "reagent only, same light"),
+        @(0.470, 0.620, 272, "Reference colours", "correct for light and camera"))
+    foreach ($c in $calls) {
+        $ln = $s.Shapes.AddLine(($px + $c[0] * $pw), ($py + $c[1] * $ph), 788, ($c[2] + 8))
+        $ln.Line.ForeColor.RGB = (C $NAVY); $ln.Line.Weight = 1; $ln.Line.BeginArrowheadStyle = 6
+        $null = Add-Text $s 791 $c[2] 147 30 @((P (T $c[3] $true $NAVY) 9.5 $false 1 0), (P (T $c[4]) 9 $false 1 0))
     }
-    $null = Add-Text $s 22 474 916 12 @((P (T "Pictures 2–5 are real output of our prototype demo, run on simulated photos with test keys. The phone app is the next build." $false $MUTED $true) 8))
+    $null = Add-Text $s 482 347 456 13 @((P (T "What the signed record for this test says" $true $NAVY) 10))
+    $rec = @(
+        @("Test", "NCB kit Test A, package P-1"),
+        @("Result", "Positive"),
+        @("Colour fits", "codeine, heroin, morphine (the kit cannot tell these apart)"),
+        @("NDPS quantity", "cannot be decided in the field"),
+        @("Signed with", "time, GPS, officer, photo hash; linked to the previous record"),
+        @("Panchnama code", "VRBUN-XZCSP-6TMM; the whole raid verifies offline"))
+    $null = Add-Table $s 482 363 @(104, 352) $null $rec 9
+    $null = Add-Text $s 482 478 456 12 @((P (T "Output of our Python prototype with test keys. The phone app is the next build." $false $MUTED) 8))
 
     # ================================================================ 3. TECHNICAL APPROACH
     $s = $pres.Slides.Item(3)
     Set-Chrome $s "TECHNICAL APPROACH" 32
     # process flow: one package from seizure to court (left two thirds)
-    $null = Add-Text $s 22 94 440 16 @((P (T "PROCESS FLOW: ONE PACKAGE, FROM SEIZURE TO COURT" $true $NAVY) 11))
+    Add-Heading $s 22 92 578 "Process flow: one package, from seizure to court"
     $null = Add-Box $s 5 22 112 578 162 $CARD
     $null = Add-Text $s 30 116 300 12 @((P (T "OFFICER'S PHONE · WORKS OFFLINE" $true $BLUE) 7.5))
     $null = Add-Box $s 5 22 282 284 82 $CARD
@@ -274,8 +290,8 @@ try {
         (P @((T "Deliberately not used: " $true $NAVY), (T "blockchain, cloud AI, a neural-network ""drug detector"" (a colour test cannot identify a drug; the court must be able to re-run the reading).")) 9))
 
     # working prototype: real engine output on simulated photos
-    $null = Add-Text $s 620 98 240 16 @((P (T "WORKING PROTOTYPE OUTPUT" $true $NAVY) 11))
-    $null = Add-Pill $s 888 100 "sim"
+    Add-Heading $s 620 92 316 "Working prototype output"
+    $null = Add-Pill $s 888 95 "sim"
     $tiles = @(
         @("proto-positive.png", "POSITIVE", "Test A: fits codeine, heroin, morphine", $ORANGE),
         @("proto-negative.png", "NEGATIVE", "Test A: no colour change vs blank", $GREEN),
@@ -287,7 +303,7 @@ try {
         $null = Add-Text $s ($x - 2) 196 104 34 @((P (T $tiles[$i][1] $true $tiles[$i][3]) 9 $false 1 0), (P (T $tiles[$i][2] $false $MUTED) 8 $false 1 0))
     }
     $null = Add-Text $s 620 234 316 40 @((P (T "Real reference code on camera-model photos: finds the card, corrects the light, reads the well against the blank, decides, then signs and chains the record; the raid verifies offline." $false $MUTED $true) 8.5))
-    $null = Add-Text $s 620 282 316 16 @((P (T "IMPLEMENTATION STATUS" $true $NAVY) 11))
+    Add-Heading $s 620 278 316 "Implementation status"
     $built = @(
         @("Python reference prototype + one-command demo, 65 automated test cases: github.com/Harshith029/fieldtest-recorder", "code"),
         @("Colour, liveness, night-light and amount experiments on simulated photos", "sim"),
@@ -301,114 +317,79 @@ try {
     # ================================================================ 4. FEASIBILITY AND VIABILITY
     $s = $pres.Slides.Item(4)
     Set-Chrome $s "FEASIBILITY AND VIABILITY" 30
-    $stats = @(
-        @("18/18", "of our tampering attacks caught by the verifier, incl. insider-admin forgery and deleted records", "code"),
-        @("15/15", "sync and failure scenarios handled by the reference sync protocol, incl. an old-backup restore", "code"),
-        @("11.7% → 0%", "false positives as sample amount varies: our first single-point rule vs colour bands (published US colours)", "sim"),
-        @("≤ 1%", "false-positive target for real-kit validation: 1,296 captures, 3 sample amounts, 95% confidence", "next"))
+    Add-Heading $s 22 96 452 "Analysis of feasibility: what we have tested so far"
+    $ev = @(
+        @("18 ways of tampering with records: edit, delete, hide, forge as server admin", "all 18 detected", "real code"),
+        @("15 sync failures: lost network, duplicate upload, phone restored from an old backup", "all 15 handled correctly", "real code"),
+        @("Reading when the sample amount varies", "0% false positives (a simple rule gave up to 11.7%)", "simulated photos"),
+        @("Sample spilled into the blank well", "reported as inconclusive, never as negative", "real code"),
+        @("Real phones and real NCB reactions", "not tested yet", "next: 1,296 tests by NCB/CFSL chemists; target at most 1% false positives"))
+    $t1 = Add-Table $s 22 120 @(186, 136, 130) @("What we tested", "Result", "How") $ev 9.5 $false
+    $y = $t1.Top + $t1.Height + 14
+    Add-Heading $s 22 $y 452 "Why it is practical"
+    $null = Add-Text $s 22 ($y + 22) 452 150 @(
+        (P (T "NCB already supplies the kit free of cost and officers already carry phones. We add a printed card per kit and a few reagent drops for the blank.") 10 $true 1 4),
+        (P (T "Small infrastructure (estimate): one server pair and 1–3 TB of storage a year on NIC or MeitY-empanelled cloud.") 10 $true 1 4),
+        (P (T "NCB would hold the signing keys, the colour standard and the code. Open formats, no per-device licence fees.") 10 $true 1 4),
+        (P (T "No real phone photo or real reaction has been tested yet. That is the next stage, and the table above says how each result was obtained.") 10 $true 1 0)) 10
+
+    Add-Heading $s 494 96 444 "Potential challenges and risks, and our strategies"
+    $rk = @(
+        @("Real reaction colours differ from the printed chart", "Validation by NCB/CFSL chemists under their licences, at 3 sample amounts. We never handle narcotics."),
+        @("Phones and light vary; glare; night raids", "Reference card, RAW capture and a bad-light check (in prototype). The app says ""inconclusive"" rather than guess. Flash / no-flash night mode is simulated, not yet integrated."),
+        @("Staged or swapped sample", "Planned: capture from before the reagent drop, a liveness check (simulated so far), the package label in frame, a link to the s.105 video."),
+        @("Rooted phone, insider, deleted records", "Supervisor-signed phone binding, panchnama code, server never trusted (in prototype). Hardware keys and attestation are designed; the checker is prototyped."),
+        @("Access to SIMS / e-Sakshya not confirmed", "File exports first. The engine is designed as a module that e-Sakshya could embed."))
+    $t2 = Add-Table $s 494 120 @(150, 294) @("Challenge / risk", "Strategy") $rk 9.5
+    $y = $t2.Top + $t2.Height + 14
+    Add-Heading $s 494 $y 444 "Path to a working product"
+    $path = @(
+        @("Done", "Python prototype, one-command demo, 65 test cases"),
+        @("Next", "Android app; photos of the printed card on real phones"),
+        @("Then", "Validation by NCB/CFSL chemists: 1,296 tests"),
+        @("After", "Pilot in one NCB zone; lab results linked back"))
     for ($i = 0; $i -lt 4; $i++) {
-        $x = 22 + $i * 230
-        $null = Add-Box $s 5 $x 96 220 96 $CARD
-        $null = Add-Text $s ($x + 10) 102 200 36 @((P (T $stats[$i][0] $true $BLUE) 26 $false 1 0))
-        $null = Add-Text $s ($x + 10) 140 200 36 @((P (T $stats[$i][1]) 9.5))
-        $null = Add-Pill $s ($x + 210 - $(switch ($stats[$i][2]) { "code" { 62 } "next" { 28 } default { 48 } })) 102 $stats[$i][2]
+        $x = 494 + $i * 114.67
+        $bx = Add-Box $s 1 $x ($y + 26) 100 66 $WHITE $NAVY
+        Fill-Text $bx.TextFrame @((P (T $path[$i][0] $true $NAVY) 10 $false 1 2), (P (T $path[$i][1]) 9 $false 1 0))
+        $tf = $bx.TextFrame; $tf.MarginLeft = 6; $tf.MarginRight = 5; $tf.MarginTop = 4; $tf.MarginBottom = 3; $tf.VerticalAnchor = 1
+        if ($i -lt 3) { $null = Add-Arrow $s ($x + 100) ($y + 59) ($x + 114.67) ($y + 59) $NAVY }
     }
-    # risk table
-    $null = Add-Text $s 22 204 600 16 @((P (T "POTENTIAL CHALLENGES, RISKS AND STRATEGIES" $true $NAVY) 11))
-    $rows = @(
-        @("Real reaction colours differ from the printed chart", "Validation by NCB/CFSL chemists under their licences: 1,296 captures at 3 sample amounts; we never handle narcotics"),
-        @("Phones and light vary; glare; night raids", "Reference card + RAW capture and a bad-light gate (prototype); say ""inconclusive"" rather than guess; flash/no-flash night mode (simulated, not yet integrated)"),
-        @("Staged or swapped sample; contaminated blank", "A blank that shows a reaction colour gives inconclusive, never negative (prototype). Planned: capture from before the drop, liveness check (simulated so far), package label in frame, s.105 video link"),
-        @("Rooted phone, insider, deleted records", "Supervisor-signed binding, panchnama anchor, untrusted server (prototype); hardware keys + attestation (designed; checker prototyped)"),
-        @("Access to SIMS / e-Sakshya not confirmed", "File exports first; the engine is designed as an SDK that e-Sakshya could embed"))
-    $tbl = $s.Shapes.AddTable(6, 2, 22, 222, 600, 260)
-    $tb = $tbl.Table
-    $tb.ApplyStyle("{2D5ABB26-0587-4C30-8999-92F81FD0307C}")
-    $tb.Columns.Item(1).Width = 200; $tb.Columns.Item(2).Width = 400
-    $hdr = @("Challenge / risk", "Strategy")
-    for ($c = 1; $c -le 2; $c++) {
-        $cell = $tb.Cell(1, $c).Shape
-        $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $NAVY)
-        Fill-Text $cell.TextFrame @((P (T $hdr[$c - 1] $true $WHITE) 9.5 $false 1 0))
-    }
-    for ($r = 0; $r -lt 5; $r++) {
-        for ($c = 1; $c -le 2; $c++) {
-            $cell = $tb.Cell($r + 2, $c).Shape
-            $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $(if ($r % 2 -eq 0) { $WHITE } else { $CARD }))
-            Fill-Text $cell.TextFrame @((P (T $rows[$r][$c - 1] ($c -eq 1)) 10 $false 1 0))
-        }
-    }
-    for ($r = 1; $r -le 6; $r++) { for ($c = 1; $c -le 2; $c++) { $tf = $tb.Cell($r, $c).Shape.TextFrame; $tf.MarginLeft = 6; $tf.MarginRight = 6; $tf.MarginTop = 6; $tf.MarginBottom = 6 } }
-    for ($r = 1; $r -le 6; $r++) { $tb.Rows.Item($r).Height = 20 }
-    # viability card
-    $null = Add-Box $s 5 638 204 300 286 $CARD
-    $null = Add-Text $s 650 212 278 16 @((P (T "FEASIBILITY ANALYSIS" $true $NAVY) 11))
-    $null = Add-Text $s 650 234 278 250 @(
-        (P @((T "Existing kit, existing phones: " $true), (T "NCB already supplies the kit free; the additions are a printed colour card per kit and a few reagent drops for the blank well.")) 10.5 $true 1 9),
-        (P @((T "Small infrastructure (estimate): " $true), (T "one app server pair, PostgreSQL, 1–3 TB a year of storage on NIC or MeitY-empanelled cloud.")) 10.5 $true 1 9),
-        (P @((T "Government-owned by design: " $true), (T "NCB would hold the signing keys, the colour standard and the code; open formats, no per-device licence fees.")) 10.5 $true 1 9),
-        (P @((T "Pass criteria set in advance: " $true), (T "false positives at most 1%, proven at 95% confidence (at least 299 negative controls); ""inconclusive"" at most 15%.")) 10.5 $true 1 9),
-        (P @((T "Clear status: " $true), (T "every number is labelled proven in code, simulated or next. No real phone photo or real reaction has been tested yet; that is the next stage.")) 10.5 $true 1 0)) 10.5
 
     # ================================================================ 5. IMPACT AND BENEFITS
     $s = $pres.Slides.Item(5)
     Set-Chrome $s "IMPACT AND BENEFITS" 32
-    $null = Add-Text $s 22 98 420 16 @((P (T "POTENTIAL IMPACT ON THE TARGET AUDIENCE" $true $NAVY) 11))
+    Add-Heading $s 22 96 452 "Potential impact on the target audience"
     $who = @(
-        @("SO", "Seizing officer", "A guided test and a signed record that shows good-faith action; planned: Field Test Memo and Form-1 item 5 filled in."),
-        @("IO", "Investigating officer, prosecutor", "Checkable records for remand and bail; planned: a Rule 10(2) grouping check and the lab result linked back."),
-        @("CT", "Courts, defence, the accused", "Any expert can re-check the record offline; the quantity category is flagged as uncertain until the lab confirms."),
-        @("HQ", "NCB headquarters and labs", "Planned: field-vs-lab accuracy per kit batch and per test, from lab reports the IO already receives."))
-    for ($i = 0; $i -lt 4; $i++) {
-        $y = 120 + $i * 64
-        $c = Add-Box $s 9 22 $y 36 36 $BLUE
-        Fill-Text $c.TextFrame @((P (T $who[$i][0] $true $WHITE) 10.5 $false 2 0)); $c.TextFrame.VerticalAnchor = 3
-        $null = Add-Text $s 68 ($y - 2) 372 60 @((P (T $who[$i][1] $true $NAVY) 11 $false 1 1), (P (T $who[$i][2]) 9.5 $false 1 0))
-    }
-    # before / after table
-    $null = Add-Text $s 460 98 478 16 @((P (T "WHAT CHANGES FOR ONE SEIZURE" $true $NAVY) 11))
+        @("Seizing officer", "A guided test and a signed record showing the test was done properly. Planned: Field Test Memo and Form-1 item 5 filled in."),
+        @("Investigating officer, prosecutor", "Records that can be checked, for remand and bail. Planned: a Rule 10(2) grouping check and the lab result linked back."),
+        @("Courts, defence, the accused", "Any expert can re-check the record offline. The quantity category is marked uncertain until the lab confirms."),
+        @("NCB headquarters and labs", "Planned: field result against lab result for every kit batch and test."))
+    $t1 = Add-Table $s 22 120 @(130, 322) @("Who", "What changes for them") $who 10.5
+
+    Add-Heading $s 494 96 444 "What changes for one seizure"
     $ba = @(
         @("Colour judged by eye", "Measured against a signed colour standard"),
-        @("""Dark brown"" written in the panchnama", "Photo + reading + every drug on the kit chart the colour fits"),
+        @("""Dark brown"" written in the panchnama", "Photo, reading and every drug on the kit chart the colour fits"),
         @("No proof of time or place", "Signed time, GNSS time, GPS and officer"),
         @("Records can be rewritten later", "Deletions and re-runs are detectable"),
-        @("Quantity category guessed", "Flagged when it can't be told in the field"),
-        @("No kit accuracy data", "Field result vs lab result, per kit batch (planned)"))
-    $tbl = $s.Shapes.AddTable(7, 2, 460, 118, 478, 260)
-    $tb = $tbl.Table
-    $tb.ApplyStyle("{2D5ABB26-0587-4C30-8999-92F81FD0307C}")
-    $tb.Columns.Item(1).Width = 210; $tb.Columns.Item(2).Width = 268
-    $h2 = @("Today (paper)", "With FieldTest Recorder")
-    for ($c = 1; $c -le 2; $c++) {
-        $cell = $tb.Cell(1, $c).Shape
-        $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $(if ($c -eq 1) { $GREY } else { $NAVY }))
-        Fill-Text $cell.TextFrame @((P (T $h2[$c - 1] $true $WHITE) 9.5 $false 1 0))
-    }
-    for ($r = 0; $r -lt 6; $r++) {
-        for ($c = 1; $c -le 2; $c++) {
-            $cell = $tb.Cell($r + 2, $c).Shape
-            $cell.Fill.Visible = -1; $cell.Fill.Solid(); $cell.Fill.ForeColor.RGB = (C $(if ($r % 2 -eq 0) { $WHITE } else { $CARD }))
-            Fill-Text $cell.TextFrame @((P (T $ba[$r][$c - 1] ($c -eq 2) $(if ($c -eq 1) { $MUTED } else { $INK })) 9.5 $false 1 0))
-        }
-    }
-    for ($r = 1; $r -le 7; $r++) { for ($c = 1; $c -le 2; $c++) { $tf = $tb.Cell($r, $c).Shape.TextFrame; $tf.MarginLeft = 5; $tf.MarginRight = 5; $tf.MarginTop = 3; $tf.MarginBottom = 3 } }
-    for ($r = 1; $r -le 7; $r++) { $tb.Rows.Item($r).Height = 20 }
-    # real-case callout under the table
-    $null = Add-Box $s 5 460 284 478 84 $WHITE $LINE
-    $null = Add-Text $s 472 292 454 70 @(
-        (P (T "Why a field report must not overstate: a real case" $true $NAVY) 11 $false 1 4),
-        (P @((T "Anuraj v. State of Kerala (2024): " $true), (T "police alleged commercial-quantity MDMA; the lab found methamphetamine in intermediate quantity (MDMA 0.5 g / 10 g vs methamphetamine 2 g / 50 g). Our record states only what the kit's colour supports, lists every drug on the kit chart that the colour fits, and warns when they fall under different NDPS thresholds.")) 9.5 $false 1 0))
-    # benefits strip
-    $null = Add-Box $s 5 22 380 916 108 $CARD
-    $ben = @(
-        @("Social", "Fairer remand and bail decisions; fewer cases lost on procedure; honest officers protected."),
-        @("Economic", "No new hardware; reuses the free NCB kit and officers' phones; small hosting cost."),
-        @("Environmental", "Paperless records; the only extra consumables are a printed card per kit and blank-well reagent drops."),
-        @("Scale", "1,15,236 NDPS cases in 2022 (MHA); each seized package can get a recorded field test."))
-    for ($i = 0; $i -lt 4; $i++) {
-        $x = 34 + $i * 228
-        $null = Add-Text $s $x 394 214 92 @((P (T $ben[$i][0] $true $NAVY) 12 $false 1 5), (P (T $ben[$i][1]) 10.5 $false 1 0))
-    }
+        @("Quantity category guessed", "Flagged when it cannot be told in the field"),
+        @("No kit accuracy data", "Field result against lab result, per kit batch (planned)"))
+    $t2 = Add-Table $s 494 120 @(190, 254) @("Today (paper)", "With FieldTest Recorder") $ba 10.5 $false
+
+    $y = [Math]::Max($t1.Top + $t1.Height, $t2.Top + $t2.Height) + 12
+    $case = Add-Text $s 30 ($y + 6) 900 40 @(
+        (P @((T "A real case: Anuraj v. State of Kerala (2024). " $true $NAVY), (T "Police alleged commercial-quantity MDMA; the lab found methamphetamine in intermediate quantity (MDMA 0.5 g / 10 g against methamphetamine 2 g / 50 g). A field report must not overstate: ours lists every drug on the kit chart that the colour fits and warns when they fall under different NDPS thresholds.")) 10.5))
+    $ch = $case.TextFrame.TextRange.BoundHeight + 12
+    $box = Add-Box $s 1 22 $y 916 $ch $WHITE $GREY
+    $box.ZOrder(1)
+    $y2 = $y + $ch + 14
+    Add-Heading $s 22 $y2 916 "Benefits of the solution"
+    $ben = @(, @("Fairer remand and bail decisions. Fewer cases lost on procedure. Honest officers protected.",
+                 "No new hardware. Reuses the free NCB kit and officers' phones. Small hosting cost.",
+                 "Paperless records. The only extra consumables are a printed card per kit and a few reagent drops.",
+                 "1,15,236 NDPS cases in 2022 (MHA). Each seized package can get a recorded field test."))
+    $null = Add-Table $s 22 ($y2 + 24) @(229, 229, 229, 229) @("Social", "Economic", "Environmental", "Scale") $ben 10.5 $false
 
     # ================================================================ 6. RESEARCH AND REFERENCES
     $s = $pres.Slides.Item(6)
@@ -448,6 +429,6 @@ try {
     "saved: $out (+ PDF), slides: $($pres.Slides.Count)"
     $pres.Close()
 } catch {
-    "ERROR at line $($_.InvocationInfo.ScriptLineNumber): $($_.Exception.Message)`n  $($_.InvocationInfo.Line.Trim())"
+    "ERROR at line $($_.InvocationInfo.ScriptLineNumber): $($_.Exception.Message)`n  $($_.InvocationInfo.Line.Trim())`n$($_.ScriptStackTrace)"
     try { $pres.Close() } catch {}
 } finally { $app.Quit(); [System.Runtime.InteropServices.Marshal]::ReleaseComObject($app) | Out-Null }
